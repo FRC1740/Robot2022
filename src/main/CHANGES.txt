@@ -1,0 +1,6 @@
+Note the following C++/WPILib changes since 2021:
+
+Updated vendor libraries. See "Important Links" on Shared Google Drive
+CANPIDController class deprecated. Use SparkMaxPIDController instead
+CANEncoder class deprecated. Use SparkMaxRelativeEncoder or SparkMaxAlternateEncoder instead
+
