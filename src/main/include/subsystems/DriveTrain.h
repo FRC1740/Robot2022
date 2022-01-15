@@ -27,7 +27,8 @@ namespace ConDriveTrain {
 
     //Spark Max Settings
     constexpr int RAMP_RATE = 0.100; //seconds
-    constexpr bool INVERSION = false; //
+    constexpr bool INVERTED = true; //
+    constexpr bool NONINVERTED = false; //
     //Conversions
     constexpr double IN_2_ENCODER = (6*ConMath::PI)/(42 * 10.71); //encoder to motor 42 counts/rev, motor to shaft 10.71:1, 6in wheel
     // SHould be 6 * pi / (42 * 10.71)

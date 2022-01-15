@@ -27,7 +27,8 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter) {
     &m_driveTrain,
     [this] { return driver_control.GetRawAxis(ConXBOXControl::RIGHT_TRIGGER) - driver_control.GetRawAxis(ConXBOXControl::LEFT_TRIGGER); },
     // Scale turning by a 25% for at-home challenges  
-    [this] { return driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X/4); }));
+    // To swap front & back of robot, add/remove a minus sign in the following line, and swap the INVERTED/NONINVERTED in DriveTrain.cpp
+    [this] { return -driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X/4); }));
 #endif
 #endif // ENABLE_DRIVETRAIN
 

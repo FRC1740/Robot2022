@@ -16,10 +16,16 @@ DriveTrain::DriveTrain() {
   m_leftMotorA.SetOpenLoopRampRate(ConDriveTrain::RAMP_RATE);
   m_leftMotorB.SetOpenLoopRampRate(ConDriveTrain::RAMP_RATE);
 
-  m_rightMotorA.SetInverted(ConDriveTrain::INVERSION);
-  m_rightMotorB.SetInverted(ConDriveTrain::INVERSION);
-  m_leftMotorA.SetInverted(ConDriveTrain::INVERSION);
-  m_leftMotorB.SetInverted(ConDriveTrain::INVERSION);
+  /* 
+    To swap front & back of robot, swap the INVERTED/NONINVERTED below and add or remove the minus sign 
+    in RobotContainer.cpp on the line which contains "ConXBOXControl::LEFT_JOYSTICK_X/4" for the turning axis
+  */
+  // WARNING! TuffBox Mini requires BOTH motors spin in the same direction!!!
+  m_rightMotorA.SetInverted(ConDriveTrain::NONINVERTED);
+  m_rightMotorB.SetInverted(ConDriveTrain::NONINVERTED);
+  // WARNING! TuffBox Mini requires BOTH motors spin in the same direction!!!
+  m_leftMotorA.SetInverted(ConDriveTrain::INVERTED);
+  m_leftMotorB.SetInverted(ConDriveTrain::INVERTED);
 
   // set PID coefficients
   // left pid controller
