@@ -16,7 +16,7 @@ That would allow for shoot then scoot or scoot then shoot by changing delays and
 */
 
 AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(drivetrain) {
-#if defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
+#if 0 // defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
   double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay
   double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(-20.0); // Drive distance (inches)
   double c = m_driveTrain->m_nte_c_ShooterSpinTime.GetDouble(10.0); // Shooter spin time
