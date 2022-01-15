@@ -147,8 +147,10 @@ double DriveTrain::GetAverageEncoderDistance() {
 void DriveTrain::GoToAngle(double angle) {
   angle *= ConDriveTrain::ANGLE_2_IN;
 // The following syntax is deprecated in 2022 and throws a warning error
-left_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
-right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+//left_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+//right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+//left_pidController.SetReference(angle, CANSparkMax::ControlType::kSmartMotion);
+//right_pidController.SetReference(angle, CANSparkMax::ControlType::kSmartMotion);
 
 }
 
@@ -156,7 +158,6 @@ double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
 																	   
 void DriveTrain::ResetGyro() {gyro->Reset();}												
 																				 
-
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
 
 #endif // ENABLE_DRIVETRAIN
