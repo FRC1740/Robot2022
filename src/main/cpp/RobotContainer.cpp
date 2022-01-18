@@ -20,8 +20,7 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter) {
     [this] { return driver_control.GetRawAxis(ConFlightControl::ELEVATOR); },
     [this] { return driver_control.GetRawAxis(ConFlightControl::RUDDER); }));
 
-#endif
-#ifndef ENABLE_FLIGHTSTICK
+#else // !ENABLE_FLIGHTSTICK
   // Set up default drive command
   m_driveTrain.SetDefaultCommand(TeleOpDrive(
     &m_driveTrain,

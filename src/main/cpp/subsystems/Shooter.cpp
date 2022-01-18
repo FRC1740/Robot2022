@@ -10,7 +10,10 @@ Shooter::Shooter()
           frc2::PIDController(0, 0, 0)) {}
 
 void Shooter::UseOutput(double output, double setpoint) {
+#ifdef ENABLE_SHOOTER
   // Use the output here
+  
+#endif
 }
 
 double Shooter::GetMeasurement() {
