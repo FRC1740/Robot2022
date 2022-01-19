@@ -7,7 +7,15 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  // Create and get reference to SB tab
+  m_sbt_Robot = &frc::Shuffleboard::GetTab(ConShuffleboard::RobotTab);
+  // See https://docs.wpilib.org/en/latest/docs/software/wpilib-tools/shuffleboard/layouts-with-code/using-tabs.html
+
+  // Create widget for code version
+  #define CODE_VERSION ROBOT_VERSION_STRING " " __DATE__ " " __TIME__ 
+  m_nte_CodeVersion = m_sbt_Robot->Add("Code Version", CODE_VERSION).WithSize(3, 1).WithPosition(0, 0).GetEntry();
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -39,10 +47,15 @@ void Robot::AutonomousInit() {
 
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
+    printf("Running Autonomous Command!\n");
+  }
+  else {
+    printf("Auto Non-functional\n");
   }
 }
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+}
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when

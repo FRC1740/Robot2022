@@ -5,7 +5,7 @@
 #include "RobotContainer.h"
 
 RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter) {
-  // ANOTHER WAY OF CONSTRUCTING: m_autoDriveDistance = AutoDriveDistance(&m_driveTrain);
+  // ANOTHER WAY OF CONSTRUCTING: m_autoDrive = AutoDrive(&m_driveTrain);
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings

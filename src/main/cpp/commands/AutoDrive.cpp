@@ -3,28 +3,34 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/AutoDrive.h"
+#include "commands/AutoDriveDistance.h"
+#include "commands/AutoDelay.h"
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/ParallelRaceGroup.h>
 
 /*
-From Kyle:
-3 independent commands that are in parallel, not series:
-
-(1) Delay a seconds, drive backwards for b seconds
-(2) spin up shooter, delay c seconds, turn off shooter
-(3) delay d seconds, turn jumbler for e seconds, turn off jumbler
-
-That would allow for shoot then scoot or scoot then shoot by changing delays and durations, as required by our reliable minimum shooting range.
+  Basic Autonomous Testing
+  (1) Delay a seconds
+  (2) drive backwards for b seconds
+  (3) Turn to c angle
 */
 
 AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(drivetrain) {
-#if 0 // defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
-  double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay
+#if defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
+  units::time::second_t a = 1.2_s; // FIXME: Temporary pending proper type conversion double -> second_t
+  // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
   double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(-20.0); // Drive distance (inches)
-  double c = m_driveTrain->m_nte_c_ShooterSpinTime.GetDouble(10.0); // Shooter spin time
-  double d = m_driveTrain->m_nte_d_JumblerDelay.GetDouble(5.0); // Jumbler delay
-  double e = m_driveTrain->m_nte_e_JumblerOnTime.GetDouble(15.0); // Jumbler on time
+  double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle
 
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
+  AddCommands (
+    frc2::SequentialCommandGroup { AutoDelay(a), AutoDriveDistance(drivetrain, b) }
+    );
+
+  #if 0
+  // Need to define each of the commands below
   AddCommands (
     frc2::SequentialCommandGroup{ AutoDelay(a), 
                                   frc2::ParallelRaceGroup{ AutoDriveDistance(drivetrain, b), AutoDelay(5.0) }
@@ -34,6 +40,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(dr
                                   frc2::ParallelRaceGroup{ JumbleShooter(shooter, -1), AutoDelay(e) }
                                 }
   );
+  #endif
 #endif // defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
 }
 

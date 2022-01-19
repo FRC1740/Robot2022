@@ -11,10 +11,8 @@
 
 class Robot : public frc::TimedRobot {
  public:
-#if 0
   frc::ShuffleboardTab* m_sbt_Robot;
   nt::NetworkTableEntry m_nte_CodeVersion;
-#endif
   void RobotInit() override;
   void RobotPeriodic() override;
   void DisabledInit() override;

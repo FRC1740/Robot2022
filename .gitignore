@@ -2,6 +2,7 @@
 
 # env.h is used for compile-time stamps and version information
 env.h
+.vscode
 
 ### C++ ###
 # Prerequisites
