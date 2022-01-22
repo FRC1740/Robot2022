@@ -25,9 +25,9 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(dr
 
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands (
-    frc2::SequentialCommandGroup { AutoDelay(a), AutoDriveDistance(drivetrain, b) }
-    );
+  AddCommands ( AutoDriveDistance(drivetrain, b) ); /*
+    frc2::SequentialCommandGroup { AutoDriveDistance(drivetrain, b), AutoDelay(a), AutoDriveDistance(drivetrain, b) }
+    ); /* */
 
   #if 0
   // Need to define each of the commands below
@@ -48,7 +48,8 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(dr
 void AutoDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoDrive::Execute() {}
+void AutoDrive::Execute() {
+}
 
 // Called once the command ends or is interrupted.
 void AutoDrive::End(bool interrupted) {}

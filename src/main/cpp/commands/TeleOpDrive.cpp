@@ -47,6 +47,9 @@ void TeleOpDrive::Execute() {
   // Do it
   m_driveTrain->ArcadeDrive(speed, rotation);
 
+  // Display the distance we've driven
+  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistance());
+
   m_speedOut = speed;
   m_rotationOut = rotation;
 

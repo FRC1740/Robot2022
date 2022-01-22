@@ -12,13 +12,14 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : 
 
 // Called when the command is initially scheduled.
 void AutoDriveDistance::Initialize() {
+  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistance());
   m_driveTrain->ResetEncoders();
-  printf("AutoDriveDistance::Initialize()\n");
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoDriveDistance::Execute() {
   // See TeleOpDrive for more filtering information
+  printf("Why aren't we running?\n");
   constexpr double speedN = 11.0; // length of digital filter
   constexpr double maxSpeed = 0.5;
   constexpr double rotation = 0.0;
@@ -26,6 +27,7 @@ void AutoDriveDistance::Execute() {
   double desiredSpeed = (m_distance > m_driveTrain->GetAverageEncoderDistance()) ? maxSpeed : -maxSpeed;
   double speed = (((speedN - 1.0) * m_speedOut) + desiredSpeed) / speedN;
   m_driveTrain->ArcadeDrive(speed, rotation);
+  printf("Setting Speed to %f", speed);
   m_speedOut = speed;
 }
 
