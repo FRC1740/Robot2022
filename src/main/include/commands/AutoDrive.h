@@ -24,14 +24,6 @@ class AutoDrive
 
  public:
   explicit AutoDrive(DriveTrain *drivetrain, Shooter *shooter);
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
  
  private:
    DriveTrain *m_driveTrain;

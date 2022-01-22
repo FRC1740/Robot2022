@@ -27,7 +27,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(dr
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
     frc2::SequentialCommandGroup { AutoDelay(a), AutoDriveDistance(drivetrain, b) }
-    );
+    ); /* */
 
   #if 0
   // Need to define each of the commands below
@@ -42,18 +42,4 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Shooter *shooter) : m_driveTrain(dr
   );
   #endif
 #endif // defined(ENABLE_DRIVETRAIN) && defined(ENABLE_SHOOTER)
-}
-
-// Called when the command is initially scheduled.
-void AutoDrive::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void AutoDrive::Execute() {}
-
-// Called once the command ends or is interrupted.
-void AutoDrive::End(bool interrupted) {}
-
-// Returns true when the command should end.
-bool AutoDrive::IsFinished() {
-  return false;
 }

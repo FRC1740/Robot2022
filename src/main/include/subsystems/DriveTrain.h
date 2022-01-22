@@ -62,6 +62,7 @@ class DriveTrain : public frc2::SubsystemBase {
   // nt::NetworkTableEntry m_nte_c_ShooterSpinTime;
   // nt::NetworkTableEntry m_nte_d_JumblerDelay;
   // nt::NetworkTableEntry m_nte_e_JumblerOnTime;
+  nt::NetworkTableEntry m_nte_Testing;
 
 #ifdef ENABLE_DRIVETRAIN
   /**

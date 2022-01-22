@@ -13,6 +13,8 @@
 //#include "subsystems/ExampleSubsystem.h"
 #include "commands/TeleOpDrive.h"
 #include "commands/AutoDrive.h"
+#include "commands/AutoDriveDistance.h"
+#include "commands/AutoDelay.h"
 #include "subsystems/DriveTrain.h"
 #include "subsystems/Shooter.h"
 

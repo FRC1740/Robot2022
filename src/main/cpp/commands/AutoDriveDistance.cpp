@@ -12,8 +12,8 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : 
 
 // Called when the command is initially scheduled.
 void AutoDriveDistance::Initialize() {
+  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistance());
   m_driveTrain->ResetEncoders();
-  printf("AutoDriveDistance::Initialize()\n");
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,7 +23,7 @@ void AutoDriveDistance::Execute() {
   constexpr double maxSpeed = 0.5;
   constexpr double rotation = 0.0;
 
-  double desiredSpeed = (m_distance > m_driveTrain->GetAverageEncoderDistance()) ? maxSpeed : -maxSpeed;
+  double desiredSpeed = (m_distance > m_driveTrain->GetAverageEncoderDistance()) ? -maxSpeed : maxSpeed;
   double speed = (((speedN - 1.0) * m_speedOut) + desiredSpeed) / speedN;
   m_driveTrain->ArcadeDrive(speed, rotation);
   m_speedOut = speed;

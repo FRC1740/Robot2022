@@ -99,6 +99,7 @@ DriveTrain::DriveTrain() {
   m_nte_a_DriveDelay        = m_sbt_DriveTrain->AddPersistent("a Drive Delay", 0.0)         .WithSize(1, 1).WithPosition(3, 0).GetEntry();
   m_nte_b_DriveDistance     = m_sbt_DriveTrain->AddPersistent("b Drive Distance", -20.0)    .WithSize(1, 1).WithPosition(3, 1).GetEntry();
   m_nte_c_DriveTurnAngle     = m_sbt_DriveTrain->AddPersistent("c Turn Angle", -20.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
+  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Drive Distance", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
 }
 
 #ifdef ENABLE_DRIVETRAIN
