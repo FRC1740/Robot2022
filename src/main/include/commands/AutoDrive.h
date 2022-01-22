@@ -23,15 +23,7 @@ class AutoDrive
     : public frc2::CommandHelper<frc2::ParallelCommandGroup, AutoDrive> {
 
  public:
-  AutoDrive(DriveTrain *drivetrain, Shooter *shooter);
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
+  explicit AutoDrive(DriveTrain *drivetrain, Shooter *shooter);
  
  private:
    DriveTrain *m_driveTrain;
