@@ -4,7 +4,7 @@
 
 #include "RobotContainer.h"
 
-RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_shooter) {
+RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher) {
   // ANOTHER WAY OF CONSTRUCTING: m_autoDrive = AutoDrive(&m_driveTrain);
   // Initialize all of your commands and subsystems here
 

@@ -10,7 +10,8 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include "subsystems/DriveTrain.h"
-#include "subsystems/Shooter.h"
+#include "subsystems/Launcher.h"
+#include "subsystems/Intake.h"
 
 /**
  * An example command.
@@ -23,7 +24,7 @@ class AutoDrive
     : public frc2::CommandHelper<frc2::ParallelCommandGroup, AutoDrive> {
 
  public:
-  explicit AutoDrive(DriveTrain *drivetrain, Shooter *shooter);
+  explicit AutoDrive(DriveTrain *drivetrain, Launcher *launcher);
  
  private:
    DriveTrain *m_driveTrain;

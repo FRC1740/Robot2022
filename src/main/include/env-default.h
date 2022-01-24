@@ -4,7 +4,7 @@
 
 //#define ENABLE_DRIVETRAIN
 //#define ENABLE_CLIMBER
-//#define ENABLE_SHOOTER
+//#define ENABLE_LAUNCHER
 //#define ENABLE_VISION
 
 #endif // ENV_H

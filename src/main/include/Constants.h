@@ -60,6 +60,7 @@ namespace ConLimelight {
 }
 
 namespace ConNEO {
+    // FIXME: Move to the specific subsystem since we use different gear ratios for each subsystem
     constexpr int MAXIMUM_RPM = 5676;
     constexpr int GEAR_RATIO = 10.71;
 }
@@ -67,9 +68,8 @@ namespace ConNEO {
 namespace ConShuffleboard {
     constexpr char RobotTab[] = "Robot";
     constexpr char ClimberTab[] = "Climber";
-    constexpr char ControlPanelManipulatorTab[] = "CPM";
     constexpr char DriveTrainTab[] = "DriveTrain";
-    constexpr char ShooterTab[] = "Shooter";
+    constexpr char LauncherTab[] = "Launcher";
     constexpr char VisionTab[] = "Vision";
 }
 
