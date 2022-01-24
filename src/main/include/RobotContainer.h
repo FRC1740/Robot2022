@@ -16,7 +16,8 @@
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
 #include "subsystems/DriveTrain.h"
-#include "subsystems/Shooter.h"
+#include "subsystems/Launcher.h"
+#include "subsystems/Intake.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -41,7 +42,8 @@ class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Subsystems
   DriveTrain m_driveTrain;
-  Shooter m_shooter;
+  Launcher m_launcher;
+  Intake m_intake;
   
   // Commands...
   AutoDrive m_autoDrive;

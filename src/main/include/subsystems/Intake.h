@@ -6,9 +6,9 @@
 
 #include <frc2/command/PIDSubsystem.h>
 
-class Shooter : public frc2::PIDSubsystem {
+class Intake : public frc2::PIDSubsystem {
  public:
-  Shooter();
+  Intake();
 
  protected:
   void UseOutput(double output, double setpoint) override;
