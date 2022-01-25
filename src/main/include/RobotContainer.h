@@ -28,11 +28,18 @@
  */
 class RobotContainer {
  public:
-  RobotContainer();
 
+  RobotContainer();
+  void ConfigureButtonBindings();
+  void RobotInit();
+  void DisabledInit();
+  void DisabledPeriodic();
+
+  frc::ShuffleboardTab* m_sbt_Robot;
+  nt::NetworkTableEntry m_nte_CodeVersion;
   frc2::Command* GetAutonomousCommand();
   frc2::Command* GetDisabledCommand();
-  
+    
   // The driver's game controller
   frc::XboxController driver_control{ConXBOXControl::DRIVER_CONTROLLER_PORT};
   // The codriver's game controller
@@ -47,9 +54,5 @@ class RobotContainer {
   
   // Commands...
   AutoDrive m_autoDrive;
-  
-  //ExampleSubsystem m_subsystem;
-  //ExampleCommand m_autonomousCommand;
 
-  void ConfigureButtonBindings();
 };

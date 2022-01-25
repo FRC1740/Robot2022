@@ -33,6 +33,26 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher) {
 
 }
 
+void RobotContainer::RobotInit() {
+  // Create and get reference to SB tab
+  m_sbt_Robot = &frc::Shuffleboard::GetTab(ConShuffleboard::RobotTab);
+  // See https://docs.wpilib.org/en/latest/docs/software/wpilib-tools/shuffleboard/layouts-with-code/using-tabs.html
+
+  // Create widget for code version
+  #define CODE_VERSION ROBOT_VERSION_STRING " " __DATE__ " " __TIME__ 
+  m_nte_CodeVersion = m_sbt_Robot->Add("Code Version", CODE_VERSION).WithSize(3, 1).WithPosition(0, 0).GetEntry();
+
+}
+// Called ONCE when the robot is disabled
+void RobotContainer::DisabledInit() {
+  m_driveTrain.ResetEncoders();
+}
+
+// Called periodically while the robot is disabled
+void RobotContainer::DisabledPeriodic() {
+
+}
+
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 }

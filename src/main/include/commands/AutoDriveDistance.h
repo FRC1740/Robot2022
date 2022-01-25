@@ -30,6 +30,6 @@ class AutoDriveDistance
 
  private:
   DriveTrain *m_driveTrain;
-  double m_distance; // FIXME: UNITS? Encoder Ticks? Feet? 
+  double m_distance_inches; 
   double m_speedOut = 0.0;
 };
