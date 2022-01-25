@@ -21,7 +21,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(
   units::time::second_t a = .5_s; // FIXME: Temporary pending proper type conversion double -> second_t
   // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
   double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0); // Drive distance (inches)
-  double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle
+  double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle (degrees)
 
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());

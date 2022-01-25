@@ -5,7 +5,7 @@
 #include "commands/AutoDriveDistance.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
-AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : m_driveTrain(drivetrain), m_distance(distance){
+AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : m_driveTrain(drivetrain), m_distance_inches(distance){
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(drivetrain);
 }
@@ -14,7 +14,7 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : 
 void AutoDriveDistance::Initialize() {
   m_driveTrain->ResetEncoders();
   // Send the distance travled to the dashboard
-  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistanceInches());
+  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetRightDistanceInches());
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -24,7 +24,7 @@ void AutoDriveDistance::Execute() {
   constexpr double maxSpeed = 0.5;
   constexpr double rotation = 0.0;
 
-  double desiredSpeed = (m_distance > m_driveTrain->GetAverageDistanceInches()) ? -maxSpeed : maxSpeed;
+  double desiredSpeed = (m_distance_inches > m_driveTrain->GetAverageDistanceInches()) ? -maxSpeed : maxSpeed;
   double speed = (((speedN - 1.0) * m_speedOut) + desiredSpeed) / speedN;
   m_driveTrain->ArcadeDrive(speed, rotation);
   m_speedOut = speed;
@@ -40,5 +40,6 @@ bool AutoDriveDistance::IsFinished() {
   constexpr double epsilon = 5.0;
   frc::SmartDashboard::PutNumber("Drive Distance: ", m_driveTrain->GetAverageDistanceInches());
 
-  return ((fabs(m_distance + copysign(epsilon / 2.0, m_distance))- m_driveTrain->GetAverageDistanceInches()) < epsilon);
+
+  return ((fabs(m_distance_inches + copysign(epsilon / 2.0, m_distance_inches))- m_driveTrain->GetAverageDistanceInches()) < epsilon);
 }

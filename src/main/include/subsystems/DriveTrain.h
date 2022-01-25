@@ -34,31 +34,17 @@ namespace ConDriveTrain {
     constexpr double ENCODER_TICK_RESOLUTION = 42.0; // IS IT REALLY 42? or 48? or maybe 24?  
     constexpr double GEAR_RATIO = 10.71; // Neo rotates 10.71 times for one rotation of the output
     constexpr double WHEEL_DIAMETER = 6.0;
-    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI;
+    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI; // Abt 19 in.
 
-    constexpr double TICKS_PER_WHEEL_REVOLUTION = ENCODER_TICK_RESOLUTION * GEAR_RATIO;
+    constexpr double TICKS_PER_WHEEL_REVOLUTION = ENCODER_TICK_RESOLUTION * GEAR_RATIO; // Abt 450 ticks
 
     //Conversions
-    // constexpr double IN_2_ENCODER = (6*ConMath::PI)/(42 * 10.71); //encoder to motor 42 counts/rev, motor to shaft 10.71:1, 6in wheel
-    // SHould be 6 * pi / (42 * 10.71)
-    // Reciprocal (42 * 10.71)/(6 * pi)
-    // Seems to scale at abt 40% of expected.
+    constexpr double TICKS_PER_INCH = TICKS_PER_WHEEL_REVOLUTION / WHEEL_CIRCUMFERENCE; // Abt 24 ticks per inch
+    constexpr double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_WHEEL_REVOLUTION; // Abt 1/24 (.042)
 
-    constexpr double TICKS_PER_INCH = TICKS_PER_WHEEL_REVOLUTION / WHEEL_CIRCUMFERENCE;
-    constexpr double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_WHEEL_REVOLUTION;
-
-    // constexpr double ENCODER_2_IN = 1/IN_2_ENCODER;
-    // constexpr double ENCODER_2_IN = (42.0 * 10.71)/(6.0 * ConMath::PI);
-
-    // Conversion factor Ticks -> Inches
-    // constexpr double ENCODER_TICKS_TO_INCHES = 2.0 + (2/9); // 0.58
-    // constexpr double ENCODER_TICKS_OFFSET = -6.0 - (2/3);
-
-    // degrees to in, measured values on car O-O 32.5 I-I 23.5 O-I 27.375
-    constexpr double ANGLE_2_IN = 25.5*ConMath::PI/360;
+    // degrees to in
+    constexpr double ANGLE_2_IN = 25.5*ConMath::PI/360; // FIXME: What is this fudge factor? 25.5?
     constexpr double IN_2_ANGLE= 1/ANGLE_2_IN;
-
-
 }
 
 class DriveTrain : public frc2::SubsystemBase {
