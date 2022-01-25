@@ -18,9 +18,9 @@
 
 AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(drivetrain) {
 #if defined(ENABLE_DRIVETRAIN) && defined(ENABLE_LAUNCHER)
-  units::time::second_t a = 1.2_s; // FIXME: Temporary pending proper type conversion double -> second_t
+  units::time::second_t a = .5_s; // FIXME: Temporary pending proper type conversion double -> second_t
   // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
-  double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(-20.0); // Drive distance (inches)
+  double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0); // Drive distance (inches)
   double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle
 
   // Add your commands here, e.g.

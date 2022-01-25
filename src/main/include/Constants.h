@@ -59,12 +59,6 @@ namespace ConLimelight {
     constexpr double focalLength = 2.9272781257541; //mm
 }
 
-namespace ConNEO {
-    // FIXME: Move to the specific subsystem since we use different gear ratios for each subsystem
-    constexpr int MAXIMUM_RPM = 5676;
-    constexpr int GEAR_RATIO = 10.71;
-}
-
 namespace ConShuffleboard {
     constexpr char RobotTab[] = "Robot";
     constexpr char ClimberTab[] = "Climber";

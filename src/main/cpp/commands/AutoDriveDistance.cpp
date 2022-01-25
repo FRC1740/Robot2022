@@ -12,8 +12,9 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : 
 
 // Called when the command is initially scheduled.
 void AutoDriveDistance::Initialize() {
-  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistance());
   m_driveTrain->ResetEncoders();
+  // Send the distance travled to the dashboard
+  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetLeftDistanceInches());
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,7 +24,7 @@ void AutoDriveDistance::Execute() {
   constexpr double maxSpeed = 0.5;
   constexpr double rotation = 0.0;
 
-  double desiredSpeed = (m_distance > m_driveTrain->GetAverageEncoderDistance()) ? -maxSpeed : maxSpeed;
+  double desiredSpeed = (m_distance > m_driveTrain->GetAverageDistanceInches()) ? -maxSpeed : maxSpeed;
   double speed = (((speedN - 1.0) * m_speedOut) + desiredSpeed) / speedN;
   m_driveTrain->ArcadeDrive(speed, rotation);
   m_speedOut = speed;
@@ -32,13 +33,12 @@ void AutoDriveDistance::Execute() {
 // Called once the command ends or is interrupted.
 void AutoDriveDistance::End(bool interrupted) {
   m_driveTrain->ArcadeDrive(0.0, 0.0);
-  printf("AutoDriveDistance::End()\n");
 }
 
 // Returns true when the command should end.
 bool AutoDriveDistance::IsFinished() {
   constexpr double epsilon = 5.0;
-  frc::SmartDashboard::PutNumber("Drive Distance: ", m_driveTrain->GetAverageEncoderDistance());
+  frc::SmartDashboard::PutNumber("Drive Distance: ", m_driveTrain->GetAverageDistanceInches());
 
-  return ((fabs(m_distance + copysign(epsilon / 2.0, m_distance))- m_driveTrain->GetAverageEncoderDistance()) < epsilon);
+  return ((fabs(m_distance + copysign(epsilon / 2.0, m_distance))- m_driveTrain->GetAverageDistanceInches()) < epsilon);
 }
