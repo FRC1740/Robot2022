@@ -72,11 +72,11 @@ DriveTrain::DriveTrain() {
   m_rightMotorB.Follow(m_rightMotorA, false);
   m_leftMotorB.Follow(m_leftMotorA, false);
 
- // NavX gyro
+  // NavX gyro
   gyro = new AHRS(frc::SPI::Port::kMXP);
 
-  m_leftEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
-  m_rightEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
+  // m_leftEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
+  // m_rightEncoderA.SetPositionConversionFactor(ConDriveTrain::ENCODER_2_IN);
 
   m_leftMotorA.BurnFlash();
   m_leftMotorB.BurnFlash();
@@ -134,19 +134,21 @@ void DriveTrain::ResetEncoders() {
   m_leftEncoderB.SetPosition(0.0);
 }
 
-// FIXME: Account for two encoders per side
-double DriveTrain::GetRightDistance() {
-  return (m_rightEncoderA.GetPosition() * ConDriveTrain::ENCODER_2_IN);
+// Account for two encoders per side
+double DriveTrain::GetRightDistanceInches() {
+  double average_ticks = ( m_rightEncoderA.GetPosition() + m_rightEncoderB.GetPosition() ) / 2.0;
+  return (average_ticks * ConDriveTrain::INCHES_PER_TICK);
 }
 
-double DriveTrain::GetLeftDistance() {
-  return (m_leftEncoderA.GetPosition() * ConDriveTrain::ENCODER_2_IN);
+double DriveTrain::GetLeftDistanceInches() {
+  double average_ticks = ( m_leftEncoderA.GetPosition() + m_leftEncoderB.GetPosition() ) / 2.0;
+  return (average_ticks * ConDriveTrain::INCHES_PER_TICK);
 }
 
 // Used by AutoDriveDistance
-double DriveTrain::GetAverageEncoderDistance() {
-  // return (m_leftEncoderA.GetPosition() - m_rightEncoderA.GetPosition()) / 2.0;
-  return ((GetLeftDistance() - GetRightDistance()) / 2.0)/ 13.16; // FIXME: Fudge Factor 
+double DriveTrain::GetAverageDistanceInches() {
+  // FIXME: Should't these be added, or is one negative? I think we just REVERSE the encoder. CRE 2022-01-25
+  return ((GetLeftDistanceInches() - GetRightDistanceInches()) / 2.0);
 }
 
 void DriveTrain::GoToAngle(double angle) {

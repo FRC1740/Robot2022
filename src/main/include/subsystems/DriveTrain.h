@@ -29,12 +29,25 @@ namespace ConDriveTrain {
     constexpr int RAMP_RATE = 0.100; //seconds
     constexpr bool INVERTED = true; //
     constexpr bool NONINVERTED = false; //
+    
+    // Neo Motor & Gearbox
+    constexpr double ENCODER_TICK_RESOLUTION = 42.0; // IS IT REALLY 42? or 48? or maybe 24?  
+    constexpr double GEAR_RATIO = 10.71; // Neo rotates 10.71 times for one rotation of the output
+    constexpr double WHEEL_DIAMETER = 6.0;
+    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI;
+
+    constexpr double TICKS_PER_WHEEL_REVOLUTION = ENCODER_TICK_RESOLUTION * GEAR_RATIO;
+
     //Conversions
-    constexpr double IN_2_ENCODER = (6*ConMath::PI)/(42 * 10.71); //encoder to motor 42 counts/rev, motor to shaft 10.71:1, 6in wheel
+    // constexpr double IN_2_ENCODER = (6*ConMath::PI)/(42 * 10.71); //encoder to motor 42 counts/rev, motor to shaft 10.71:1, 6in wheel
     // SHould be 6 * pi / (42 * 10.71)
     // Reciprocal (42 * 10.71)/(6 * pi)
     // Seems to scale at abt 40% of expected.
-    constexpr double ENCODER_2_IN = 1/IN_2_ENCODER;
+
+    constexpr double TICKS_PER_INCH = TICKS_PER_WHEEL_REVOLUTION / WHEEL_CIRCUMFERENCE;
+    constexpr double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_WHEEL_REVOLUTION;
+
+    // constexpr double ENCODER_2_IN = 1/IN_2_ENCODER;
     // constexpr double ENCODER_2_IN = (42.0 * 10.71)/(6.0 * ConMath::PI);
 
     // Conversion factor Ticks -> Inches
@@ -81,11 +94,11 @@ class DriveTrain : public frc2::SubsystemBase {
 
   void SetMaxOutput(double maxOutput);
 
-  double GetRightDistance();
+  double GetRightDistanceInches();
 
-  double GetLeftDistance();
+  double GetLeftDistanceInches();
 
-  double GetAverageEncoderDistance();
+  double GetAverageDistanceInches();
   
   double GetGyroAngle();
   void ResetEncoders();
