@@ -75,15 +75,19 @@ DriveTrain::DriveTrain() {
   // NavX gyro
   gyro = new AHRS(frc::SPI::Port::kMXP);
 
-  // FIXME: This may be a better way to set the distance conversion: Right on the SparkMax!
-  // Native Tick counts * Gear Ratio divided by Wheel circumference (42 * 10.71)/(6 * pi) = ticks per inch
-  // We can use the SetPositionConversionFactor() to use this as our tick reference.
-  // m_leftEncoderA.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
-  // m_rightEncoderA.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
-  // m_leftEncoderB.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
-  // m_rightEncoderB.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
-  // BUUUT: IF YOU DO THIS, CHANGE THE GetLeftDistanceInches() and GetRightDistanceInches() methods!!!
+  /*
+     FIXME: This may be a better way to set the distance conversion: Right on the SparkMax!
+     Native Tick counts * Gear Ratio divided by Wheel circumference (42 * 10.71)/(6 * pi) = ticks per inch
+     We can use the SetPositionConversionFactor() to use this as our tick reference.
+     // m_leftEncoderA.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
+     // m_rightEncoderA.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
+     // m_leftEncoderB.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
+     // m_rightEncoderB.SetPositionConversionFactor(ConDriveTrain::TICKS_PER_INCH);
+    BUUUT: IF YOU DO THIS, CHANGE THE GetLeftDistanceInches() and GetRightDistanceInches() methods!!!
 
+  */
+
+  // Save all SparkMax firmware parameters to flash memory
   m_leftMotorA.BurnFlash();
   m_leftMotorB.BurnFlash();
   m_rightMotorA.BurnFlash();
@@ -105,7 +109,10 @@ DriveTrain::DriveTrain() {
   m_nte_a_DriveDelay        = m_sbt_DriveTrain->AddPersistent("a Drive Delay", 0.0)         .WithSize(1, 1).WithPosition(3, 0).GetEntry();
   m_nte_b_DriveDistance     = m_sbt_DriveTrain->AddPersistent("b Drive Distance", 0.0)    .WithSize(1, 1).WithPosition(3, 1).GetEntry();
   m_nte_c_DriveTurnAngle     = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
-//  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
+  //  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
+
+  // End of DriveTrain Constructor
+  printf("DriveTrain() Constructor returning...\n");
 }
 
 #ifdef ENABLE_DRIVETRAIN
