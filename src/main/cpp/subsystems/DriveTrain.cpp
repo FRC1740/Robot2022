@@ -111,13 +111,20 @@ DriveTrain::DriveTrain() {
   m_nte_c_DriveTurnAngle     = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
   //  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
 
+  // Display current encoder values
+  m_nte_LeftEncoder = m_sbt_DriveTrain->AddPersistent("Left Side Encoder", 0.0)             .WithSize(2,1).WithPosition(4,0).GetEntry();
+  m_nte_RightEncoder = m_sbt_DriveTrain->AddPersistent("Right Side Encoder", 0.0)            .WithSize(2,1).WithPosition(4,1).GetEntry();
+
   // End of DriveTrain Constructor
   printf("DriveTrain() Constructor returning...\n");
 }
 
 #ifdef ENABLE_DRIVETRAIN
 // This method will be called once per scheduler run
-//void DriveTrain::Periodic() {}
+void DriveTrain::Periodic() {
+  m_nte_LeftEncoder.SetDouble(GetAverageLeftEncoders());
+  m_nte_RightEncoder.SetDouble(GetAverageRightEncoders());
+}
 
 // Used by TeleOpDrive
 void DriveTrain::ArcadeDrive(double speed, double rotation) {
@@ -149,15 +156,11 @@ void DriveTrain::ResetEncoders() {
 
 // Account for two encoders per side
 double DriveTrain::GetRightDistanceInches() {
-  double distance = ( m_rightEncoderA.GetPosition() + m_rightEncoderB.GetPosition() ) / 2.0;
-  // If the SetPositionConversionFactor() was used above, the above value IS THE DISTANCE IN INCHES
-  return (distance * ConDriveTrain::INCHES_PER_TICK);
+  return (GetAverageRightEncoders() * ConDriveTrain::INCHES_PER_TICK);
 }
 
 double DriveTrain::GetLeftDistanceInches() {
-  double distance = ( m_leftEncoderA.GetPosition() + m_leftEncoderB.GetPosition() ) / 2.0;
-  // If the SetPositionConversionFactor() was used above, the above value IS THE DISTANCE IN INCHES
-  return (distance * ConDriveTrain::INCHES_PER_TICK);
+  return (GetAverageLeftEncoders() * ConDriveTrain::INCHES_PER_TICK);
 }
 
 // Used by AutoDriveDistance
@@ -166,6 +169,13 @@ double DriveTrain::GetAverageDistanceInches() {
   return ((GetLeftDistanceInches() + GetRightDistanceInches()) / 2.0);
 }
 
+double DriveTrain::GetAverageLeftEncoders() {
+  return (m_leftEncoderA.GetPosition() + m_leftEncoderB.GetPosition() ) / 2.0;
+}
+
+double DriveTrain::GetAverageRightEncoders() {
+  return (m_rightEncoderA.GetPosition() + m_rightEncoderB.GetPosition() ) / 2.0;
+}
 void DriveTrain::GoToAngle(double angle) {
   angle *= ConDriveTrain::ANGLE_2_IN;
   // FIXME: The following syntax is deprecated in 2022 and throws a warning error, but the recommended

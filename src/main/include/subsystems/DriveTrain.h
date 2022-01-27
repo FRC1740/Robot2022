@@ -55,16 +55,22 @@ class DriveTrain : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_DriveRotationFilter;
   nt::NetworkTableEntry m_nte_InputExponent;
 
+  // Encoder outputs
+  nt::NetworkTableEntry m_nte_LeftEncoder;
+  nt::NetworkTableEntry m_nte_RightEncoder;
+
+  nt::NetworkTableEntry m_nte_Testing;
+
+  // Autonomous Variables
   nt::NetworkTableEntry m_nte_a_DriveDelay;
   nt::NetworkTableEntry m_nte_b_DriveDistance;
   nt::NetworkTableEntry m_nte_c_DriveTurnAngle;
-  nt::NetworkTableEntry m_nte_Testing;
-
+  
 #ifdef ENABLE_DRIVETRAIN
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
-  //void Periodic();
+  void Periodic();
 
   /**
    * Drives the robot using arcade controls.
@@ -81,11 +87,12 @@ class DriveTrain : public frc2::SubsystemBase {
   void SetMaxOutput(double maxOutput);
 
   double GetRightDistanceInches();
-
   double GetLeftDistanceInches();
-
   double GetAverageDistanceInches();
   
+  double GetAverageRightEncoders();
+  double GetAverageLeftEncoders();
+
   double GetGyroAngle();
   void ResetEncoders();
   void GoToAngle(double angle);
