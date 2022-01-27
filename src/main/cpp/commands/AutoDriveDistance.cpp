@@ -24,7 +24,7 @@ void AutoDriveDistance::Execute() {
   constexpr double maxSpeed = 0.5;
   constexpr double rotation = 0.0;
 
-  double desiredSpeed = (m_distance_inches > m_driveTrain->GetAverageDistanceInches()) ? -maxSpeed : maxSpeed;
+  double desiredSpeed = (m_distance_inches > m_driveTrain->GetAverageDistanceInches()) ? maxSpeed : -maxSpeed;
   double speed = (((speedN - 1.0) * m_speedOut) + desiredSpeed) / speedN;
   m_driveTrain->ArcadeDrive(speed, rotation);
   m_speedOut = speed;
