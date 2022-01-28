@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/AutoDriveDistance.h"
-#include <frc/smartdashboard/SmartDashboard.h>
+//#include <frc/smartdashboard/SmartDashboard.h>
 
 AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -13,8 +13,7 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain) : m_driveTrain(driv
 // Called when the command is initially scheduled.
 void AutoDriveDistance::Initialize() {
   m_driveTrain->ResetEncoders();
-  // Send the distance travled to the dashboard
-  m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetRightDistanceInches());
+  // Read the desired travel distance from network tables (shuffleboard driver input)
   m_distance_inches = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0);
 }
 
@@ -39,8 +38,6 @@ void AutoDriveDistance::End(bool interrupted) {
 // Returns true when the command should end.
 bool AutoDriveDistance::IsFinished() {
   constexpr double epsilon = 5.0;
-  frc::SmartDashboard::PutNumber("Drive Distance: ", m_driveTrain->GetAverageDistanceInches());
-
 
   return ((fabs(m_distance_inches + copysign(epsilon / 2.0, m_distance_inches))- m_driveTrain->GetAverageDistanceInches()) < epsilon);
 }

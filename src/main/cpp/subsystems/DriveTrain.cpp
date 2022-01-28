@@ -114,6 +114,7 @@ DriveTrain::DriveTrain() {
   // Display current encoder values
   m_nte_LeftEncoder = m_sbt_DriveTrain->AddPersistent("Left Side Encoder", 0.0)             .WithSize(2,1).WithPosition(4,0).GetEntry();
   m_nte_RightEncoder = m_sbt_DriveTrain->AddPersistent("Right Side Encoder", 0.0)            .WithSize(2,1).WithPosition(4,1).GetEntry();
+  m_nte_IMU_ZAngle = m_sbt_DriveTrain->AddPersistent("IMU Z-Axis Angle", 0.0)               .WithSize(2,1).WithPosition(4,2).GetEntry();
 
   // End of DriveTrain Constructor
   printf("DriveTrain() Constructor returning...\n");
@@ -124,6 +125,7 @@ DriveTrain::DriveTrain() {
 void DriveTrain::Periodic() {
   m_nte_LeftEncoder.SetDouble(GetAverageLeftEncoders());
   m_nte_RightEncoder.SetDouble(GetAverageRightEncoders());
+  m_nte_IMU_ZAngle.SetDouble(GetGyroAngle());
 }
 
 // Used by TeleOpDrive
@@ -187,9 +189,11 @@ void DriveTrain::GoToAngle(double angle) {
 }
 
 double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
-																	   
-void DriveTrain::ResetGyro() {gyro->Reset();}												
-																				 
+
+// Used by AutoTurn 																	   
+void DriveTrain::ResetGyro() {
+  gyro->Reset();
+}																				 
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
 
 #endif // ENABLE_DRIVETRAIN

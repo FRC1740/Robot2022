@@ -58,6 +58,7 @@ class DriveTrain : public frc2::SubsystemBase {
   // Encoder outputs
   nt::NetworkTableEntry m_nte_LeftEncoder;
   nt::NetworkTableEntry m_nte_RightEncoder;
+  nt::NetworkTableEntry m_nte_IMU_ZAngle;
 
   nt::NetworkTableEntry m_nte_Testing;
 
@@ -95,6 +96,7 @@ class DriveTrain : public frc2::SubsystemBase {
 
   double GetGyroAngle();
   void ResetEncoders();
+
   void GoToAngle(double angle);
   void ResetGyro();
   //void SetSafety(bool safety);

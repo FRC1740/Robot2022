@@ -5,6 +5,7 @@
 #include "commands/AutoDrive.h"
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
+#include "commands/AutoTurn.h"
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
@@ -28,7 +29,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
-    frc2::SequentialCommandGroup { AutoDelay(drivetrain), AutoDriveDistance(drivetrain) }
+    frc2::SequentialCommandGroup { AutoDelay(drivetrain), AutoDriveDistance(drivetrain), AutoTurn(drivetrain) }
     ); /* */
   #endif
   #if defined(ENABLE_LAUNCHER)
