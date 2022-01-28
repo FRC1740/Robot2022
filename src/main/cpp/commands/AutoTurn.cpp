@@ -12,6 +12,7 @@ AutoTurn::AutoTurn(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
 
 // Called when the command is initially scheduled.
 void AutoTurn::Initialize() {
+  m_driveTrain->ResetGyro();
   // Read the target angle from the dashboard
   m_angle_degrees = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0);
 }
@@ -23,7 +24,7 @@ void AutoTurn::Execute() {
   constexpr double maxRotation = 0.5;
   constexpr double speed = 0.0;
 
-  double desiredRotation = (m_angle_degrees > m_driveTrain->GetGyroAngle()) ? maxRotation : -maxRotation;
+  double desiredRotation = (m_angle_degrees < m_driveTrain->GetGyroAngle()) ? maxRotation : -maxRotation;
   double rotation = (((rotationN - 1.0) * m_rotationOut) + desiredRotation) / rotationN;
   m_driveTrain->ArcadeDrive(speed, rotation);
   m_rotationOut = rotation;  
