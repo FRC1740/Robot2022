@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/Timer.h>
+#include "subsystems/DriveTrain.h"
 
 /**
  * An example command.
@@ -18,7 +19,7 @@
 class AutoDelay
     : public frc2::CommandHelper<frc2::CommandBase, AutoDelay> {
  public:
-  explicit AutoDelay( units::time::second_t seconds);
+  explicit AutoDelay(DriveTrain *drivetrain);
 
   void Initialize() override;
 
@@ -29,6 +30,8 @@ class AutoDelay
   bool IsFinished() override;
 
  private:
+  DriveTrain *m_driveTrain;
   units::time::second_t m_seconds;
+  // double m_seconds; // Don't know how to type convert the NTE GetDouble() -> second_t
   frc::Timer m_timer;  
 };
