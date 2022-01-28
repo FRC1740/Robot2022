@@ -4,7 +4,7 @@
 
 #include "commands/AutoDelay.h"
 
-AutoDelay::AutoDelay(units::time::second_t seconds) : m_seconds(seconds) {
+AutoDelay::AutoDelay(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_timer = frc::Timer(); 
 }
@@ -13,8 +13,9 @@ AutoDelay::AutoDelay(units::time::second_t seconds) : m_seconds(seconds) {
 void AutoDelay::Initialize() {
   m_timer.Reset();
   m_timer.Start();
-  #ifdef DEBUG
-    printf("AutoDelay::Initialize()\n");
+  m_seconds = (units::time::second_t)m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Seconds delay before driving
+  #ifdef DEBUG && DEBUG == TRUE
+    printf("AutoDelay()::Initialize()\n");
   #endif
 }   
 

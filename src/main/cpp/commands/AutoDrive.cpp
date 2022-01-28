@@ -18,17 +18,17 @@
 
 AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(drivetrain) {
 #if defined(ENABLE_DRIVETRAIN)
-  units::time::second_t a = .5_s; // FIXME: Temporary pending proper type conversion double -> second_t
+  // SHuffleboard parameters NOT refreshing this way. Moving them into the specific commands instead of
+  // passing them as arguments to the command seems to function as desired.
+  // units::time::second_t a = .5_s; // FIXME: Temporary pending proper type conversion double -> second_t
   // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
-  double b = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0); // Drive distance (inches)
-  double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle (degrees)
-  printf("Autodrive(): Reading parameters from Shuffleboard... %f\n", b);
+  // double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle (degrees)
 
   #if !defined(ENABLE_LAUNCHER)
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
-    frc2::SequentialCommandGroup { AutoDelay(a), AutoDriveDistance(drivetrain, b) }
+    frc2::SequentialCommandGroup { AutoDelay(drivetrain), AutoDriveDistance(drivetrain) }
     ); /* */
   #endif
   #if defined(ENABLE_LAUNCHER)

@@ -5,7 +5,7 @@
 #include "commands/AutoDriveDistance.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
-AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) : m_driveTrain(drivetrain), m_distance_inches(distance){
+AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(drivetrain);
 }
@@ -15,6 +15,7 @@ void AutoDriveDistance::Initialize() {
   m_driveTrain->ResetEncoders();
   // Send the distance travled to the dashboard
   m_driveTrain->m_nte_Testing.SetDouble(m_driveTrain->GetRightDistanceInches());
+  m_distance_inches = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
