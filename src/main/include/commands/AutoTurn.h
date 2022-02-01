@@ -27,10 +27,20 @@ class AutoTurn
 
   bool IsFinished() override;
 
+  void PID();
+
  private:
 
   DriveTrain *m_driveTrain;
+  frc::ShuffleboardTab* m_sbt_Robot;
+  nt::NetworkTableEntry m_nte_AutoTurn_kP;
+  nt::NetworkTableEntry m_nte_AutoTurn_kI;
+  nt::NetworkTableEntry m_nte_AutoTurn_kD;
+  nt::NetworkTableEntry m_nte_AutoTurn_error;
+  nt::NetworkTableEntry m_nte_AutoTurn_output;
   double m_angle_degrees;
   double m_rotationOut = 0.0;
+  double m_kP, m_kI, m_kD, m_setpoint, m_integral, m_output, m_previous_error;
+
 
 };
