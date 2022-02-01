@@ -16,7 +16,7 @@ AutoTurn::AutoTurn(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
   m_sbt_Robot = &frc::Shuffleboard::GetTab(ConShuffleboard::RobotTab);
   // PID constants: Starting with .5/.001/.3 worked OK on terazzo floor
   m_nte_AutoTurn_kP = m_sbt_Robot->AddPersistent("AutoTurn kP", 0.5).WithSize(1,1).WithPosition(0,1).GetEntry();
-  m_nte_AutoTurn_kI = m_sbt_Robot->AddPersistent("AutoTurn kI", 0.001).WithSize(1,1).WithPosition(1,1).GetEntry();
+  m_nte_AutoTurn_kI = m_sbt_Robot->AddPersistent("AutoTurn kI", 0.01).WithSize(1,1).WithPosition(1,1).GetEntry();
   m_nte_AutoTurn_kD = m_sbt_Robot->AddPersistent("AutoTurn kD", 0.3).WithSize(1,1).WithPosition(2,1).GetEntry();
   m_nte_AutoTurn_error = m_sbt_Robot->AddPersistent("PID Error", 0.0).WithSize(1,1).WithPosition(0,2).GetEntry();
   m_nte_AutoTurn_output = m_sbt_Robot->AddPersistent("PID Output", 0.0).WithSize(1,1).WithPosition(1,2).GetEntry();
