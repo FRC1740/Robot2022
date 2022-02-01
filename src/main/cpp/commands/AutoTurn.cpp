@@ -2,10 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/AutoTurn.h"
+#include <cmath>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
+#include "commands/AutoTurn.h"
 
 AutoTurn::AutoTurn(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -35,12 +36,12 @@ void AutoTurn::Initialize() {
 
 void AutoTurn::PID() {
   double error, derivative;
-  error = (m_setpoint - m_driveTrain->GetGyroAngle())/m_setpoint; // Error = Target - Actual, eg 45 degrees, normalized to 0.0 - 1.0
+  error = (m_setpoint - m_driveTrain->GetGyroAngle())/abs(m_setpoint); // Error = Target - Actual, eg 45 degrees, normalized to 0.0 - 1.0
   m_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
   derivative = (error - m_previous_error) / .02;
   m_output = m_kP * error + m_kI*m_integral + m_kD*derivative;
   m_nte_AutoTurn_error.SetDouble(error);
-  m_nte_AutoTurn_output.SetDouble(m_output);
+  m_nte_AutoTurn_output.SetDouble(-m_output);
   m_previous_error = error;
 }
 
