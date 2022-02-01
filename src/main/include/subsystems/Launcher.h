@@ -3,7 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 namespace ConLauncher {
-  constexpr int LAUNCHER_MOTOR_ID = 6;
+  constexpr int LAUNCHER_MOTOR_BERT_ID = 6;
+  constexpr int LAUNCHER_MOTOR_ERNIE_ID = 7;
 }
 
 #pragma once
@@ -17,21 +18,26 @@ namespace ConLauncher {
 class Launcher : public frc2::PIDSubsystem {
  public:
   Launcher();
-  void Launch();
+  void LaunchBert();
+  void LaunchErnie();
   void Reset();
   void SetLaunchSoftLimit();
   void SetResetSoftLimit();
 
   frc::ShuffleboardTab *m_sbt_Launcher;
-  nt::NetworkTableEntry m_nte_LaunchFwdLimit; // LAUNCHER forward may be MOTOR REVERSE!!!
-  nt::NetworkTableEntry m_nte_LaunchRevLimit; // Ditto for the reverse
+  nt::NetworkTableEntry m_nte_LaunchBert_FwdLimit; // LAUNCHER forward may be MOTOR REVERSE!!!
+  nt::NetworkTableEntry m_nte_LaunchBert_RevLimit; // Ditto for the reverse
+  nt::NetworkTableEntry m_nte_LaunchErnie_FwdLimit; // LAUNCHER forward may be MOTOR REVERSE!!!
+  nt::NetworkTableEntry m_nte_LaunchErnie_RevLimit; // Ditto for the reverse
 
  protected:
   // NEO motor
-  rev::CANSparkMax m_launcherMotor{ConLauncher::LAUNCHER_MOTOR_ID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_launcherMotorBert{ConLauncher::LAUNCHER_MOTOR_BERT_ID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_launcherMotorErnie{ConLauncher::LAUNCHER_MOTOR_ERNIE_ID, rev::CANSparkMax::MotorType::kBrushless};
 
-  // built-in encoder
-  rev::SparkMaxRelativeEncoder m_launcherEncoder = m_launcherMotor.GetEncoder();
+  // built-in encoders
+  rev::SparkMaxRelativeEncoder m_launcherEncoderBert = m_launcherMotorBert.GetEncoder();
+  rev::SparkMaxRelativeEncoder m_launcherEncoderErnie = m_launcherMotorErnie.GetEncoder();
 
   void UseOutput(double output, double setpoint) override;
 
