@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
+#include "Constants.h"
 
 RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher) {
   // ANOTHER WAY OF CONSTRUCTING: m_autoDrive = AutoDrive(&m_driveTrain);
@@ -31,6 +32,7 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher) {
 #endif
 #endif // ENABLE_DRIVETRAIN
 
+
 }
 
 void RobotContainer::RobotInit() {
@@ -51,6 +53,9 @@ void RobotContainer::DisabledInit() {
 // Called periodically while the robot is disabled
 void RobotContainer::DisabledPeriodic() {
 
+}
+
+void RobotContainer::TeleopInit() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {

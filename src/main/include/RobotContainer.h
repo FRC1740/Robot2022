@@ -7,6 +7,7 @@
 #include <frc2/command/Command.h>
 #include <frc/XboxController.h>
 
+#include "OI.h"
 #include "Constants.h"
 
 #include "commands/TeleOpDrive.h"
@@ -16,6 +17,7 @@
 #include "subsystems/DriveTrain.h"
 #include "subsystems/Launcher.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Climber.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -32,6 +34,7 @@ class RobotContainer {
   void RobotInit();
   void DisabledInit();
   void DisabledPeriodic();
+  void TeleopInit();
 
   frc::ShuffleboardTab* m_sbt_Robot;
   nt::NetworkTableEntry m_nte_CodeVersion;
@@ -49,6 +52,7 @@ class RobotContainer {
   DriveTrain m_driveTrain;
   Launcher m_launcher;
   Intake m_intake;
+  Climber m_climber;
 
   // Commands...
   AutoDrive m_autoDrive;

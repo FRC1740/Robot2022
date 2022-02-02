@@ -9,10 +9,12 @@ Launcher::Launcher()
           // The PIDController used by the subsystem
           frc2::PIDController(0, 0, 0)) {
             // Initialize stuff here
+            #ifdef ENABLE_LAUNCHER
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
+            #endif
           }
 
 void Launcher::LaunchBert() {

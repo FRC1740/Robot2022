@@ -31,6 +31,7 @@ class Launcher : public frc2::PIDSubsystem {
   nt::NetworkTableEntry m_nte_LaunchErnie_RevLimit; // Ditto for the reverse
 
  protected:
+ #ifdef ENABLE_LAUNCHER
   // NEO motor
   rev::CANSparkMax m_launcherMotorBert{ConLauncher::LAUNCHER_MOTOR_BERT_ID, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax m_launcherMotorErnie{ConLauncher::LAUNCHER_MOTOR_ERNIE_ID, rev::CANSparkMax::MotorType::kBrushless};
@@ -38,7 +39,7 @@ class Launcher : public frc2::PIDSubsystem {
   // built-in encoders
   rev::SparkMaxRelativeEncoder m_launcherEncoderBert = m_launcherMotorBert.GetEncoder();
   rev::SparkMaxRelativeEncoder m_launcherEncoderErnie = m_launcherMotorErnie.GetEncoder();
-
+ #endif
   void UseOutput(double output, double setpoint) override;
 
   double GetMeasurement() override;
