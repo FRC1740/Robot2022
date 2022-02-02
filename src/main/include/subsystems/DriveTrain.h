@@ -15,6 +15,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <AHRS.h>				 
 
+#include "OI.h"
 #include "Constants.h"
 
 namespace ConDriveTrain {
@@ -107,6 +108,13 @@ class DriveTrain : public frc2::SubsystemBase {
 
   double m_maxOutput = 1.0;
   AHRS *gyro;
+
+  // Neo motor controllers
+  rev::CANSparkMax m_rightMotorA{ConDriveTrain::RIGHT_MOTOR_A_ID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_rightMotorB{ConDriveTrain::RIGHT_MOTOR_B_ID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_leftMotorA{ConDriveTrain::LEFT_MOTOR_A_ID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_leftMotorB{ConDriveTrain::LEFT_MOTOR_B_ID, rev::CANSparkMax::MotorType::kBrushless};
+
   /* Drive Train Smart Motion PID set-up below */
   rev::SparkMaxPIDController  left_pidController = m_leftMotorA.GetPIDController();
   rev::SparkMaxPIDController  right_pidController = m_rightMotorA.GetPIDController();
@@ -120,11 +128,6 @@ class DriveTrain : public frc2::SubsystemBase {
   // motor max RPM
   const double MaxRPM = 5700;
 
-  // Neo motor controllers
-  rev::CANSparkMax m_rightMotorA{ConDriveTrain::RIGHT_MOTOR_A_ID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax m_rightMotorB{ConDriveTrain::RIGHT_MOTOR_B_ID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax m_leftMotorA{ConDriveTrain::LEFT_MOTOR_A_ID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax m_leftMotorB{ConDriveTrain::LEFT_MOTOR_B_ID, rev::CANSparkMax::MotorType::kBrushless};
 
   // Drive encoders
   rev::SparkMaxRelativeEncoder m_rightEncoderA = m_rightMotorA.GetEncoder();
