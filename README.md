@@ -5,16 +5,20 @@
 C++/WPILib control system code for 2022 competition season
 
 ### Subsystems
-- DriveTrain
-- Shooter
-
+- DriveTrain (4xSparkMax)
+- Launcher (2xSparkMax)
+- Intake (1xSparkMax; 1xDoubleSolenoid)
+- Climber (1xSparkMax)
+- 
 ### Commands
 - TeleopDrive
-- Shoot
+- Deploy
+- Launch
+- Retract
 
 ### Autonomous Commands
 - AutoDriveDistance
-- AutoDriveAngle
+- AutoTurn
 - AutoDelay
 
 ### Autonomous Command Groups
