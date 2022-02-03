@@ -31,8 +31,10 @@ class Climber : public frc2::PIDSubsystem {
 
   void Climb();
   void Descend();
+  /*
   void Lock();
   void Unlock();
+  */
 
   frc::ShuffleboardTab *m_sbt_Climber;
   nt::NetworkTableEntry m_nte_ClimberDistance;
@@ -53,6 +55,6 @@ class Climber : public frc2::PIDSubsystem {
   rev::SparkMaxRelativeEncoder m_climberEncoder = m_climberMotor.GetEncoder();
   */
   // Locking Servo
-  frc::Servo chainLock {ConClimber::kServoPWMPort};
+  // frc::Servo chainLock {ConClimber::kServoPWMPort};
 
 };

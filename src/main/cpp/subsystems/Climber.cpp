@@ -53,6 +53,7 @@ void Climber::Descend() {
 }
 
 // Engage/Disengage chain locking mechanism
+/* This can either go away or will become pneumatically actuated
 void Climber::Lock() {
   chainLock.SetAngle(0.0);
   m_nte_LockStatus.SetBoolean(true);
@@ -62,17 +63,20 @@ void Climber::Unlock() {
   chainLock.SetAngle(180.0);
   m_nte_LockStatus.SetBoolean(false);
 }
+*/
 
 void Climber::Periodic() {
 // FIXME: Uncomment when ready
 //  m_nte_ClimberDistance.SetDouble(m_climberEncoder.GetPosition());
 //  m_nte_ClimberSpeed.SetDouble(m_climberEncoder.GetVelocity());
   
+  /*
   if (m_nte_LockToggle.GetBoolean(true)) {
     Lock();
   } 
   else {
     Unlock();
   }
+  */
 }
 
