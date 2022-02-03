@@ -9,7 +9,7 @@ C++/WPILib control system code for 2022 competition season
 - Launcher (2xSparkMax)
 - Intake (1xSparkMax; 1xDoubleSolenoid)
 - Climber (1xSparkMax)
-- 
+
 ### Commands
 - TeleopDrive
 - Deploy
