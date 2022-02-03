@@ -5,13 +5,20 @@
 #pragma once
 
 #include <frc2/command/PIDSubsystem.h>
+#include <frc/DoubleSolenoid.h>
+#include <frc/XboxController.h>
+#include "Robot.h"
 
 class Intake : public frc2::PIDSubsystem {
  public:
   Intake();
+  void Deploy();
+  void Retract();
 
  protected:
   void UseOutput(double output, double setpoint) override;
 
   double GetMeasurement() override;
+
+  frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, 1, 2};
 };

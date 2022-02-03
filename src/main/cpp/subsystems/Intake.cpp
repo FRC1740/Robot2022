@@ -6,8 +6,20 @@
 
 Intake::Intake()
     : PIDSubsystem(
-          // The PIDController used by the subsystem
-          frc2::PIDController(0, 0, 0)) {}
+        // The PIDController used by the subsystem
+        frc2::PIDController(0, 0, 0)) {
+        // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
+        deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
+        }
+
+void Intake::Deploy() {
+  deployDoublePCM.Set(frc::DoubleSolenoid::Value::kForward);
+
+}
+
+void Intake::Retract() {
+  deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
+}
 
 void Intake::UseOutput(double output, double setpoint) {
   // Use the output here
