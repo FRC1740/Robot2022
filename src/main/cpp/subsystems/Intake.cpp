@@ -10,6 +10,7 @@ Intake::Intake()
         frc2::PIDController(0, 0, 0)) {
         // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
         deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
+        m_relayDirection = frc::Relay::kOff;
         }
 
 void Intake::Deploy() {
@@ -28,4 +29,14 @@ void Intake::UseOutput(double output, double setpoint) {
 double Intake::GetMeasurement() {
   // Return the process variable measurement here
   return 0;
+}
+
+void Intake::TestRelay(int direction) {
+  if (direction == 1) {
+    m_relayDirection = frc::Relay::kForward;
+  }
+  else {
+    m_relayDirection = frc::Relay::kOff;
+  }
+  testRelay.Set(m_relayDirection);
 }

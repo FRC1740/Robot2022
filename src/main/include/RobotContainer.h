@@ -14,6 +14,8 @@
 #include "commands/AutoDrive.h"
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
+#include "commands/Test.h"
+
 #include "subsystems/DriveTrain.h"
 #include "subsystems/Launcher.h"
 #include "subsystems/Intake.h"
@@ -40,7 +42,7 @@ class RobotContainer {
   nt::NetworkTableEntry m_nte_CodeVersion;
   frc2::Command* GetAutonomousCommand();
   frc2::Command* GetDisabledCommand();
-    
+
   // The driver's game controller
   frc::XboxController driver_control{ConXBOXControl::DRIVER_CONTROLLER_PORT};
   // The codriver's game controller
