@@ -6,14 +6,14 @@
 
 #include <frc2/command/PIDSubsystem.h>
 #include <frc/DoubleSolenoid.h>
-#include <frc/XboxController.h>
-#include "Robot.h"
+#include <frc/Relay.h>
 
 class Intake : public frc2::PIDSubsystem {
  public:
   Intake();
   void Deploy();
   void Retract();
+  void TestRelay(int);
 
  protected:
   void UseOutput(double output, double setpoint) override;
@@ -21,4 +21,6 @@ class Intake : public frc2::PIDSubsystem {
   double GetMeasurement() override;
 
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, 1, 2};
+  frc::Relay testRelay {0};
+  frc::Relay::Value m_relayDirection;
 };

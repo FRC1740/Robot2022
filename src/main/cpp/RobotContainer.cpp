@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc2/command/button/Button.h>
+#include <frc/Relay.h>
 #include "RobotContainer.h"
 #include "Constants.h"
 
@@ -60,6 +62,33 @@ void RobotContainer::TeleopInit() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+#ifdef ENABLE_DRIVETRAIN
+  // Commence reduced speed driving when bumper(s) pressed
+  // frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhenHeld(new TeleOpSlowDrive(&m_driveTrain));
+  // frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhenHeld(new TeleOpSlowDrive(&m_driveTrain));
+#endif // ENABLE_DRIVETRAIN
+
+#ifdef ENABLE_INTAKE
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Test(&m_intake, 0));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Test(&m_intake, 1));
+#endif
+
+#ifdef ENABLE_CLIMBER
+  // Climber
+  // frc2::Button([this] {return driver_control.GetRawButton(ConLaunchPad::Button::WHITE); }).WhenReleased(new DisengageClimberLock(&m_climber));
+#endif // ENABLE_CLIMBER
+
+#ifdef ENABLE_LAUNCHER
+  // CRE: Basic independent motor configuration for shooting/loading/jumbling
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::RED); }).WhenHeld(new SpinUpShooter(&m_shooter));
+  // The loader system is unfortunately connected to the old hopper flapper motor...
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::BLUE); }).WhileHeld(new FlapHopper(&m_shooter));
+
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::RED); }).WhileHeld(new FireShooter(&m_shooter));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::BLUE); }).WhileHeld(new UntakeShooter(&m_shooter));
+#endif // ENABLE_Launcher
+
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
