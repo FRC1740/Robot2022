@@ -19,7 +19,7 @@
 class AutoDelay
     : public frc2::CommandHelper<frc2::CommandBase, AutoDelay> {
  public:
-  explicit AutoDelay(DriveTrain *drivetrain);
+  explicit AutoDelay(units::time::second_t);
 
   void Initialize() override;
 

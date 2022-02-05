@@ -2,11 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-namespace ConLauncher {
-  constexpr int LAUNCHER_MOTOR_BERT_ID = 6;
-  constexpr int LAUNCHER_MOTOR_ERNIE_ID = 7;
-}
-
 #pragma once
 
 #include <frc2/command/PIDSubsystem.h>
@@ -15,11 +10,19 @@ namespace ConLauncher {
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
 
+#include "env.h"
+
+namespace ConLauncher {
+  constexpr int LAUNCHER_MOTOR_BERT_ID = 6;
+  constexpr int LAUNCHER_MOTOR_ERNIE_ID = 1;
+}
+
 class Launcher : public frc2::PIDSubsystem {
  public:
   Launcher();
   void LaunchBert();
   void LaunchErnie();
+  void Launch(); // Launch both Bert & Ernie
   void Reset();
   void SetLaunchSoftLimit();
   void SetResetSoftLimit();

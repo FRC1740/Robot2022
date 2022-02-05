@@ -14,15 +14,24 @@ Launcher::Launcher()
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
+            m_launcherMotorBert.SetInverted(true); // Naturally, Bert is Backwards...
+            m_launcherMotorErnie.SetInverted(false);
             #endif
           }
 
+void Launcher::Launch() {
+  LaunchBert();
+  LaunchErnie();
+
+}
 void Launcher::LaunchBert() {
   // Launch a ball
+  m_launcherMotorBert.Set(1.0);
 }
 
 void Launcher::LaunchErnie() {
   // Launch a ball
+  m_launcherMotorErnie.Set(1.0);
 }
 
 void Launcher::SetLaunchSoftLimit() {
