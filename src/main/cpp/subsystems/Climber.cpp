@@ -20,17 +20,7 @@ Climber::Climber()
           .WithSize(2,1)
           .WithPosition(0,1)
           .GetEntry();
-    m_nte_LockStatus = m_sbt_Climber->AddPersistent("Chain Locked?", false)
-          .WithSize(1,1)
-          .WithPosition(2,0)
-          .WithWidget(frc::BuiltInWidgets::kBooleanBox)
-          .GetEntry();
-    m_nte_LockToggle = m_sbt_Climber->AddPersistent("Lock/Unlock", false)
-          .WithSize(1,1)
-          .WithPosition(2,1)
-          .WithWidget(frc::BuiltInWidgets::kToggleButton)
-          .GetEntry();
-
+  
           }
 
 void Climber::UseOutput(double output, double setpoint) {
