@@ -1,9 +1,6 @@
 
 #pragma once
 
-//On error, create env.h from env-default.h and modify ROBOT_VERSION_STRING
-#include "env.h"
-
 namespace ConShuffleboard {
     constexpr char RobotTab[] = "Robot";
     constexpr char ClimberTab[] = "Climber";

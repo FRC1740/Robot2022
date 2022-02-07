@@ -13,6 +13,8 @@ class Intake : public frc2::PIDSubsystem {
   Intake();
   void Deploy();
   void Retract();
+  void Inject();
+  void Reject();
   void TestRelay(int);
 
  protected:
@@ -20,7 +22,7 @@ class Intake : public frc2::PIDSubsystem {
 
   double GetMeasurement() override;
 
-  frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, 1, 2};
+  frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, 0, 1};
   frc::Relay testRelay {0};
   frc::Relay::Value m_relayDirection;
 };

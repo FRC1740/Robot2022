@@ -14,6 +14,9 @@
 #include "commands/AutoDrive.h"
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
+#include "commands/Deploy.h"
+#include "commands/Retract.h"
+#include "commands/Launch.h"
 #include "commands/Test.h"
 
 #include "subsystems/DriveTrain.h"

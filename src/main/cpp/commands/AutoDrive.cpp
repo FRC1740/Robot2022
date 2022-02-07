@@ -6,6 +6,9 @@
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
 #include "commands/AutoTurn.h"
+#include "commands/Deploy.h"
+#include "commands/Retract.h"
+#include "commands/Launch.h"
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
@@ -17,7 +20,7 @@
   (3) Turn to c angle
 */
 
-AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(drivetrain) {
+AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake) : m_driveTrain(drivetrain) {
 #if defined(ENABLE_DRIVETRAIN)
   // SHuffleboard parameters NOT refreshing this way. Moving them into the specific commands instead of
   // passing them as arguments to the command seems to function as desired.
@@ -25,23 +28,30 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher) : m_driveTrain(
   // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
   // double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle (degrees)
 
-  #if !defined(ENABLE_LAUNCHER)
+  #if !defined(FOO)
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
-    frc2::SequentialCommandGroup { AutoDelay(drivetrain), AutoDriveDistance(drivetrain), AutoTurn(drivetrain) }
-    ); /* */
+    frc2::SequentialCommandGroup {  AutoDelay(1.5_s), 
+                                    AutoDriveDistance(drivetrain),
+                                    AutoTurn(drivetrain),
+                                    Launch(launcher),
+                                    Deploy(intake)
+                                 } );
   #endif
-  #if defined(ENABLE_LAUNCHER)
+  #if defined(FOO)
   // Add autonomous drive & launcher commands
   AddCommands (
-    frc2::SequentialCommandGroup{ AutoDelay(a), 
-                                  frc2::ParallelRaceGroup{ AutoDriveDistance(drivetrain, b), AutoDelay(5.0) }
-                                },
-    frc2::ParallelRaceGroup{ LaunchBall(launcher), AutoDelay(c) },
-    frc2::SequentialCommandGroup{ AutoDelay(d),
-                                  frc2::ParallelRaceGroup{ IntakeBall(intake), AutoDelay(e) }
+    frc2::SequentialCommandGroup { AutoDelay(1.5_s), AutoDriveDistance(drivetrain), AutoTurn(drivetrain) },
+    frc2::SequentialCommandGroup{ AutoDelay(1.0_s), 
+                                  frc2::ParallelRaceGroup{ Deploy(intake), AutoDelay(1.0_s) }
                                 }
+    /*
+    frc2::ParallelRaceGroup{ Launch(launcher), AutoDelay() },
+    frc2::SequentialCommandGroup{ AutoDelay(1.0_s),
+                                  frc2::ParallelRaceGroup{ Deploy(intake), AutoDelay(1.0_s) }
+                                }
+    */
   );
   #endif  // defined(ENABLE_LAUNCHER)
 #endif // defined(ENABLE_DRIVETRAIN)

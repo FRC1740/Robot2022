@@ -7,14 +7,14 @@
 #include "RobotContainer.h"
 #include "Constants.h"
 
-RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher) {
+RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher, &m_intake) {
   // ANOTHER WAY OF CONSTRUCTING: m_autoDrive = AutoDrive(&m_driveTrain);
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
   ConfigureButtonBindings();
 
-#ifdef ENABLE_DRIVETRAIN
+#if defined ENABLE_DRIVETRAIN && defined ENABLE_LAUNCHER
 // #define ENABLE_FLIGHTSTICK
 #ifdef ENABLE_FLIGHTSTICK
   // Set up default drive command
@@ -68,25 +68,19 @@ void RobotContainer::ConfigureButtonBindings() {
   // frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhenHeld(new TeleOpSlowDrive(&m_driveTrain));
 #endif // ENABLE_DRIVETRAIN
 
+#ifdef ENABLE_LAUNCHER
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(new Launch(&m_launcher));
+#endif
+
 #ifdef ENABLE_INTAKE
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Test(&m_intake, 0));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Test(&m_intake, 1));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Retract(&m_intake));
 #endif
 
 #ifdef ENABLE_CLIMBER
   // Climber
   // frc2::Button([this] {return driver_control.GetRawButton(ConLaunchPad::Button::WHITE); }).WhenReleased(new DisengageClimberLock(&m_climber));
 #endif // ENABLE_CLIMBER
-
-#ifdef ENABLE_LAUNCHER
-  // CRE: Basic independent motor configuration for shooting/loading/jumbling
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::RED); }).WhenHeld(new SpinUpShooter(&m_shooter));
-  // The loader system is unfortunately connected to the old hopper flapper motor...
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Switch::BLUE); }).WhileHeld(new FlapHopper(&m_shooter));
-
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::RED); }).WhileHeld(new FireShooter(&m_shooter));
-  frc2::Button([this] {return codriver_control.GetRawButton(ConLaunchPad::Button::BLUE); }).WhileHeld(new UntakeShooter(&m_shooter));
-#endif // ENABLE_Launcher
 
 
 }
