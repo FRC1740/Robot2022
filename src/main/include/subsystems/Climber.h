@@ -13,7 +13,7 @@
 
 namespace ConClimber {
   // Motor
-  constexpr int CLIMBER_MOTOR_ID = 1;
+  constexpr int CLIMBER_MOTOR_ID = 8;
 
   //Spark Max Settings
   constexpr int RAMP_RATE = 0.100; //seconds
@@ -21,6 +21,8 @@ namespace ConClimber {
   constexpr bool NONINVERTED = false; //
   constexpr double CLIMB_SPEED = -1.0;  // Climb Motor Speed
   constexpr double DESCEND_SPEED = 1.0; // Descend Motor Speed
+  constexpr int SOFT_LIMIT_FWD = 2000; // Soft Limit Extension 5' 6" MAX height
+  constexpr int SOFT_LIMIT_REV = 20;
 
   //Servo
   constexpr int kServoPWMPort = 9;
@@ -32,14 +34,16 @@ class Climber : public frc2::PIDSubsystem {
   Climber();
 
   void Climb();
-  void Descend();
+  void Extend();
   void Stop();
   
   frc::ShuffleboardTab *m_sbt_Climber;
   nt::NetworkTableEntry m_nte_ClimberDistance;
   nt::NetworkTableEntry m_nte_ClimberOutput;
-  nt::NetworkTableEntry m_nte_ClimbSpeed;
-  nt::NetworkTableEntry m_nte_DescendSpeed;
+  nt::NetworkTableEntry m_nte_ClimbSpeedLimit;
+  nt::NetworkTableEntry m_nte_DescendSpeedLimit;
+  nt::NetworkTableEntry m_nte_ExtendLimit;
+  nt::NetworkTableEntry m_nte_RetractLimit;
 
  protected:
 
