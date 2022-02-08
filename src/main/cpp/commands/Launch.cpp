@@ -28,11 +28,14 @@ Launch::Launch(Launcher *launcher) : m_launcher{launcher} {
 }
 
 // PID Command does not use these three methods...
-void Launch::Initialize() {}
-void Launch::Execute() {
-  m_launcher->Launch();
+void Launch::Initialize() {
+    m_launcher->Launch();
 }
-void Launch::End() {}
+void Launch::Execute() {
+}
+void Launch::End() {
+  m_launcher->Retract();
+}
 
 // Returns true when the command should end.
 bool Launch::IsFinished() {

@@ -15,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class Retract
-    : public frc2::CommandHelper<frc2::CommandBase, Retract> {
+class Reject
+    : public frc2::CommandHelper<frc2::CommandBase, Reject> {
  public:
-  Retract(Intake*);
+  Reject(Intake *);
 
   void Initialize() override;
 
