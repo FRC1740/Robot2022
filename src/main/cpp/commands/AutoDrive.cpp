@@ -7,7 +7,7 @@
 #include "commands/AutoDelay.h"
 #include "commands/AutoTurn.h"
 #include "commands/Deploy.h"
-#include "commands/Retract.h"
+#include "commands/Stow.h"
 #include "commands/Launch.h"
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>

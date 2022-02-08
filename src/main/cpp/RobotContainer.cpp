@@ -69,12 +69,13 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif // ENABLE_DRIVETRAIN
 
 #ifdef ENABLE_LAUNCHER
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(new Launch(&m_launcher));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhileHeld(new Launch(&m_launcher));
 #endif
 
 #ifdef ENABLE_INTAKE
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Retract(&m_intake));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Stow(&m_intake));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(new Reject(&m_intake));
 #endif
 
 #ifdef ENABLE_CLIMBER

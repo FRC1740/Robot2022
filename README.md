@@ -12,9 +12,9 @@ C++/WPILib control system code for 2022 competition season
 
 ### Commands
 - TeleopDrive
-- Deploy
-- Launch
-- Retract
+- Launch: Launch 1 or 2 balls from catapult
+- Deploy: Deploy Intake outside robot perimiter for retrieving balls
+- Stow: Stow Intake back within robot perimeter
 
 ### Autonomous Commands
 - AutoDriveDistance

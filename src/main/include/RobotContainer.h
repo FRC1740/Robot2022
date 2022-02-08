@@ -15,7 +15,8 @@
 #include "commands/AutoDriveDistance.h"
 #include "commands/AutoDelay.h"
 #include "commands/Deploy.h"
-#include "commands/Retract.h"
+#include "commands/Stow.h"
+#include "commands/Reject.h"
 #include "commands/Launch.h"
 #include "commands/Test.h"
 

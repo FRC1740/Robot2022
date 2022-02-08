@@ -2,25 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/Retract.h"
+#include "commands/Reject.h"
 
-Retract::Retract(Intake *intake) : m_intake{intake} {
+Reject::Reject(Intake *intake) : m_intake{intake} {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(intake);
 }
 
 // Called when the command is initially scheduled.
-void Retract::Initialize() {
-  m_intake->Retract();
+void Reject::Initialize() {
+  m_intake->Reject();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Retract::Execute() {}
+void Reject::Execute() {}
 
 // Called once the command ends or is interrupted.
-void Retract::End(bool interrupted) {}
+void Reject::End(bool interrupted) {
+  m_intake->Load();
+}
 
 // Returns true when the command should end.
-bool Retract::IsFinished() {
-  return true;
+bool Reject::IsFinished() {
+  return false;
 }
