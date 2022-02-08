@@ -18,6 +18,8 @@
 #include "commands/Stow.h"
 #include "commands/Reject.h"
 #include "commands/Launch.h"
+#include "commands/Climb.h"
+#include "commands/ExtendClimber.h"
 #include "commands/Test.h"
 
 #include "subsystems/DriveTrain.h"

@@ -69,21 +69,22 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif // ENABLE_DRIVETRAIN
 
 #ifdef ENABLE_LAUNCHER
+// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhileHeld(new Launch(&m_launcher));
 #endif
 
 #ifdef ENABLE_INTAKE
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Stow(&m_intake));
+// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
+//  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
+//  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Stow(&m_intake));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(new Reject(&m_intake));
 #endif
 
 #ifdef ENABLE_CLIMBER
-  // Climber
-  // frc2::Button([this] {return driver_control.GetRawButton(ConLaunchPad::Button::WHITE); }).WhenReleased(new DisengageClimberLock(&m_climber));
+// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
-
-
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

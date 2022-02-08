@@ -10,6 +10,7 @@ Climber::Climber()
           // The PIDController used by the subsystem
           frc2::PIDController(0, 0, 0)) {
 
+    // Initialize Shuffleboard Tab and Network Table Entries
     m_sbt_Climber = &frc::Shuffleboard::GetTab(ConShuffleboard::ClimberTab);
 
     m_nte_ClimberDistance = m_sbt_Climber->AddPersistent("Climber Position", 0.0)
@@ -20,15 +21,32 @@ Climber::Climber()
           .WithSize(2,1)
           .WithPosition(0,1)
           .GetEntry();
-    m_nte_ClimbSpeed = m_sbt_Climber->AddPersistent("Climb Speed (-1.0 - 0.0)", ConClimber::CLIMB_SPEED)
+    m_nte_ClimbSpeedLimit = m_sbt_Climber->AddPersistent("Climb Speed Limit", ConClimber::CLIMB_SPEED)
           .WithSize(2,1)
-          .WithPosition(0,2)
+          .WithPosition(2,0)
           .GetEntry();
-    m_nte_DescendSpeed = m_sbt_Climber->AddPersistent("Descend Speed (0.0 - 1.0)", ConClimber::DESCEND_SPEED)
+    m_nte_DescendSpeedLimit = m_sbt_Climber->AddPersistent("Descend Speed Limit", ConClimber::DESCEND_SPEED)
           .WithSize(2,1)
-          .WithPosition(0,3)
+          .WithPosition(2,1)
           .GetEntry();
-          }
+    m_nte_ExtendLimit = m_sbt_Climber->AddPersistent("Extension Limit", ConClimber::SOFT_LIMIT_FWD)
+          .WithSize(2,1)
+          .WithPosition(2,2)
+          .GetEntry();
+    m_nte_RetractLimit = m_sbt_Climber->AddPersistent("Retract Limit", ConClimber::SOFT_LIMIT_REV)
+          .WithSize(2,1)
+          .WithPosition(2,3)
+          .GetEntry();
+
+    // Reset Encoder to zero for starting configuration
+    m_climberEncoder.SetPosition(0.0);
+    // Configure SparkMax SoftLimits
+    m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, ConClimber::SOFT_LIMIT_FWD);
+    m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, ConClimber::SOFT_LIMIT_REV);
+    m_climberMotor.BurnFlash();
+    }
 
 void Climber::UseOutput(double output, double setpoint) {
   // Use the output here
@@ -41,42 +59,24 @@ double Climber::GetMeasurement() {
 
 // Climb lifts the robot up to target position
 void Climber::Climb() {
-  m_climberMotor.Set(ConClimber::CLIMB_SPEED);
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_FWD));
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_REV));
+    m_climberMotor.BurnFlash();
+  m_climberMotor.Set(m_nte_ClimbSpeedLimit.GetDouble(ConClimber::CLIMB_SPEED));
 }
 
 // Descend is a manual override to lower the robot
-void Climber::Descend() {
-  m_climberMotor.Set(ConClimber::DESCEND_SPEED);
+void Climber::Extend() {
+  m_climberMotor.Set(m_nte_DescendSpeedLimit.GetDouble(ConClimber::DESCEND_SPEED));
 }
 
 void Climber::Stop() {
   m_climberMotor.Set(0.0);
 }
-// Engage/Disengage chain locking mechanism
-/* This can either go away or will become pneumatically actuated
-void Climber::Lock() {
-  chainLock.SetAngle(0.0);
-  m_nte_LockStatus.SetBoolean(true);
-}
-
-void Climber::Unlock() {
-  chainLock.SetAngle(180.0);
-  m_nte_LockStatus.SetBoolean(false);
-}
-*/
 
 void Climber::Periodic() {
-// FIXME: Uncomment when ready
-//  m_nte_ClimberDistance.SetDouble(m_climberEncoder.GetPosition());
-//  m_nte_ClimberSpeed.SetDouble(m_climberEncoder.GetVelocity());
-  
-  /*
-  if (m_nte_LockToggle.GetBoolean(true)) {
-    Lock();
-  } 
-  else {
-    Unlock();
-  }
-  */
+  // FIXME: Uncomment when ready
+  m_nte_ClimberDistance.SetDouble(m_climberEncoder.GetPosition());
+  m_nte_ClimberOutput.SetDouble(m_climberEncoder.GetVelocity());
 }
 
