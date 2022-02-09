@@ -60,3 +60,13 @@ void Intake::TestRelay(int direction) {
   }
   testRelay.Set(m_relayDirection);
 }
+
+void Intake::TestServo(int direction) {
+  if (direction == 1) {
+    testServo.Set(1.0);
+  }
+  else {
+    testServo.Set(0.0);
+  }
+
+}

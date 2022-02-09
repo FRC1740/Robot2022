@@ -38,6 +38,7 @@ Climber::Climber()
           .WithPosition(2,3)
           .GetEntry();
 
+#ifdef ENABLE_CLIBMER
     // Reset Encoder to zero for starting configuration
     m_climberEncoder.SetPosition(0.0);
     // Configure SparkMax SoftLimits
@@ -46,6 +47,7 @@ Climber::Climber()
     m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, ConClimber::SOFT_LIMIT_REV);
     m_climberMotor.BurnFlash();
+#endif 
     }
 
 void Climber::UseOutput(double output, double setpoint) {
@@ -59,24 +61,31 @@ double Climber::GetMeasurement() {
 
 // Climb lifts the robot up to target position
 void Climber::Climb() {
+#ifdef ENABLE_CLIMBER
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_FWD));
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_REV));
     m_climberMotor.BurnFlash();
-  m_climberMotor.Set(m_nte_ClimbSpeedLimit.GetDouble(ConClimber::CLIMB_SPEED));
+    m_climberMotor.Set(m_nte_ClimbSpeedLimit.GetDouble(ConClimber::CLIMB_SPEED));
+#endif
 }
 
 // Descend is a manual override to lower the robot
 void Climber::Extend() {
+#ifdef ENABLE_CLIMBER
   m_climberMotor.Set(m_nte_DescendSpeedLimit.GetDouble(ConClimber::DESCEND_SPEED));
+#endif
 }
 
 void Climber::Stop() {
+#ifdef ENABLE_CLIMBER
   m_climberMotor.Set(0.0);
+#endif
 }
 
 void Climber::Periodic() {
-  // FIXME: Uncomment when ready
+#ifdef ENABLE_CLIMBER
   m_nte_ClimberDistance.SetDouble(m_climberEncoder.GetPosition());
   m_nte_ClimberOutput.SetDouble(m_climberEncoder.GetVelocity());
+#endif
 }
 

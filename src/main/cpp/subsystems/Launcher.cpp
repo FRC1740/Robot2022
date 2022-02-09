@@ -13,9 +13,9 @@ Launcher::Launcher()
             #ifdef ENABLE_LAUNCHER
             // We will reset the encoder to 0 at starting position, so our "reverse" limit should be a bit less...
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
-            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(115.0));
+            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(ConLauncher::BERT_FWD_LIMIT));
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
-            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, -5.0);
+            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Bert_RevLimit.GetDouble(ConLauncher::BERT_REV_LIMIT));
             m_launcherMotorBert.SetInverted(true); // Naturally, Bert is Backwards...
 
             // WARNING: Even though a motor is "inverted", I believe the encoders still read +/- the same way!!!
@@ -25,8 +25,8 @@ Launcher::Launcher()
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
             // We will reset the encoder to 0 at starting position, so this is our "reverse" limit
-            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, -5.0);
-            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Ernie_FwdLimit.GetDouble(115.0));
+            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Ernie_RevLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT));
+            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Ernie_FwdLimit.GetDouble(ConLauncher::ERNIE_FWD_LIMIT));
 
             m_launcherMotorErnie.BurnFlash();
             m_launcherMotorErnie.BurnFlash();
@@ -34,7 +34,7 @@ Launcher::Launcher()
             m_sbt_Launcher = &frc::Shuffleboard::GetTab(ConShuffleboard::LauncherTab);
 
             m_nte_Ernie_FwdLimit = m_sbt_Launcher->AddPersistent("Ernie Limit", ConLauncher::ERNIE_FWD_LIMIT)
-                  .WithSize(1,1)
+                  .WithSize(2,1)
                   .WithPosition(0,0)
                   .GetEntry();
             m_nte_Bert_FwdLimit = m_sbt_Launcher->AddPersistent("Bert Limit", ConLauncher::BERT_FWD_LIMIT)

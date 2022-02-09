@@ -39,7 +39,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
                                     Deploy(intake)
                                  } );
   #endif
-  #if defined(FOO)
+  #if 0
   // Add autonomous drive & launcher commands
   AddCommands (
     frc2::SequentialCommandGroup { AutoDelay(1.5_s), AutoDriveDistance(drivetrain), AutoTurn(drivetrain) },
