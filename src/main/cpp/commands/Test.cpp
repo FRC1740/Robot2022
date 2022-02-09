@@ -12,7 +12,8 @@ Test::Test(Intake *intake, int direction) : m_intake{intake}, m_direction{direct
 
 // Called when the command is initially scheduled.
 void Test::Initialize() {
-  m_intake->TestRelay(m_direction);
+  // m_intake->TestRelay(m_direction);
+  m_intake->TestServo(m_direction);
 }
 
 // Called repeatedly when this Command is scheduled to run

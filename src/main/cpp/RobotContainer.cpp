@@ -75,9 +75,12 @@ void RobotContainer::ConfigureButtonBindings() {
 
 #ifdef ENABLE_INTAKE
 // FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-//  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
-//  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Stow(&m_intake));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Deploy(&m_intake));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Stow(&m_intake));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(new Reject(&m_intake));
+// Servo Test
+// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Test(&m_intake, 1));
+// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Test(&m_intake, 0));
 #endif
 
 #ifdef ENABLE_CLIMBER
