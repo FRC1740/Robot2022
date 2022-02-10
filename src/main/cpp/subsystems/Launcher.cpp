@@ -11,25 +11,28 @@ Launcher::Launcher()
           frc2::PIDController(0, 0, 0)) {
             // Initialize stuff here
             #ifdef ENABLE_LAUNCHER
-            // We will reset the encoder to 0 at starting position, so our "reverse" limit should be a bit less...
+            // Enable & Set Encoder Soft Limits...
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
-            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(ConLauncher::BERT_FWD_LIMIT));
             m_launcherMotorBert.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
-            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Bert_RevLimit.GetDouble(ConLauncher::BERT_REV_LIMIT));
-            m_launcherMotorBert.SetInverted(true); // Naturally, Bert is Backwards...
-
-            // WARNING: Even though a motor is "inverted", I believe the encoders still read +/- the same way!!!
-            // FIXME: If so, that means we have to flip the two soft limits on Bert
-
-            m_launcherMotorErnie.SetInverted(false);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
             m_launcherMotorErnie.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
-            // We will reset the encoder to 0 at starting position, so this is our "reverse" limit
-            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Ernie_RevLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT));
+            // Forward Limits
+            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(ConLauncher::BERT_FWD_LIMIT));
+            m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Bert_RevLimit.GetDouble(ConLauncher::BERT_REV_LIMIT));
             m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Ernie_FwdLimit.GetDouble(ConLauncher::ERNIE_FWD_LIMIT));
+            m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Ernie_RevLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT));
 
+            // Naturally, Bert is Backwards...
+            m_launcherMotorBert.SetInverted(true);
+            m_launcherMotorErnie.SetInverted(false);
+
+            // Set Current limits (Stall, Free)
+            m_launcherMotorBert.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
+            m_launcherMotorErnie.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
+
+            // Save the configuration to flash memory
             m_launcherMotorErnie.BurnFlash();
-            m_launcherMotorErnie.BurnFlash();
+            m_launcherMotorBert.BurnFlash();
 
             m_sbt_Launcher = &frc::Shuffleboard::GetTab(ConShuffleboard::LauncherTab);
 

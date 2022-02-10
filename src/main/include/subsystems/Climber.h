@@ -23,6 +23,7 @@ namespace ConClimber {
   constexpr double DESCEND_SPEED = 1.0; // Descend Motor Speed
   constexpr int SOFT_LIMIT_FWD = 2000; // Soft Limit Extension 5' 6" MAX height
   constexpr int SOFT_LIMIT_REV = 20;
+  constexpr int CURRENT_STALL_LIMIT = 80;
 
   //Servo
   constexpr int kServoPWMPort = 9;

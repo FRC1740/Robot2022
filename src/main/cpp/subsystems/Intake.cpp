@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Intake.h"
+#include "Constants.h"
 
 Intake::Intake()
     : PIDSubsystem(
@@ -10,8 +11,14 @@ Intake::Intake()
         frc2::PIDController(0, 0, 0)) {
         // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
         deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
-        m_relayDirection = frc::Relay::kOff;
         m_deployedState = false;
+
+        // Configure SparkMax settings
+        m_intakeMotor.SetSmartCurrentLimit(ConIntake::CURRENT_STALL_LIMIT, ConIntake::CURRENT_STALL_LIMIT);
+        m_intakeEncoder.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
+        m_intakeMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        // Save SparkMax motor/encoder config to flash memory
+        m_intakeMotor.BurnFlash();
         }
 
 void Intake::Deploy() {
@@ -49,24 +56,4 @@ void Intake::UseOutput(double output, double setpoint) {
 double Intake::GetMeasurement() {
   // Return the process variable measurement here
   return 0;
-}
-
-void Intake::TestRelay(int direction) {
-  if (direction == 1) {
-    m_relayDirection = frc::Relay::kForward;
-  }
-  else {
-    m_relayDirection = frc::Relay::kOff;
-  }
-  testRelay.Set(m_relayDirection);
-}
-
-void Intake::TestServo(int direction) {
-  if (direction == 1) {
-    testServo.Set(1.0);
-  }
-  else {
-    testServo.Set(0.0);
-  }
-
 }
