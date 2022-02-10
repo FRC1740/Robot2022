@@ -58,3 +58,7 @@ namespace ConLimelight {
 
     constexpr double focalLength = 2.9272781257541; //mm
 }
+
+namespace ConSparkMax {
+    constexpr double POSITION_CONVERSION_FACTOR = 42.0;
+}

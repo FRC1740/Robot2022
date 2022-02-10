@@ -6,6 +6,7 @@
 
 ExampleSubsystem::ExampleSubsystem() {
   // Implementation of subsystem constructor goes here.
+  m_relayDirection = frc::Relay::kOff;
 }
 
 void ExampleSubsystem::Periodic() {
@@ -14,4 +15,24 @@ void ExampleSubsystem::Periodic() {
 
 void ExampleSubsystem::SimulationPeriodic() {
   // Implementation of subsystem simulation periodic method goes here.
+}
+
+void ExampleSubsystem::TestRelay(int direction) {
+  if (direction == 1) {
+    m_relayDirection = frc::Relay::kForward;
+  }
+  else {
+    m_relayDirection = frc::Relay::kOff;
+  }
+  testRelay.Set(m_relayDirection);
+}
+
+void ExampleSubsystem::TestServo(int direction) {
+  if (direction == 1) {
+    testServo.Set(1.0);
+  }
+  else {
+    testServo.Set(0.0);
+  }
+
 }

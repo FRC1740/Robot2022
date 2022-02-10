@@ -18,8 +18,9 @@ namespace ConLauncher {
   // Starting point for Launcher soft limits
   constexpr int BERT_FWD_LIMIT = 115;
   constexpr int ERNIE_FWD_LIMIT = 115;
-  constexpr int BERT_REV_LIMIT = -5.0;
-  constexpr int ERNIE_REV_LIMIT = -5.0;  
+  constexpr int BERT_REV_LIMIT = -5;
+  constexpr int ERNIE_REV_LIMIT = -5;
+  constexpr int CURRENT_STALL_LIMIT = 80;
 }
 
 class Launcher : public frc2::PIDSubsystem {

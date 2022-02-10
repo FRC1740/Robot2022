@@ -4,6 +4,7 @@
 
 #include "subsystems/Climber.h"
 #include "OI.h"
+#include "Constants.h"
 
 Climber::Climber()
     : PIDSubsystem(
@@ -38,7 +39,11 @@ Climber::Climber()
           .WithPosition(2,3)
           .GetEntry();
 
+
 #ifdef ENABLE_CLIBMER
+    m_climberMotor.SetSmartCurrentLimit(ConClimber::CURRENT_STALL_LIMIT, ConClimber::CURRENT_STALL_LIMIT);
+    m_climberEncoder.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
+    m_climberMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     // Reset Encoder to zero for starting configuration
     m_climberEncoder.SetPosition(0.0);
     // Configure SparkMax SoftLimits
