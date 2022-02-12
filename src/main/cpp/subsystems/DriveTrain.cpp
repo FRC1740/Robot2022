@@ -69,8 +69,8 @@ DriveTrain::DriveTrain() {
   right_pidController.SetSmartMotionAllowedClosedLoopError(kAllErr);
 
   // Set additional motor controllers on drive train to follow
-  m_rightMotorB.Follow(m_rightMotorA, false);
-  m_leftMotorB.Follow(m_leftMotorA, false);
+  m_rightMotorB.Follow(m_rightMotorA, ConDriveTrain::NONINVERTED);
+  m_leftMotorB.Follow(m_leftMotorA, ConDriveTrain::NONINVERTED);
 
   // NavX gyro
   gyro = new AHRS(frc::SPI::Port::kMXP);
