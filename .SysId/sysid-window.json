@@ -6,8 +6,8 @@
       "style": "0",
       "userScale": "2",
       "width": "1600",
-      "xpos": "171",
-      "ypos": "54"
+      "xpos": "304",
+      "ypos": "69"
     }
   },
   "Window": {
@@ -19,12 +19,12 @@
     "###Generator": {
       "Collapsed": "0",
       "Pos": "6,31",
-      "Size": "435,475"
+      "Size": "435,512"
     },
     "###Logger": {
       "Collapsed": "0",
-      "Pos": "3,511",
-      "Size": "439,536"
+      "Pos": "4,545",
+      "Size": "439,442"
     },
     "###Program Log": {
       "Collapsed": "0",
@@ -43,13 +43,18 @@
     },
     "Deploy Status": {
       "Collapsed": "0",
-      "Pos": "723,86",
+      "Pos": "727,86",
       "Size": "800,839"
     },
     "Diagnostic Plots": {
       "Collapsed": "0",
       "Pos": "895,25",
       "Size": "702,800"
+    },
+    "Exception Caught!": {
+      "Collapsed": "0",
+      "Pos": "560,460",
+      "Size": "480,128"
     },
     "Warning": {
       "Collapsed": "0",

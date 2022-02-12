@@ -35,7 +35,7 @@ namespace ConDriveTrain {
     constexpr double ENCODER_TICK_RESOLUTION = 42.0; // IS IT REALLY 42? or 48? or maybe 24?  
     constexpr double GEAR_RATIO = 10.71; // Neo rotates 10.71 times for one rotation of the output
     constexpr double WHEEL_DIAMETER = 6.0;
-    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI; // Abt 19 in.
+    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI; // Abt 18.85 in.
 
     constexpr double TICKS_PER_WHEEL_REVOLUTION = ENCODER_TICK_RESOLUTION * GEAR_RATIO; // Abt 450 ticks
 

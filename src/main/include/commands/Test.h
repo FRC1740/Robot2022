@@ -6,7 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/Intake.h"
+#include "subsystems/ExampleSubsystem.h"
 
 /**
  * An example command.
@@ -18,7 +18,7 @@
 class Test
     : public frc2::CommandHelper<frc2::CommandBase, Test> {
  public:
-  Test(Intake *, int);
+  Test(ExampleSubsystem *, int);
 
   void Initialize() override;
 
@@ -29,6 +29,6 @@ class Test
   bool IsFinished() override;
 
  private:
-  Intake *m_intake;
+  ExampleSubsystem *m_example;
   int m_direction;
 };

@@ -14,9 +14,6 @@ void AutoDelay::Initialize() {
   m_timer.Reset();
   m_timer.Start();
   // m_seconds = (units::time::second_t)m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Seconds delay before driving
-  #ifdef DEBUG && DEBUG == TRUE
-    printf("AutoDelay()::Initialize()\n");
-  #endif
 }   
 
 // Called repeatedly when this Command is scheduled to run
