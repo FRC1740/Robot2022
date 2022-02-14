@@ -6,6 +6,9 @@
 
 #include <frc2/command/PIDSubsystem.h>
 #include <frc/DoubleSolenoid.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/shuffleboard/ShuffleboardTab.h>
+#include <networktables/NetworkTableEntry.h>
 #include <rev/CANSparkMax.h>
 
 namespace ConIntake {
@@ -24,6 +27,11 @@ class Intake : public frc2::SubsystemBase {
   void Stow();
   void Load();
   void Reject();
+  void Periodic() override;
+
+  frc::ShuffleboardTab *m_sbt_Intake;
+  nt::NetworkTableEntry m_nte_MotorCurrent;
+  nt::NetworkTableEntry m_nte_StowedState;
 
  protected:
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
