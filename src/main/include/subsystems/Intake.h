@@ -6,32 +6,37 @@
 
 #include <frc2/command/PIDSubsystem.h>
 #include <frc/DoubleSolenoid.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/shuffleboard/ShuffleboardTab.h>
+#include <networktables/NetworkTableEntry.h>
 #include <rev/CANSparkMax.h>
 
 namespace ConIntake {
-  constexpr int MOTOR_ID = 7;
+  constexpr int MOTOR_ID = 9;
   constexpr int PNEUM_PORT_A = 0;
   constexpr int PNEUM_PORT_B = 1;
   constexpr double LOAD_BALL = 1.0; // Should be motor forward
   constexpr double REJECT_BALL = -1.0; // Should be motor reverse
-  constexpr int CURRENT_STALL_LIMIT = 80;
+  constexpr int CURRENT_STALL_LIMIT = 40;
 }
 
-class Intake : public frc2::PIDSubsystem {
+class Intake : public frc2::SubsystemBase {
  public:
   Intake();
   void Deploy();
   void Stow();
   void Load();
   void Reject();
+  void Periodic() override;
+
+  frc::ShuffleboardTab *m_sbt_Intake;
+  nt::NetworkTableEntry m_nte_MotorCurrent;
+  nt::NetworkTableEntry m_nte_StowedState;
 
  protected:
-  void UseOutput(double output, double setpoint) override;
-
-  double GetMeasurement() override;
-
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
-  rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::SparkMaxRelativeEncoder m_intakeEncoder = m_intakeMotor.GetEncoder();
+  rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushed}; // Regular brushed motor
+  // Brushed motor - No sensor
+  // rev::SparkMaxRelativeEncoder m_intakeEncoder = m_intakeMotor.GetEncoder();
   bool m_deployedState; // True if intake system is deployed outside of robot perimeter
 };

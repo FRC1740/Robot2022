@@ -6,6 +6,7 @@ namespace ConShuffleboard {
     constexpr char ClimberTab[] = "Climber";
     constexpr char DriveTrainTab[] = "DriveTrain";
     constexpr char LauncherTab[] = "Launcher";
+    constexpr char IntakeTab[] = "Intake";
     constexpr char VisionTab[] = "Vision";
 }
 

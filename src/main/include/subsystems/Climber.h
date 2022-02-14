@@ -5,7 +5,6 @@
 #pragma once
 
 #include <frc2/command/PIDSubsystem.h>
-#include <frc/Servo.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
