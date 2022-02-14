@@ -11,6 +11,7 @@ Reject::Reject(Intake *intake) : m_intake{intake} {
 
 // Called when the command is initially scheduled.
 void Reject::Initialize() {
+  printf("Reject::Initialize()\n");
   m_intake->Reject();
 }
 
@@ -20,6 +21,7 @@ void Reject::Execute() {}
 // Called once the command ends or is interrupted.
 void Reject::End(bool interrupted) {
   m_intake->Load();
+  printf("Reject::End()\n");
 }
 
 // Returns true when the command should end.

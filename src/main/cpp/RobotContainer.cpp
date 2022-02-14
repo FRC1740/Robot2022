@@ -70,7 +70,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
 #ifdef ENABLE_LAUNCHER
 // FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhileHeld(new Launch(&m_launcher));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenHeld(new Launch(&m_launcher));
 #endif
 
 #ifdef ENABLE_INTAKE

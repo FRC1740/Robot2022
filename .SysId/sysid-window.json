@@ -43,7 +43,7 @@
     },
     "Deploy Status": {
       "Collapsed": "0",
-      "Pos": "727,86",
+      "Pos": "731,86",
       "Size": "800,839"
     },
     "Diagnostic Plots": {
@@ -58,8 +58,8 @@
     },
     "Warning": {
       "Collapsed": "0",
-      "Pos": "753,3",
-      "Size": "100,964"
+      "Pos": "755,3",
+      "Size": "669,964"
     }
   }
 }
