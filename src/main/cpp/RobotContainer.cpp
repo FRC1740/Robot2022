@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc2/command/StartEndCommand.h>
 #include <frc2/command/button/Button.h>
 #include <frc/Relay.h>
 #include "RobotContainer.h"
@@ -50,6 +51,8 @@ void RobotContainer::RobotInit() {
 // Called ONCE when the robot is disabled
 void RobotContainer::DisabledInit() {
   m_driveTrain.ResetEncoders();
+  m_launcher.Retract();
+  m_intake.Stow();
 }
 
 // Called periodically while the robot is disabled
@@ -70,7 +73,10 @@ void RobotContainer::ConfigureButtonBindings() {
 
 #ifdef ENABLE_LAUNCHER
 // FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(Launch(&m_launcher));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.Launch();}, [&] {m_launcher.Retract();}, {&m_launcher} ));
+
+  //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(Launch(&m_launcher));
   //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenReleased(Retract(&m_launcher));
 
 #endif
@@ -81,8 +87,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Stow(&m_intake));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(Reject(&m_intake));
 // Servo Test
-// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(new Test(&m_intake, 1));
-// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(new Test(&m_intake, 0));
+// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Test(&m_intake, 1));
+// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Test(&m_intake, 0));
 #endif
 
 #ifdef ENABLE_CLIMBER

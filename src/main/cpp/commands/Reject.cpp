@@ -6,7 +6,7 @@
 
 Reject::Reject(Intake *intake) : m_intake{intake} {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(intake);
+  //AddRequirements(intake);
 }
 
 // Called when the command is initially scheduled.

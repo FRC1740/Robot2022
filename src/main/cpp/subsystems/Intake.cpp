@@ -27,6 +27,7 @@ Intake::Intake() {
               .WithSize(2,1)
               .WithPosition(0,0)
               .WithWidget(frc::BuiltInWidgets::kDial)
+              // .WithProperties({"min" : 0, "max" : ConIntake::CURRENT_STALL_LIMIT});
               // Would like to use .WithProperties() to set Max to CURRENT_LIMIT
               .GetEntry();
         m_nte_StowedState = m_sbt_Intake->AddPersistent("Deployed State", true)

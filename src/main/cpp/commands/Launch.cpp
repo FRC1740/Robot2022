@@ -5,7 +5,7 @@
 #include "commands/Launch.h"
 
 Launch::Launch(Launcher *launcher) : m_launcher{launcher} {
-  AddRequirements(launcher);
+  //AddRequirements(launcher);
 }
 
 // PID Command does not use these three methods...
