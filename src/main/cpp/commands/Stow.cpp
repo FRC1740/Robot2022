@@ -11,6 +11,7 @@ Stow::Stow(Intake *intake) : m_intake{intake} {
 
 // Called when the command is initially scheduled.
 void Stow::Initialize() {
+  printf("Command Stow::Initialize()\n");
   m_intake->Stow();
 }
 
@@ -18,7 +19,9 @@ void Stow::Initialize() {
 void Stow::Execute() {}
 
 // Called once the command ends or is interrupted.
-void Stow::End(bool interrupted) {}
+void Stow::End(bool interrupted) {
+  printf("Command Stow::End()\n");
+}
 
 // Returns true when the command should end.
 bool Stow::IsFinished() {

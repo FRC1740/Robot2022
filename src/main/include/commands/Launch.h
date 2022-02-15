@@ -11,7 +11,7 @@
 class Launch
     : public frc2::CommandHelper<frc2::CommandBase, Launch> {      
  public:
-  Launch(Launcher *);
+  explicit Launch(Launcher *);
   void Initialize() override;
   void Execute();
   void End();

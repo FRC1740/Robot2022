@@ -10,14 +10,14 @@ Launch::Launch(Launcher *launcher) : m_launcher{launcher} {
 
 // PID Command does not use these three methods...
 void Launch::Initialize() {
-  printf("Launch Command: Launching!\n");
+  printf("Command Launch::Initialize()\n");
   m_launcher->Launch();
 }
 
 void Launch::Execute() {}
 
 void Launch::End() {
-  printf("Launch Command: Retracting launcher\n");
+  printf("Command Launch::End()\n");
   m_launcher->Retract();
 }
 
