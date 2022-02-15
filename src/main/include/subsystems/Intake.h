@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <frc2/command/PIDSubsystem.h>
+#include <frc2/command/SubsystemBase.h>
 #include <frc/DoubleSolenoid.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>

@@ -11,6 +11,7 @@ Deploy::Deploy(Intake *intake) : m_intake{intake} {
 
 // Called when the command is initially scheduled.
 void Deploy::Initialize() {
+  printf("Command Deploy::Initialize()\n");
   m_intake->Deploy();
 }
 
@@ -20,6 +21,7 @@ void Deploy::Execute() {
 
 // Called once the command ends or is interrupted.
 void Deploy::End(bool interrupted) {
+  printf("Command Deploy::End()\n");
 }
 
 // Returns true when the command should end.

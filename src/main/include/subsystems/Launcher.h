@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <frc2/command/PIDSubsystem.h>
+#include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
@@ -25,7 +25,7 @@ namespace ConLauncher {
   constexpr int CURRENT_STALL_LIMIT = 80;
 }
 
-class Launcher : public frc2::PIDSubsystem {
+class Launcher : public frc2::SubsystemBase {
  public:
   Launcher();
   void LaunchBert();
@@ -34,7 +34,6 @@ class Launcher : public frc2::PIDSubsystem {
   void RetractBert();
   void RetractErnie();
   void Retract(); // Move both catapaults back to starting position
-  void Reset();
   void Stop(); // Stop launcher motors
   void SetLaunchSoftLimit();
   void SetResetSoftLimit();
@@ -64,10 +63,6 @@ class Launcher : public frc2::PIDSubsystem {
   // Power Settings for each launcher
   double m_ErnieFwdPower;
   double m_BertFwdPower;
-
-  void UseOutput(double output, double setpoint) override;
-
-  double GetMeasurement() override;
 
   void Periodic();
 };

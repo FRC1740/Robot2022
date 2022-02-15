@@ -5,10 +5,7 @@
 #include "subsystems/Launcher.h"
 #include "OI.h"
 
-Launcher::Launcher()
-    : PIDSubsystem(
-          // The PIDController used by the subsystem
-          frc2::PIDController(0, 0, 0)) {
+Launcher::Launcher() {
             // Initialize stuff here
             #ifdef ENABLE_LAUNCHER
             m_launcherEncoderBert.SetPosition(0.0);
@@ -84,29 +81,30 @@ void Launcher::Launch() {
 }
 
 void Launcher::LaunchBert() {
+  printf("Launcher::LaunchBert() Executing...\n");  
   // Launch a ball
   m_launcherMotorBert.Set(m_BertFwdPower);
 }
 
 void Launcher::LaunchErnie() {
+  printf("Launcher::LaunchErnie() Executing...\n");  
   // Launch a ball
   m_launcherMotorErnie.Set(m_ErnieFwdPower);
 }
 
 void Launcher::Retract() {
   // Bring both launchers back
-  printf("Launcher::Retract()... ");
   RetractBert();
   RetractErnie();
 }
 
 void Launcher::RetractBert() {
-  printf("Reversing Bert... ");
+  printf("Launcher::RetractBert() Executing...\n");  
   m_launcherMotorBert.Set(-.1);
 }
 
 void Launcher::RetractErnie() {
-  printf("Reversing Ernie... ");
+  printf("Launcher::RetractErnie() Executing...\n");  
   m_launcherMotorErnie.Set(-.1);
 }
 void Launcher::SetLaunchSoftLimit() {
@@ -119,17 +117,6 @@ void Launcher::SetLaunchSoftLimit() {
 }
 
 void Launcher::SetResetSoftLimit() {}
-
-void Launcher::Reset() {}
-
-void Launcher::UseOutput(double output, double setpoint) {
-  // Use the output here
-}
-
-double Launcher::GetMeasurement() {
-  // Return the process variable measurement here
-  return 0;
-}
 
 void Launcher::Stop() {
   m_launcherMotorErnie.Set(0.0);

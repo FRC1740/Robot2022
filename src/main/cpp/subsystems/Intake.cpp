@@ -36,12 +36,14 @@ Intake::Intake() {
         }
 
 void Intake::Deploy() {
+  printf("Intake::Deploy() Executing...\n");
   deployDoublePCM.Set(frc::DoubleSolenoid::Value::kForward);
   m_deployedState = true;
   Load();
 }
 
 void Intake::Stow() {
+  printf("Intake::Stow() Executing...\n");
   deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
   m_intakeMotor.Set(0.0);
   m_deployedState = false;
