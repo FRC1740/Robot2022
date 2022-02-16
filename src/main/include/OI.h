@@ -43,8 +43,9 @@ namespace ConXBOXControl {
     // Dead zone
     constexpr double DEAD_ZONE = 0.1;
 
-    // Driver controller Port
+    // Drive Station Controller "Ports"
     constexpr int DRIVER_CONTROLLER_PORT = 0;
+    constexpr int CODRIVER_CONTROLLER_PORT = 1;
 }
 
 // DeadZone lambda function

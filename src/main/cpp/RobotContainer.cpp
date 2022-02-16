@@ -61,6 +61,7 @@ void RobotContainer::DisabledPeriodic() {
 }
 
 void RobotContainer::TeleopInit() {
+  m_launcher.SetLaunchSoftLimit();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -72,23 +73,30 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif // ENABLE_DRIVETRAIN
 
 #ifdef ENABLE_LAUNCHER
-// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).ToggleWhenPressed(
-      frc2::StartEndCommand( [&] {m_launcher.Launch();}, [&] {m_launcher.Retract();}, {&m_launcher} ));
+  // Duplicate Launch OI controls on both driver & codriver inputs
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
-  //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(Launch(&m_launcher));
-  //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenReleased(Retract(&m_launcher));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
 #endif
 
 #ifdef ENABLE_INTAKE
-// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Deploy(&m_intake));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Stow(&m_intake));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(Reject(&m_intake));
-// Servo Test
-// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Test(&m_intake, 1));
-// frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Test(&m_intake, 0));
+  // Duplicate Intake OI controls on both driver & codriver inputs
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_intake.Deploy();}, [&] {m_intake.Stow();}, {&m_intake} ));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(
+    frc2::StartEndCommand( [&] {m_intake.Reject(); }, [&] {m_intake.Load();} ));
+
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::A); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_intake.Deploy();}, [&] {m_intake.Stow();}, {&m_intake} ));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::B); }).WhileHeld(
+    frc2::StartEndCommand( [&] {m_intake.Reject(); }, [&] {m_intake.Load();} ));
 #endif
 
 #ifdef ENABLE_CLIMBER
@@ -96,6 +104,12 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
   frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
+
+#ifdef ENABLE_TESTING
+// Servo Test
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Test(&m_testing, 1));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Test(&m_testing, 0));
+#endif
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

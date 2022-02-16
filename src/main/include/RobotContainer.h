@@ -52,7 +52,7 @@ class RobotContainer {
   // The driver's game controller
   frc::XboxController driver_control{ConXBOXControl::DRIVER_CONTROLLER_PORT};
   // The codriver's game controller
-  //frc::XboxController codriver_control{ConLaunchPad::LAUNCHPAD_CONTROLLER_PORT};
+  frc::XboxController codriver_control{ConXBOXControl::CODRIVER_CONTROLLER_PORT};
 
  private:
   // The robot's subsystems and commands are defined here...
@@ -61,6 +61,7 @@ class RobotContainer {
   Launcher m_launcher;
   Intake m_intake;
   Climber m_climber;
+  ExampleSubsystem m_testing;
 
   // Commands...
   AutoDrive m_autoDrive;
