@@ -17,13 +17,12 @@ void Test::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Test::Execute() {
-}
+void Test::Execute() {}
 
 // Called once the command ends or is interrupted.
 void Test::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool Test::IsFinished() {
-  return false;
+  return true;
 }

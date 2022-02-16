@@ -44,6 +44,7 @@ class Climber : public frc2::PIDSubsystem {
   nt::NetworkTableEntry m_nte_DescendSpeedLimit;
   nt::NetworkTableEntry m_nte_ExtendLimit;
   nt::NetworkTableEntry m_nte_RetractLimit;
+  nt::NetworkTableEntry m_nte_MotorCurrent;
 
  protected:
 

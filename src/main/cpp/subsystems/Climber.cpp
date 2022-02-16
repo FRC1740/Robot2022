@@ -19,8 +19,14 @@ Climber::Climber()
           .WithPosition(0,0)
           .GetEntry();
     m_nte_ClimberOutput = m_sbt_Climber->AddPersistent("Climber Output", 0.0)
-          .WithSize(2,1)
+          .WithSize(2,2)
           .WithPosition(0,1)
+          .WithWidget(frc::BuiltInWidgets::kDial)
+          .GetEntry();
+    m_nte_MotorCurrent = m_sbt_Climber->AddPersistent("Motor Current", 0.0)
+          .WithSize(2,2)
+          .WithPosition(0,2)
+          .WithWidget(frc::BuiltInWidgets::kDial)
           .GetEntry();
     m_nte_ClimbSpeedLimit = m_sbt_Climber->AddPersistent("Climb Speed Limit", ConClimber::CLIMB_SPEED)
           .WithSize(2,1)
@@ -91,6 +97,7 @@ void Climber::Periodic() {
 #ifdef ENABLE_CLIMBER
   m_nte_ClimberDistance.SetDouble(m_climberEncoder.GetPosition());
   m_nte_ClimberOutput.SetDouble(m_climberEncoder.GetVelocity());
+  m_nte_MotorCurrent.SetDouble(m_climberMotor.GetOutputCurrent());
 #endif
 }
 

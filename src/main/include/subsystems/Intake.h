@@ -23,6 +23,7 @@ namespace ConIntake {
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
+  void ToggleDeployedState();
   void Deploy();
   void Stow();
   void Load();

@@ -36,6 +36,10 @@ Intake::Intake() {
               .GetEntry();
         }
 
+void Intake::ToggleDeployedState() {
+  m_deployedState == true ? Stow() : Deploy();
+}
+
 void Intake::Deploy() {
   printf("Intake::Deploy() Executing...\n");
   deployDoublePCM.Set(frc::DoubleSolenoid::Value::kForward);
