@@ -23,18 +23,25 @@ Intake::Intake() {
               .WithSize(2,1)
               .WithPosition(0,0)
               .GetEntry();
-
-        m_nte_MotorCurrent = m_sbt_Intake->AddPersistent("Intake Current", 0.0)
+        m_nte_ShutdownDelay = m_sbt_Intake->AddPersistent("Shutdown Delay", (double)ConIntake::SHUTDOWN_DELAY)
               .WithSize(2,1)
               .WithPosition(0,1)
+              .GetEntry();
+        m_nte_MotorCurrent = m_sbt_Intake->AddPersistent("Intake Current", 0.0)
+              .WithSize(2,1)
+              .WithPosition(0,2)
               .WithWidget(frc::BuiltInWidgets::kDial)
               // .WithProperties({"min" : 0, "max" : ConIntake::CURRENT_STALL_LIMIT});
               // Would like to use .WithProperties() to set Max to CURRENT_LIMIT
               .GetEntry();
+
         m_nte_StowedState = m_sbt_Intake->AddPersistent("Deployed State", true)
               .WithSize(2,2)
               .WithPosition(2,0)
               .GetEntry();
+
+
+        m_timer = frc::Timer(); // For delayed shutdown of intake motor
         }
 
 void Intake::ToggleDeployedState() {
@@ -50,8 +57,10 @@ void Intake::Deploy() {
 
 void Intake::Stow() {
   printf("Intake::Stow() Executing...\n");
+  
   deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
-  m_intakeMotor.Set(0.0);
+  m_timer.Reset();
+  m_timer.Start();
   m_deployedState = false;
 }
 
@@ -77,4 +86,7 @@ void Intake::Periodic() {
   m_nte_MotorCurrent.SetDouble(m_intakeMotor.GetOutputCurrent());
   m_nte_StowedState.SetBoolean(!m_deployedState);
   m_intakePower = m_nte_MotorPower.GetDouble(ConIntake::INTAKE_POWER);
+  if (m_deployedState == false && m_timer.Get() > ConIntake::SHUTDOWN_DELAY) {
+    m_intakeMotor.Set(0.0);
+  }
 }

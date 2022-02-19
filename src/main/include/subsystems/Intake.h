@@ -9,6 +9,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
+#include <frc/Timer.h>
 #include <rev/CANSparkMax.h>
 
 namespace ConIntake {
@@ -19,6 +20,7 @@ namespace ConIntake {
   constexpr double REJECT_BALL = -1.0; // Should be motor reverse
   constexpr int CURRENT_STALL_LIMIT = 40;
   constexpr double INTAKE_POWER = .6; // Try 60% power
+  constexpr units::time::second_t SHUTDOWN_DELAY = 1.0_s; // Seconds to delay between Stow() and motor shutdown
 }
 
 class Intake : public frc2::SubsystemBase {
@@ -35,6 +37,7 @@ class Intake : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_MotorCurrent;
   nt::NetworkTableEntry m_nte_StowedState;
   nt::NetworkTableEntry m_nte_MotorPower;
+  nt::NetworkTableEntry m_nte_ShutdownDelay;
 
  protected:
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
@@ -43,4 +46,5 @@ class Intake : public frc2::SubsystemBase {
   // rev::SparkMaxRelativeEncoder m_intakeEncoder = m_intakeMotor.GetEncoder();
   bool m_deployedState; // True if intake system is deployed outside of robot perimeter
   double m_intakePower; // Power to run intake motor
+  frc::Timer m_timer;
 };
