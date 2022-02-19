@@ -5,6 +5,7 @@
 #include <frc2/command/StartEndCommand.h>
 #include <frc2/command/button/Button.h>
 #include <frc/Relay.h>
+#include <cameraserver/CameraServer.h>
 #include "RobotContainer.h"
 #include "Constants.h"
 
@@ -35,10 +36,18 @@ RobotContainer::RobotContainer() : m_autoDrive(&m_driveTrain, &m_launcher, &m_in
 #endif
 #endif // ENABLE_DRIVETRAIN
 
-
 }
 
 void RobotContainer::RobotInit() {
+
+  #ifdef ENABLE_USB_CAMERA
+  // Start the Camera Server
+  // Get the USB camera from CameraServer
+  cs::UsbCamera camera = frc::CameraServer::StartAutomaticCapture();
+  // Set the resolution
+  camera.SetResolution(640, 480);
+  camera.SetFPS(15);
+  #endif
   // Create and get reference to SB tab
   m_sbt_Robot = &frc::Shuffleboard::GetTab(ConShuffleboard::RobotTab);
   // See https://docs.wpilib.org/en/latest/docs/software/wpilib-tools/shuffleboard/layouts-with-code/using-tabs.html
@@ -61,7 +70,7 @@ void RobotContainer::DisabledPeriodic() {
 }
 
 void RobotContainer::TeleopInit() {
-  m_launcher.SetLaunchSoftLimit();
+  m_launcher.SetLaunchSoftLimits();
 }
 
 void RobotContainer::ConfigureButtonBindings() {

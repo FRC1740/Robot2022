@@ -16,12 +16,14 @@ namespace ConLauncher {
   constexpr int MOTOR_BERT_ID = 6;
   constexpr int MOTOR_ERNIE_ID = 1;
   // Starting point for Launcher soft limits
-  constexpr int BERT_FWD_LIMIT = 115;
-  constexpr int ERNIE_FWD_LIMIT = 115;
+  constexpr int BERT_FWD_LIMIT = 200;
+  constexpr int ERNIE_FWD_LIMIT = 200;
   constexpr int BERT_REV_LIMIT = 0;
   constexpr int ERNIE_REV_LIMIT = 0;
-  constexpr double ERNIE_POWER = .4;
-  constexpr double BERT_POWER = .4;
+  constexpr double BERT_RAMP_RATE = .1;
+  constexpr double ERNIE_RAMP_RATE = .1;
+  constexpr double BERT_POWER = .45;
+  constexpr double ERNIE_POWER = .45;
   constexpr int CURRENT_STALL_LIMIT = 80;
 }
 
@@ -35,8 +37,8 @@ class Launcher : public frc2::SubsystemBase {
   void RetractErnie();
   void Retract(); // Move both catapaults back to starting position
   void Stop(); // Stop launcher motors
-  void SetLaunchSoftLimit();
-  void SetResetSoftLimit();
+  void SetLaunchSoftLimits();
+  void SetResetSoftLimits();
 
   frc::ShuffleboardTab *m_sbt_Launcher;
   // Inputs from Dashboard
@@ -46,6 +48,9 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Ernie_RevLimit; // Ditto for the reverse
   nt::NetworkTableEntry m_nte_Ernie_Power; // 0.0 to 1.0 (max)
   nt::NetworkTableEntry m_nte_Bert_Power; // Ditto
+  nt::NetworkTableEntry m_nte_Bert_Ramp_Rate;
+  nt::NetworkTableEntry m_nte_Ernie_Ramp_Rate;
+
   // Outputs to Dashboard
   nt::NetworkTableEntry m_nte_Ernie_Position; // Encoder feedback
   nt::NetworkTableEntry m_nte_Bert_Position; // Ditto
