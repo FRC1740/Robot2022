@@ -45,8 +45,7 @@ Climber::Climber()
           .WithPosition(2,3)
           .GetEntry();
 
-
-#ifdef ENABLE_CLIBMER
+#ifdef ENABLE_CLIMBER
     m_climberMotor.SetSmartCurrentLimit(ConClimber::CURRENT_STALL_LIMIT, ConClimber::CURRENT_STALL_LIMIT);
     m_climberEncoder.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
     m_climberMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -73,9 +72,6 @@ double Climber::GetMeasurement() {
 // Climb lifts the robot up to target position
 void Climber::Climb() {
 #ifdef ENABLE_CLIMBER
-    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_FWD));
-    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_REV));
-    m_climberMotor.BurnFlash();
     m_climberMotor.Set(m_nte_ClimbSpeedLimit.GetDouble(ConClimber::CLIMB_SPEED));
 #endif
 }
@@ -101,3 +97,10 @@ void Climber::Periodic() {
 #endif
 }
 
+void Climber::SetClimberSoftLimits() {
+    m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, ConClimber::SOFT_LIMIT_FWD);
+    m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
+    m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, ConClimber::SOFT_LIMIT_REV);
+    m_climberMotor.BurnFlash();
+}

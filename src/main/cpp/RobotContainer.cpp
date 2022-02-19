@@ -71,6 +71,7 @@ void RobotContainer::DisabledPeriodic() {
 
 void RobotContainer::TeleopInit() {
   m_launcher.SetLaunchSoftLimits();
+  m_climber.SetClimberSoftLimits();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -83,14 +84,14 @@ void RobotContainer::ConfigureButtonBindings() {
 
 #ifdef ENABLE_LAUNCHER
   // Duplicate Launch OI controls on both driver & codriver inputs
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).ToggleWhenPressed(
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).ToggleWhenPressed(
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
-  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).ToggleWhenPressed(
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
-  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).ToggleWhenPressed(
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
 #endif
@@ -109,9 +110,8 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif
 
 #ifdef ENABLE_CLIMBER
-// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
 
 #ifdef ENABLE_TESTING
