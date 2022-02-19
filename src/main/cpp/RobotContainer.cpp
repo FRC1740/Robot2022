@@ -109,9 +109,8 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif
 
 #ifdef ENABLE_CLIMBER
-// FIXME: TEMPORARY BUTTON ASSIGMENTS!!!
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
+  frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
 
 #ifdef ENABLE_TESTING

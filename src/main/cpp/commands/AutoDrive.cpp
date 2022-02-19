@@ -32,10 +32,9 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
-    frc2::SequentialCommandGroup {  AutoDelay(1.5_s), 
+    frc2::SequentialCommandGroup {  AutoDelay(.5_s),
+                                    Launch(launcher),    
                                     AutoDriveDistance(drivetrain),
-                                    AutoTurn(drivetrain),
-                                    Launch(launcher),
                                     Deploy(intake)
                                  } );
   #endif
