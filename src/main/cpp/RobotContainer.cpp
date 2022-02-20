@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <frc2/command/StartEndCommand.h>
+#include <frc2/command/InstantCommand.h>
 #include <frc2/command/button/Button.h>
 #include <frc/Relay.h>
 #include <cameraserver/CameraServer.h>
@@ -118,6 +119,12 @@ void RobotContainer::ConfigureButtonBindings() {
 // Servo Test
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Test(&m_testing, 1));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Test(&m_testing, 0));
+#endif
+
+#ifdef ENABLE_VISION
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(
+    frc2::InstantCommand( [&] {m_vision.ToggleLight();}, { &m_vision } ));
+  //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(Test(&m_testing, 0));
 #endif
 }
 
