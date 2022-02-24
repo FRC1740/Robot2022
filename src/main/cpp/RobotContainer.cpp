@@ -122,7 +122,7 @@ void RobotContainer::ConfigureButtonBindings() {
 #endif
 
 #ifdef ENABLE_VISION
-  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::A); }).WhenPressed(
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
     frc2::InstantCommand( [&] {m_vision.ToggleLight();}, { &m_vision } ));
   //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(Test(&m_testing, 0));
 #endif

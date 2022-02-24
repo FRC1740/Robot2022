@@ -21,9 +21,14 @@ namespace ConVision {
         constexpr double I = 0.0;
         constexpr double D = 0.0;
     }
-    constexpr int ON = 3;
+    // LED Modes: Write to NT "ledMode"
+    constexpr int ON = 3; 
     constexpr int BLINK = 2;
     constexpr int OFF = 1;
+
+    // Camera Mode: Write to NT "camMode"
+    constexpr int DRIVER_ONLY = 1;
+    constexpr int VISION_TRACKING = 0;
 }
 
 class Vision : public frc2::SubsystemBase {
