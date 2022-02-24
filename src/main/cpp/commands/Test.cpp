@@ -12,7 +12,7 @@ Test::Test(ExampleSubsystem *example, int direction) : m_example{example}, m_dir
 
 // Called when the command is initially scheduled.
 void Test::Initialize() {
-  // m_intake->TestRelay(m_direction);
+  m_example->TestRelay(m_direction);
   m_example->TestServo(m_direction);
 }
 
