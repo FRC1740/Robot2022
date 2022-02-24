@@ -17,6 +17,7 @@ Vision::Vision() {
 
 #ifdef ENABLE_VISION
     LightOff();
+    m_nt_Limelight->PutNumber("camMode", ConVision::DRIVER_ONLY);
 #endif
 }
 
