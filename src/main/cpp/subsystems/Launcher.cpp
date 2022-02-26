@@ -72,6 +72,16 @@ Launcher::Launcher() {
                   .WithSize(2,1)
                   .WithPosition(4,1)
                   .GetEntry();
+            m_nte_Bert_Voltage = m_sbt_Launcher->AddPersistent("Bert Voltage", 0.0)
+                  .WithSize(2,1)
+                  .WithPosition(4,2)
+                  .WithWidget(frc::BuiltInWidgets::kDial)
+                  .GetEntry();
+            m_nte_Ernie_Voltage = m_sbt_Launcher->AddPersistent("Ernie Voltage", 0.0)
+                  .WithSize(2,1)
+                  .WithPosition(4,3)
+                  .WithWidget(frc::BuiltInWidgets::kDial)
+                  .GetEntry();
             m_ErnieFwdPower = ConLauncher::ERNIE_POWER;
             m_BertFwdPower = ConLauncher::BERT_POWER;
 
@@ -153,5 +163,8 @@ void Launcher::Periodic() {
   m_BertFwdPower = m_nte_Bert_Power.GetDouble(ConLauncher::BERT_POWER);
   m_nte_Bert_Position.SetDouble(m_launcherEncoderBert.GetPosition());
   m_nte_Ernie_Position.SetDouble(m_launcherEncoderErnie.GetPosition());
+  // Display
+  m_nte_Bert_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
+  m_nte_Ernie_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
   #endif
 }
