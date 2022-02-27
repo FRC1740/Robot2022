@@ -54,6 +54,8 @@ class Launcher : public frc2::SubsystemBase {
   // Outputs to Dashboard
   nt::NetworkTableEntry m_nte_Ernie_Position; // Encoder feedback
   nt::NetworkTableEntry m_nte_Bert_Position; // Ditto
+  nt::NetworkTableEntry m_nte_Bert_Voltage;
+  nt::NetworkTableEntry m_nte_Ernie_Voltage;
 
  protected:
  #ifdef ENABLE_LAUNCHER
