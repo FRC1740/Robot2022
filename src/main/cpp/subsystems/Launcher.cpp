@@ -5,6 +5,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include "subsystems/Launcher.h"
 #include "OI.h"
+#include "Constants.h"
 
 Launcher::Launcher() {
             // Initialize stuff here
@@ -29,6 +30,16 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
     m_pidControllerErnie.SetFF(kFF);
     m_pidControllerErnie.SetOutputRange(kMinOutput, kMaxOutput);
 #endif
+            // All of our Encoders are based on a tick count of 42
+            m_launcherEncoderBert.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
+            m_launcherEncoderErnie.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
+
+            // I believe brake mode is the default, but...
+            m_launcherMotorBert.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+            m_launcherMotorErnie.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            // No hardware limits on these controllers
+
             m_launcherEncoderBert.SetPosition(0.0);
             m_launcherEncoderErnie.SetPosition(0.0);
             // Enable & Set Encoder Soft Limits...
