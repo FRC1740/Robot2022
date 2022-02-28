@@ -57,6 +57,19 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Bert_Voltage;
   nt::NetworkTableEntry m_nte_Ernie_Voltage;
 
+#define noLAUNCHER_VELOCITY_CONTROL
+#ifdef LAUNCHER_VELOCITY_CONTROL
+  // Velocity Control- see
+  // https://github.com/REVrobotics/SPARK-MAX-Examples/tree/master/C%2B%2B/Velocity%20PID%20Control
+  nt::NetworkTableEntry m_nte_Launcher_P__Gain;
+  nt::NetworkTableEntry m_nte_Launcher_I_Gain;
+  nt::NetworkTableEntry m_nte_Launcher_D_Gain;
+  nt::NetworkTableEntry m_nte_Launcher_I_Zone;
+  nt::NetworkTableEntry m_nte_Launcher_Feed_Forward;
+  nt::NetworkTableEntry m_nte_Launcher_Max_Output;
+  nt::NetworkTableEntry m_nte_Launcher_Min_Output;
+#endif
+
  protected:
  #ifdef ENABLE_LAUNCHER
   // NEO motor
@@ -66,6 +79,12 @@ class Launcher : public frc2::SubsystemBase {
   // built-in encoders
   rev::SparkMaxRelativeEncoder m_launcherEncoderBert = m_launcherMotorBert.GetEncoder();
   rev::SparkMaxRelativeEncoder m_launcherEncoderErnie = m_launcherMotorErnie.GetEncoder();
+
+#ifdef LAUNCHER_VELOCITY_CONTROL
+  rev::SparkMaxPIDController m_pidControllerBert = m_launcherMotorBert.GetPIDController();
+  rev::SparkMaxPIDController m_pidControllerErnie = m_launcherMotorErnie.GetPIDController();
+#endif
+
  #endif
   // Power Settings for each launcher
   double m_ErnieFwdPower;

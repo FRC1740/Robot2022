@@ -9,6 +9,26 @@
 Launcher::Launcher() {
             // Initialize stuff here
             #ifdef ENABLE_LAUNCHER
+#ifdef LAUNCHER_VELOCITY_CONTROL
+double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, kMinOutput = -1.0;
+    m_launcherMotorBert.RestoreFactoryDefaults();
+    m_launcherMotorErnie.RestoreFactoryDefaults();
+    
+    // set PID coefficients
+    m_pidControllerBert.SetP(kP);
+    m_pidControllerBert.SetI(kI);
+    m_pidControllerBert.SetD(kD);
+    m_pidControllerBert.SetIZone(kIz);
+    m_pidControllerBert.SetFF(kFF);
+    m_pidControllerBert.SetOutputRange(kMinOutput, kMaxOutput);
+
+    m_pidControllerErnie.SetP(kP);
+    m_pidControllerErnie.SetI(kI);
+    m_pidControllerErnie.SetD(kD);
+    m_pidControllerErnie.SetIZone(kIz);
+    m_pidControllerErnie.SetFF(kFF);
+    m_pidControllerErnie.SetOutputRange(kMinOutput, kMaxOutput);
+#endif
             m_launcherEncoderBert.SetPosition(0.0);
             m_launcherEncoderErnie.SetPosition(0.0);
             // Enable & Set Encoder Soft Limits...
@@ -82,6 +102,39 @@ Launcher::Launcher() {
                   .WithPosition(4,3)
                   .WithWidget(frc::BuiltInWidgets::kDial)
                   .GetEntry();
+
+#ifdef LAUNCHER_VELOCITY_CONTROL
+  // display PID coefficients on Shuffleboard
+  m_nte_Launcher_P__Gain = m_sbt_Launcher->AddPersistent("Launcher P Gain", kP)
+                  .WithSize(2,1)
+                  .WithPosition(5,0)
+                  .GetEntry();
+  m_nte_Launcher_I_Gain = m_sbt_Launcher->AddPersistent("Launcher I Gain", kI)
+                  .WithSize(2,1)
+                  .WithPosition(5,1)
+                  .GetEntry();
+  m_nte_Launcher_D_Gain = m_sbt_Launcher->AddPersistent("Launcher D Gain", kD)
+                  .WithSize(2,1)
+                  .WithPosition(5,2)
+                  .GetEntry();
+  m_nte_Launcher_I_Zone = m_sbt_Launcher->AddPersistent("Launcher I Gain", kIz)
+                  .WithSize(2,1)
+                  .WithPosition(5,3)
+                  .GetEntry();
+  m_nte_Launcher_Feed_Forward = m_sbt_Launcher->AddPersistent("Launcher Feed Forward", kFF)
+                  .WithSize(2,1)
+                  .WithPosition(6,0)
+                  .GetEntry();
+  m_nte_Launcher_Max_Output = m_sbt_Launcher->AddPersistent("Launcher Max Output", kMaxOutput)
+                  .WithSize(2,1)
+                  .WithPosition(6,1)
+                  .GetEntry();
+  m_nte_Launcher_Min_Output = m_sbt_Launcher->AddPersistent("Launcher Min Output", kMinOutput)
+                  .WithSize(2,1)
+                  .WithPosition(6,2)
+                  .GetEntry();
+#endif
+
             m_ErnieFwdPower = ConLauncher::ERNIE_POWER;
             m_BertFwdPower = ConLauncher::BERT_POWER;
 
