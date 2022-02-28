@@ -73,6 +73,7 @@ void RobotContainer::DisabledPeriodic() {
 void RobotContainer::TeleopInit() {
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
+  m_launcher.Retract();
 }
 
 void RobotContainer::ConfigureButtonBindings() {

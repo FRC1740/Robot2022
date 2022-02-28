@@ -12,6 +12,8 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/StartEndCommand.h>
 
 /*
   Basic Autonomous Testing
@@ -33,9 +35,10 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
     frc2::SequentialCommandGroup {  AutoDelay(.5_s),
-                                    Launch(launcher),    
-                                    AutoDriveDistance(drivetrain),
-                                    Deploy(intake)
+// Non functional                                    frc2::InstantCommand( [&] {launcher->LaunchBert(); }, {launcher}),
+                                    Launch(launcher),
+//                                    Deploy(intake),
+                                    AutoDriveDistance(drivetrain)
                                  } );
   #endif
   #if 0
