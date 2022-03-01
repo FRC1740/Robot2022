@@ -4,7 +4,8 @@
 
 #include "commands/AutoDriveDistance.h"
 
-AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain) : m_driveTrain(drivetrain) {
+AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance) 
+  : m_driveTrain(drivetrain), m_distance_inches(distance) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(drivetrain);
 }
@@ -13,7 +14,6 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain) : m_driveTrain(driv
 void AutoDriveDistance::Initialize() {
   m_driveTrain->ResetEncoders();
   // Read the desired travel distance from network tables (shuffleboard driver input)
-  m_distance_inches = m_driveTrain->m_nte_b_DriveDistance.GetDouble(0.0);
 }
 
 // Called repeatedly when this Command is scheduled to run

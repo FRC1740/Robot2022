@@ -30,17 +30,29 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   // double a = m_driveTrain->m_nte_a_DriveDelay.GetDouble(0.0); // Drive delay (seconds)
   // double c = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0); // Turning Angle (degrees)
 
-  #if !defined(FOO)
+  double m_distance = m_driveTrain->m_nte_b_DriveDistance.GetDouble(ConAutoDriveDistance::DISTANCE);
+
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
-    frc2::SequentialCommandGroup {  AutoDelay(.5_s),
+    frc2::SequentialCommandGroup {  frc2::InstantCommand( [launcher] { launcher->LaunchBert(); }, { launcher }),
+                                    frc2::InstantCommand( [launcher] { launcher->LaunchErnie(); }, { launcher }),
+//                                    Launch(launcher),
+                                    AutoDelay(0.5_s),
+                                    frc2::InstantCommand( [launcher] { launcher->RetractBert(); }, { launcher }),
+                                    frc2::InstantCommand( [launcher] { launcher->RetractErnie(); }, { launcher }),
+                                    frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }),
+                                    AutoDriveDistance(drivetrain, m_distance),
+                                    frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
+                                    AutoDelay(0.5_s),
+                                    AutoDriveDistance(drivetrain, -m_distance),
+                                    AutoDelay(0.25_s),
                                     frc2::InstantCommand( [launcher] { launcher->LaunchBert(); }, { launcher }),
-                                    Launch(launcher),
-//                                    Deploy(intake),
-                                    AutoDriveDistance(drivetrain)
+                                    frc2::InstantCommand( [launcher] { launcher->LaunchErnie(); }, { launcher }),                                  
+                                    AutoDelay(0.5_s),
+                                    frc2::InstantCommand( [launcher] { launcher->RetractBert(); }, { launcher }),
+                                    frc2::InstantCommand( [launcher] { launcher->RetractErnie(); }, { launcher }),
                                  } );
-  #endif
   #if 0
   // Add autonomous drive & launcher commands
   AddCommands (

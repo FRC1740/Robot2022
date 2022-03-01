@@ -8,6 +8,11 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/DriveTrain.h"
 
+namespace ConAutoDriveDistance {
+  constexpr double DISTANCE = 86; // Inches (negative is reverse) Needed to exit the 
+  constexpr double LAUNCH_DELAY = 0.5; // Seconds to delay between launch & drive
+}
+
 /**
  * An example command.
  *
@@ -18,7 +23,7 @@
 class AutoDriveDistance
     : public frc2::CommandHelper<frc2::CommandBase, AutoDriveDistance> {
  public:
-  AutoDriveDistance(DriveTrain *drivetrain);
+  AutoDriveDistance(DriveTrain *drivetrain, double distance);
 
   void Initialize() override;
 
@@ -30,6 +35,6 @@ class AutoDriveDistance
 
  private:
   DriveTrain *m_driveTrain;
-  double m_distance_inches; // CRE 2022-01-28 Read from shuffleboard NOT passed as argument
+  double m_distance_inches = 0.0; // CRE 2022-01-28 Read from shuffleboard
   double m_speedOut = 0.0;
 };
