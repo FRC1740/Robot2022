@@ -19,6 +19,8 @@
 #include "Constants.h"
 
 namespace ConDriveTrain {
+    // Autonomous Constants
+    constexpr double AUTONOMOUS_DISTANCE = 80;
     // Motors
     constexpr int RIGHT_MOTOR_A_ID = 2;
     constexpr int RIGHT_MOTOR_B_ID = 4;
@@ -100,6 +102,8 @@ class DriveTrain : public frc2::SubsystemBase {
 
   void GoToAngle(double angle);
   void ResetGyro();
+
+  void GetAutonomousDistance();
   //void SetSafety(bool safety);
   
  private:
@@ -128,6 +132,7 @@ class DriveTrain : public frc2::SubsystemBase {
   // motor max RPM
   const double MaxRPM = 5700;
 
+  double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
 
   // Drive encoders
   rev::SparkMaxRelativeEncoder m_rightEncoderA = m_rightMotorA.GetEncoder();

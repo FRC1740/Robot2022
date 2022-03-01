@@ -44,6 +44,7 @@ class RobotContainer {
   void DisabledInit();
   void DisabledPeriodic();
   void TeleopInit();
+  void AutonomousInit();
 
   frc::ShuffleboardTab* m_sbt_Robot;
   nt::NetworkTableEntry m_nte_CodeVersion;

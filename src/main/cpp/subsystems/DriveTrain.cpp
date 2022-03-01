@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DriveTrain.h"
+// namespace Constants 
+#include "commands/AutoDriveDistance.h"
 
 DriveTrain::DriveTrain() {
 #ifdef ENABLE_DRIVETRAIN
@@ -106,8 +108,8 @@ DriveTrain::DriveTrain() {
   m_nte_InputExponent       = m_sbt_DriveTrain->AddPersistent("Input Exponent", 1.0)        .WithSize(1, 1).WithPosition(0, 2).GetEntry();
 
   // Create widgets for AutoDrive
-  m_nte_a_DriveDelay        = m_sbt_DriveTrain->AddPersistent("a Drive Delay", 0.5)         .WithSize(1, 1).WithPosition(3, 0).GetEntry();
-  m_nte_b_DriveDistance     = m_sbt_DriveTrain->AddPersistent("b Drive Distance", -60.0)    .WithSize(1, 1).WithPosition(3, 1).GetEntry();
+  m_nte_a_DriveDelay        = m_sbt_DriveTrain->AddPersistent("a Launch Delay", ConAutoDriveDistance::LAUNCH_DELAY)         .WithSize(1, 1).WithPosition(3, 0).GetEntry();
+  m_nte_b_DriveDistance     = m_sbt_DriveTrain->AddPersistent("b Drive Distance", ConAutoDriveDistance::DISTANCE)    .WithSize(1, 1).WithPosition(3, 1).GetEntry();
   m_nte_c_DriveTurnAngle     = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
   //  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
 
@@ -186,14 +188,19 @@ void DriveTrain::GoToAngle(double angle) {
   //  right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
   left_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
   right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
-}
 
+}
 double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
 
 // Used by AutoTurn 																	   
 void DriveTrain::ResetGyro() {
   gyro->Reset();
 }																				 
+
+// Call GetAutonomousDistance() inside the AutonomousInit() method to read values from Shuffleboard
+void DriveTrain::GetAutonomousDistance() {
+  m_autoDistance = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
+}
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
 
 #endif // ENABLE_DRIVETRAIN

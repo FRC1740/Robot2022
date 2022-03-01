@@ -67,7 +67,6 @@ void RobotContainer::DisabledInit() {
 
 // Called periodically while the robot is disabled
 void RobotContainer::DisabledPeriodic() {
-
 }
 
 void RobotContainer::TeleopInit() {
@@ -76,6 +75,9 @@ void RobotContainer::TeleopInit() {
   m_launcher.Retract();
 }
 
+void RobotContainer::AutonomousInit() {
+  m_driveTrain.GetAutonomousDistance();
+}
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 #ifdef ENABLE_DRIVETRAIN
