@@ -35,7 +35,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   // AddCommands(FooCommand(), BarCommand());
   AddCommands (
     frc2::SequentialCommandGroup {  AutoDelay(.5_s),
-// Non functional                                    frc2::InstantCommand( [&] {launcher->LaunchBert(); }, {launcher}),
+                                    frc2::InstantCommand( [launcher] { launcher->LaunchBert(); }, { launcher }),
                                     Launch(launcher),
 //                                    Deploy(intake),
                                     AutoDriveDistance(drivetrain)
