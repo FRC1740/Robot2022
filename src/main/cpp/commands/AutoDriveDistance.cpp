@@ -38,5 +38,5 @@ void AutoDriveDistance::End(bool interrupted) {
 bool AutoDriveDistance::IsFinished() {
   constexpr double epsilon = 5.0;
 
-  return ((fabs(m_distance_inches + copysign(epsilon / 2.0, m_distance_inches))- m_driveTrain->GetAverageDistanceInches()) < epsilon);
+  return ((fabs(m_distance_inches + copysign(epsilon / 2.0, m_distance_inches)- m_driveTrain->GetAverageDistanceInches())) < epsilon);
 }
