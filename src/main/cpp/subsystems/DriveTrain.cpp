@@ -204,7 +204,8 @@ void DriveTrain::ResetGyro() {
 
 // Call GetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
 void DriveTrain::SetAutonomousParameters() {
-  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_2_BALL);
+  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE);
+  printf("m_autoDriveMode set to %f\n", m_autoDriveMode);
   m_autoDistance = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
   m_autoDriveDelay = m_nte_a_DriveDelay.GetDouble(ConDriveTrain::AUTONOMOUS_DRIVE_DELAY);
 }
