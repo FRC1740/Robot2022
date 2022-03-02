@@ -8,10 +8,11 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/DriveTrain.h"
 
-namespace ConAutoDriveDistance {
-  constexpr double DISTANCE = 86; // Inches (negative is reverse) Needed to exit the 
-  constexpr double LAUNCH_DELAY = 0.5; // Seconds to delay between launch & drive
-}
+// Moved to DriveTrain.h
+// namespace ConAutoDriveDistance {
+//   constexpr double DISTANCE = 86; // Inches (negative is reverse) Needed to exit the 
+//   constexpr double LAUNCH_DELAY = 0.5; // Seconds to delay between launch & drive
+// }
 
 /**
  * An example command.
