@@ -21,10 +21,11 @@
 namespace ConDriveTrain {
     // Autonomous Constants
     constexpr double AUTONOMOUS_DISTANCE = 80;  // Inches (negative is reverse) Needed to exit the 
-    constexpr double AUTONOMOUS_LAUNCH_DELAY = 0.5; // Seconds to delay between launch & drive
-    constexpr int AUTONOMOUS_MODE_SHOOT_DELAY_MOVE = 1;
-    constexpr int AUTONOMOUS_MODE_JUST_MOVE = 2;
-    constexpr int AUTONOMOUS_MODE_5_BALL = 3;
+    constexpr double AUTONOMOUS_DRIVE_DELAY = 5.0; // Seconds to delay between launch & drive
+    constexpr int AUTONOMOUS_MODE_2_BALL = 1;
+    constexpr int AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE = 2;
+    constexpr int AUTONOMOUS_MODE_JUST_MOVE = 3;
+    constexpr int AUTONOMOUS_MODE_5_BALL = 5;
 
     // Motors
     constexpr int RIGHT_MOTOR_A_ID = 2;
@@ -110,12 +111,13 @@ class DriveTrain : public frc2::SubsystemBase {
   void ResetGyro();
 
   // Retrieve from dashboard, set member variables
-  void GetAutonomousParameters();
+  void SetAutonomousParameters();
   //void SetSafety(bool safety);
   
   // Autonomous drive parameters
   double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
-  double m_autoDriveMode = ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE;
+  double m_autoDriveMode = ConDriveTrain::AUTONOMOUS_MODE_2_BALL;
+  double m_autoDriveDelay = ConDriveTrain::AUTONOMOUS_DRIVE_DELAY;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
