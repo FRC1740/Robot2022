@@ -108,9 +108,10 @@ DriveTrain::DriveTrain() {
   m_nte_InputExponent       = m_sbt_DriveTrain->AddPersistent("Input Exponent", 1.0)        .WithSize(1, 1).WithPosition(0, 2).GetEntry();
 
   // Create widgets for AutoDrive
-  m_nte_a_DriveDelay        = m_sbt_DriveTrain->AddPersistent("a Launch Delay", ConAutoDriveDistance::LAUNCH_DELAY)         .WithSize(1, 1).WithPosition(3, 0).GetEntry();
-  m_nte_b_DriveDistance     = m_sbt_DriveTrain->AddPersistent("b Drive Distance", ConAutoDriveDistance::DISTANCE)    .WithSize(1, 1).WithPosition(3, 1).GetEntry();
-  m_nte_c_DriveTurnAngle     = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
+  m_nte_a_DriveDelay     = m_sbt_DriveTrain->AddPersistent("a Launch Delay", ConDriveTrain::AUTONOMOUS_LAUNCH_DELAY).WithSize(1, 1).WithPosition(3, 0).GetEntry();
+  m_nte_b_DriveDistance  = m_sbt_DriveTrain->AddPersistent("b Drive Distance", ConDriveTrain::AUTONOMOUS_DISTANCE).WithSize(1, 1).WithPosition(3, 1).GetEntry();
+  m_nte_c_DriveTurnAngle = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
+  m_nte_autoDriveMode    = m_sbt_DriveTrain->AddPersistent("AutoDrive Mode", ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE).WithSize(1, 1).WithPosition(3, 3).GetEntry();
   //  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
 
   // Display current encoder values
@@ -197,8 +198,9 @@ void DriveTrain::ResetGyro() {
   gyro->Reset();
 }																				 
 
-// Call GetAutonomousDistance() inside the AutonomousInit() method to read values from Shuffleboard
-void DriveTrain::GetAutonomousDistance() {
+// Call GetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
+void DriveTrain::GetAutonomousParameters() {
+  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE);
   m_autoDistance = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
 }
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}

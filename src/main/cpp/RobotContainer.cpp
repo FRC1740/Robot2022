@@ -76,7 +76,7 @@ void RobotContainer::TeleopInit() {
 }
 
 void RobotContainer::AutonomousInit() {
-  m_driveTrain.GetAutonomousDistance();
+  m_driveTrain.GetAutonomousParameters();
 }
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
