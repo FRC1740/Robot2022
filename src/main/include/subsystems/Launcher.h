@@ -57,7 +57,6 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Bert_Voltage;
   nt::NetworkTableEntry m_nte_Ernie_Voltage;
 
-#define noLAUNCHER_VELOCITY_CONTROL
 #ifdef LAUNCHER_VELOCITY_CONTROL
   // Velocity Control- see
   // https://github.com/REVrobotics/SPARK-MAX-Examples/tree/master/C%2B%2B/Velocity%20PID%20Control
