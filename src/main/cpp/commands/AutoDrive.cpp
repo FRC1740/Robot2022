@@ -15,13 +15,6 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/StartEndCommand.h>
 
-/*
-  Basic Autonomous Testing
-  (1) Delay a seconds
-  (2) drive backwards for b seconds
-  (3) Turn to c angle
-*/
-
 AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake) : m_driveTrain(drivetrain) {
 #if defined(ENABLE_DRIVETRAIN)
   // SHuffleboard parameters NOT refreshing this way. Moving them into the specific commands instead of
@@ -33,16 +26,16 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   double m_distance = m_driveTrain->m_autoDistance;
   int m_mode = m_driveTrain->m_autoDriveMode;
   // Remove the following to allow any mode
-  m_mode = ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE;
+  // m_mode = ConDriveTrain::AUTONOMOUS_MODE_2_BALL;
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   switch (m_mode) {
-    case ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE:
+    case ConDriveTrain::AUTONOMOUS_MODE_2_BALL:
+      printf("Autonomous %d Ball Mode", m_mode);
       AddCommands (
         frc2::SequentialCommandGroup {
             frc2::InstantCommand( [launcher] { launcher->LaunchBert(); }, { launcher }),
             frc2::InstantCommand( [launcher] { launcher->LaunchErnie(); }, { launcher }),
-    //        Launch(launcher),
             AutoDelay(0.5_s),
             frc2::InstantCommand( [launcher] { launcher->RetractBert(); }, { launcher }),
             frc2::InstantCommand( [launcher] { launcher->RetractErnie(); }, { launcher }),
@@ -60,11 +53,22 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
           } );
     break;
 
-    case ConDriveTrain::AUTONOMOUS_MODE_JUST_MOVE:
+    case ConDriveTrain::AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE:
+      printf("Autonomous Mode %d: Shoot-Delay-Move", m_mode);
+      AddCommands (
+          frc2::SequentialCommandGroup {
+            frc2::InstantCommand( [launcher] { launcher->LaunchBert(); }, { launcher }),
+            frc2::InstantCommand( [launcher] { launcher->LaunchErnie(); }, { launcher }),
+            AutoDelay(0.5_s),
+            frc2::InstantCommand( [launcher] { launcher->RetractBert(); }, { launcher }),
+            frc2::InstantCommand( [launcher] { launcher->RetractErnie(); }, { launcher }),
+            AutoDriveDistance(drivetrain, m_distance),
+        } );
     break;
 
     case ConDriveTrain::AUTONOMOUS_MODE_5_BALL:
     break;
+
   #if 0
   // Add autonomous drive & launcher commands
   AddCommands (

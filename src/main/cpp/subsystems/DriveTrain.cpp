@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DriveTrain.h"
-// namespace Constants 
-#include "commands/AutoDriveDistance.h"
 
 DriveTrain::DriveTrain() {
 #ifdef ENABLE_DRIVETRAIN
@@ -77,6 +75,11 @@ DriveTrain::DriveTrain() {
   // NavX gyro
   gyro = new AHRS(frc::SPI::Port::kMXP);
 
+  // We should always be writing the desired SparkMax settings if they're not the default
+  m_leftEncoderA.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR);
+  m_rightEncoderA.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR);
+  m_leftEncoderB.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR);
+  m_rightEncoderB.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR);
   /*
      FIXME: This may be a better way to set the distance conversion: Right on the SparkMax!
      Native Tick counts * Gear Ratio divided by Wheel circumference (42 * 10.71)/(6 * pi) = ticks per inch
@@ -108,10 +111,10 @@ DriveTrain::DriveTrain() {
   m_nte_InputExponent       = m_sbt_DriveTrain->AddPersistent("Input Exponent", 1.0)        .WithSize(1, 1).WithPosition(0, 2).GetEntry();
 
   // Create widgets for AutoDrive
-  m_nte_a_DriveDelay     = m_sbt_DriveTrain->AddPersistent("a Launch Delay", ConDriveTrain::AUTONOMOUS_LAUNCH_DELAY).WithSize(1, 1).WithPosition(3, 0).GetEntry();
+  m_nte_a_DriveDelay     = m_sbt_DriveTrain->AddPersistent("a Launch Delay", ConDriveTrain::AUTONOMOUS_DRIVE_DELAY).WithSize(1, 1).WithPosition(3, 0).GetEntry();
   m_nte_b_DriveDistance  = m_sbt_DriveTrain->AddPersistent("b Drive Distance", ConDriveTrain::AUTONOMOUS_DISTANCE).WithSize(1, 1).WithPosition(3, 1).GetEntry();
   m_nte_c_DriveTurnAngle = m_sbt_DriveTrain->AddPersistent("c Turn Angle", 0.0)       .WithSize(1, 1).WithPosition(3, 2).GetEntry();
-  m_nte_autoDriveMode    = m_sbt_DriveTrain->AddPersistent("AutoDrive Mode", ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE).WithSize(1, 1).WithPosition(3, 3).GetEntry();
+  m_nte_autoDriveMode    = m_sbt_DriveTrain->AddPersistent("AutoDrive Mode", ConDriveTrain::AUTONOMOUS_MODE_2_BALL).WithSize(1, 1).WithPosition(3, 3).GetEntry();
   //  m_nte_Testing     = m_sbt_DriveTrain->AddPersistent("Testing", 0.0)       .WithSize(1, 1).WithPosition(3, 3).GetEntry();
 
   // Display current encoder values
@@ -145,9 +148,10 @@ void DriveTrain::TankDrive(double left, double right){
 double DriveTrain::GetMaxOutput() {
     return m_maxOutput;
 }
-// Why is this method recursive?
+
 void DriveTrain::SetMaxOutput(double maxOutput) {
   m_maxOutput = maxOutput;
+  // m_drivetain is the frc::DifferentialDrive class/object
   m_driveTrain.SetMaxOutput(maxOutput);
 }
 
@@ -199,9 +203,10 @@ void DriveTrain::ResetGyro() {
 }																				 
 
 // Call GetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
-void DriveTrain::GetAutonomousParameters() {
-  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE);
+void DriveTrain::SetAutonomousParameters() {
+  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_2_BALL);
   m_autoDistance = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
+  m_autoDriveDelay = m_nte_a_DriveDelay.GetDouble(ConDriveTrain::AUTONOMOUS_DRIVE_DELAY);
 }
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
 

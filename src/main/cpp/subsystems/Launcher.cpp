@@ -118,31 +118,31 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
   // display PID coefficients on Shuffleboard
   m_nte_Launcher_P__Gain = m_sbt_Launcher->AddPersistent("Launcher P Gain", kP)
                   .WithSize(2,1)
-                  .WithPosition(5,0)
+                  .WithPosition(6,0)
                   .GetEntry();
   m_nte_Launcher_I_Gain = m_sbt_Launcher->AddPersistent("Launcher I Gain", kI)
                   .WithSize(2,1)
-                  .WithPosition(5,1)
+                  .WithPosition(6,1)
                   .GetEntry();
   m_nte_Launcher_D_Gain = m_sbt_Launcher->AddPersistent("Launcher D Gain", kD)
                   .WithSize(2,1)
-                  .WithPosition(5,2)
+                  .WithPosition(6,2)
                   .GetEntry();
   m_nte_Launcher_I_Zone = m_sbt_Launcher->AddPersistent("Launcher I Gain", kIz)
                   .WithSize(2,1)
-                  .WithPosition(5,3)
-                  .GetEntry();
-  m_nte_Launcher_Feed_Forward = m_sbt_Launcher->AddPersistent("Launcher Feed Forward", kFF)
-                  .WithSize(2,1)
-                  .WithPosition(6,0)
-                  .GetEntry();
-  m_nte_Launcher_Max_Output = m_sbt_Launcher->AddPersistent("Launcher Max Output", kMaxOutput)
-                  .WithSize(2,1)
-                  .WithPosition(6,1)
+                  .WithPosition(6,4)
                   .GetEntry();
   m_nte_Launcher_Min_Output = m_sbt_Launcher->AddPersistent("Launcher Min Output", kMinOutput)
                   .WithSize(2,1)
-                  .WithPosition(6,2)
+                  .WithPosition(8,0)
+                  .GetEntry();
+  m_nte_Launcher_Max_Output = m_sbt_Launcher->AddPersistent("Launcher Max Output", kMaxOutput)
+                  .WithSize(2,1)
+                  .WithPosition(8,1)
+                  .GetEntry();
+  m_nte_Launcher_Feed_Forward = m_sbt_Launcher->AddPersistent("Launcher Feed Forward", kFF)
+                  .WithSize(2,1)
+                  .WithPosition(8,3)
                   .GetEntry();
 #endif
 
