@@ -20,7 +20,12 @@
 
 namespace ConDriveTrain {
     // Autonomous Constants
-    constexpr double AUTONOMOUS_DISTANCE = 80;
+    constexpr double AUTONOMOUS_DISTANCE = 80;  // Inches (negative is reverse) Needed to exit the 
+    constexpr double AUTONOMOUS_LAUNCH_DELAY = 0.5; // Seconds to delay between launch & drive
+    constexpr int AUTONOMOUS_MODE_SHOOT_DELAY_MOVE = 1;
+    constexpr int AUTONOMOUS_MODE_JUST_MOVE = 2;
+    constexpr int AUTONOMOUS_MODE_5_BALL = 3;
+
     // Motors
     constexpr int RIGHT_MOTOR_A_ID = 2;
     constexpr int RIGHT_MOTOR_B_ID = 4;
@@ -69,6 +74,7 @@ class DriveTrain : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_a_DriveDelay;
   nt::NetworkTableEntry m_nte_b_DriveDistance;
   nt::NetworkTableEntry m_nte_c_DriveTurnAngle;
+  nt::NetworkTableEntry m_nte_autoDriveMode;
   
 #ifdef ENABLE_DRIVETRAIN
   /**
@@ -103,9 +109,14 @@ class DriveTrain : public frc2::SubsystemBase {
   void GoToAngle(double angle);
   void ResetGyro();
 
-  void GetAutonomousDistance();
+  // Retrieve from dashboard, set member variables
+  void GetAutonomousParameters();
   //void SetSafety(bool safety);
   
+  // Autonomous drive parameters
+  double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
+  double m_autoDriveMode = ConDriveTrain::AUTONOMOUS_MODE_SHOOT_DELAY_MOVE;
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -131,8 +142,6 @@ class DriveTrain : public frc2::SubsystemBase {
 
   // motor max RPM
   const double MaxRPM = 5700;
-
-  double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
 
   // Drive encoders
   rev::SparkMaxRelativeEncoder m_rightEncoderA = m_rightMotorA.GetEncoder();
