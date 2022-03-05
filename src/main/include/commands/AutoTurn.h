@@ -17,7 +17,7 @@
 class AutoTurn
     : public frc2::CommandHelper<frc2::CommandBase, AutoTurn> {
  public:
-  AutoTurn(DriveTrain *drivetrain);
+  AutoTurn(DriveTrain *drivetrain, double angle);
 
   void Initialize() override;
 
@@ -41,6 +41,4 @@ class AutoTurn
   double m_angle_degrees;
   double m_rotationOut = 0.0;
   double m_kP, m_kI, m_kD, m_setpoint, m_integral, m_output, m_previous_error;
-
-
 };

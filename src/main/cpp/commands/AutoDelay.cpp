@@ -4,7 +4,7 @@
 
 #include "commands/AutoDelay.h"
 
-AutoDelay::AutoDelay(units::time::second_t seconds) : m_seconds(seconds) {
+AutoDelay::AutoDelay(double seconds) : m_seconds(seconds) {
   // Use addRequirements() here to declare subsystem dependencies.
   m_timer = frc::Timer(); 
 }
@@ -29,5 +29,5 @@ void AutoDelay::End(bool interrupted) {
 // Returns true when the command should end.
 bool AutoDelay::IsFinished() {
   // m_timer.Get() returns a units::time::second_t
-  return m_timer.Get() > m_seconds;
+  return (double)m_timer.Get() > m_seconds;
 }

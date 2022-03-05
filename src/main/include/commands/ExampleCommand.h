@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/ConditionalCommand.h>
 
 #include "subsystems/ExampleSubsystem.h"
 
@@ -28,4 +29,12 @@ class ExampleCommand
 
  private:
   ExampleSubsystem* m_subsystem;
+    // The enum used as keys for selecting the command to run.
+  enum CommandSelector { ONE, TWO, THREE };
+
+  // An example selector method for the selectcommand.  Returns the selector
+  // that will select which command to run.  Can base this choice on logical
+  // conditions evaluated at runtime.
+  CommandSelector Select() { return ONE; }
+
 };

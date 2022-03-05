@@ -50,7 +50,7 @@ void Intake::ToggleDeployedState() {
 
 void Intake::Deploy() {
   printf("Intake::Deploy() Executing...\n");
-  deployDoublePCM.Set(frc::DoubleSolenoid::Value::kForward);
+  deployDoublePCM.Set(ConIntake::DEPLOY_INTAKE);
   m_deployedState = true;
   Load();
 }
@@ -58,7 +58,7 @@ void Intake::Deploy() {
 void Intake::Stow() {
   printf("Intake::Stow() Executing...\n");
   
-  deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
+  deployDoublePCM.Set(ConIntake::STOW_INTAKE);
   m_timer.Reset();
   m_timer.Start();
   m_deployedState = false;

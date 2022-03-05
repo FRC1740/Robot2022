@@ -21,6 +21,7 @@
 #include "commands/Climb.h"
 #include "commands/ExtendClimber.h"
 #include "commands/Test.h"
+#include "commands/ExampleCommand.h"
 
 #include "subsystems/DriveTrain.h"
 #include "subsystems/Launcher.h"
@@ -67,6 +68,5 @@ class RobotContainer {
   ExampleSubsystem m_testing;
 
   // Commands...
-  AutoDrive m_autoDrive;
-
+  AutoDrive *m_autoDrive = nullptr;
 };
