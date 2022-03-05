@@ -19,7 +19,7 @@
 class AutoDelay
     : public frc2::CommandHelper<frc2::CommandBase, AutoDelay> {
  public:
-  explicit AutoDelay(units::time::second_t);
+  explicit AutoDelay(double);
 
   void Initialize() override;
 
@@ -31,7 +31,7 @@ class AutoDelay
 
  private:
   DriveTrain *m_driveTrain;
-  units::time::second_t m_seconds;
+  double m_seconds;
   // double m_seconds; // Don't know how to type convert the NTE GetDouble() -> second_t
   frc::Timer m_timer;  
 };

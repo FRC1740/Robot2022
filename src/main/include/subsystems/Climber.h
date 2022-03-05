@@ -20,7 +20,7 @@ namespace ConClimber {
   constexpr bool NONINVERTED = false; //
   constexpr double CLIMB_SPEED = -1.0;  // Climb Motor Speed
   constexpr double DESCEND_SPEED = 1.0; // Descend Motor Speed
-  constexpr int SOFT_LIMIT_FWD = 2400; // Soft Limit Extension 5' 6" MAX height
+  constexpr int SOFT_LIMIT_FWD = 3000; // Soft Limit Extension 5' 6" MAX height; Bar @ 60-1/4"
   constexpr int SOFT_LIMIT_REV = 0;
   constexpr int CURRENT_STALL_LIMIT = 80;
 

@@ -20,7 +20,7 @@
 
 namespace ConDriveTrain {
     // Autonomous Constants
-    constexpr double AUTONOMOUS_DISTANCE = 80;  // Inches (negative is reverse) Needed to exit the 
+    constexpr double AUTONOMOUS_DISTANCE = 84;  // Inches (negative is reverse) Needed to exit the 
     constexpr double AUTONOMOUS_DRIVE_DELAY = 5.0; // Seconds to delay between launch & drive
     constexpr int AUTONOMOUS_MODE_2_BALL = 1;
     constexpr int AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE = 2;
