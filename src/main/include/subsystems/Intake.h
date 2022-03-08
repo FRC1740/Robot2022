@@ -11,6 +11,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <frc/Timer.h>
 #include <rev/CANSparkMax.h>
+#include "Constants.h"
 
 namespace ConIntake {
   constexpr int MOTOR_ID = 9;
@@ -42,7 +43,6 @@ class Intake : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_ShutdownDelay;
 
  protected:
- 
 #ifdef ENABLE_INTAKE
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
   rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushed}; // Regular brushed motor
