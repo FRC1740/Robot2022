@@ -8,6 +8,7 @@
 #include "subsystems/DriveTrain.h"
 
 DriveTrain::DriveTrain() {
+
 #ifdef ENABLE_DRIVETRAIN
   // Settings for Spark Max motor controllers should be done here, in code
   // and not in the Spark Max Client Software
@@ -202,15 +203,25 @@ void DriveTrain::ResetGyro() {
   gyro->Reset();
 }																				 
 
-// Call GetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
+#endif // ENABLE_DRIVETRAIN
+
+// Call SetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
 void DriveTrain::SetAutonomousParameters() {
-  m_autoDriveMode =  m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE);
-  printf("m_autoDriveMode set to %f\n", m_autoDriveMode);
-  m_autoDistance = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
-  printf("m_autoDistance set to %f\n", m_autoDistance);
-  m_autoDriveDelay = m_nte_a_DriveDelay.GetDouble(ConDriveTrain::AUTONOMOUS_DRIVE_DELAY);
-  printf("m_autoDriveDelay set to %f\n", m_autoDriveDelay);
+  double d;
+  d = m_nte_autoDriveMode.GetDouble(ConDriveTrain::AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE);
+  if (d != m_autoDriveMode) {
+    m_autoDriveMode = d;
+    printf("m_autoDriveMode set to %f\n", m_autoDriveMode);
+  }
+  d = m_nte_b_DriveDistance.GetDouble(ConDriveTrain::AUTONOMOUS_DISTANCE);
+  if (d != m_autoDistance) {
+    m_autoDistance = d;
+    printf("m_autoDistance set to %f\n", m_autoDistance);
+  }
+  d = m_nte_a_DriveDelay.GetDouble(ConDriveTrain::AUTONOMOUS_DRIVE_DELAY);
+  if (d != m_autoDriveDelay) {
+    m_autoDriveDelay = d;
+    printf("m_autoDriveDelay set to %f\n", m_autoDriveDelay);
+  }
 }
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
-
-#endif // ENABLE_DRIVETRAIN

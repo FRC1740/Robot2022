@@ -21,7 +21,6 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
   m_launcher = launcher;
   m_intake = intake;
 
-  #if defined(ENABLE_DRIVETRAIN)
     // SHuffleboard parameters NOT refreshing this way. Moving them into the specific commands instead of
     // passing them as arguments to the command seems to function as desired.
     // units::time::second_t a = .5_s; // FIXME: Temporary pending proper type conversion double -> second_t
@@ -65,7 +64,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
     // AddCommands(FooCommand(), BarCommand());
     switch (m_mode) {
       case ConDriveTrain::AUTONOMOUS_MODE_2_BALL:
-        printf("Autonomous %d Ball Mode", m_mode);
+        printf("Autonomous %d Ball Mode\n", m_mode);
         AddCommands (
           frc2::SequentialCommandGroup { 
               frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), 
@@ -97,7 +96,7 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
       break;
 
       case ConDriveTrain::AUTONOMOUS_MODE_LAUNCH_DELAY_MOVE:
-        printf("Autonomous Mode %d: Shoot-Delay-Move", m_mode);
+        printf("Autonomous Mode %d: Shoot-Delay-Move\n", m_mode);
         AddCommands (
             frc2::SequentialCommandGroup {
               frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
@@ -130,6 +129,5 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
 
     } // switch(mode)
     #endif // if 0
-  #endif // defined(ENABLE_DRIVETRAIN)
 
 }

@@ -13,7 +13,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
-#include <AHRS.h>				 
+#include <AHRS.h>
 
 #include "OI.h"
 #include "Constants.h"
@@ -110,6 +110,8 @@ class DriveTrain : public frc2::SubsystemBase {
   void GoToAngle(double angle);
   void ResetGyro();
 
+#endif // ENABLE_DRIVETRAIN
+
   // Retrieve from dashboard, set member variables
   void SetAutonomousParameters();
   //void SetSafety(bool safety);
@@ -124,6 +126,8 @@ class DriveTrain : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   double m_maxOutput = 1.0;
+
+#ifdef ENABLE_DRIVETRAIN
   AHRS *gyro;
 
   // Neo motor controllers
