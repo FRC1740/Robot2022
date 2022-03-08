@@ -23,9 +23,11 @@ AutoTurn::AutoTurn(DriveTrain *drivetrain, double angle) : m_driveTrain{drivetra
 
 }
 
+#ifdef ENABLE_DRIVETRAIN
 // Called when the command is initially scheduled.
 void AutoTurn::Initialize() {
   m_driveTrain->ResetGyro();
+
   // Read the target angle from the dashboard
   //m_setpoint = m_driveTrain->m_nte_c_DriveTurnAngle.GetDouble(0.0);
   m_setpoint = m_angle_degrees;
@@ -65,3 +67,4 @@ void AutoTurn::End(bool interrupted) {
 bool AutoTurn::IsFinished() {
   return false;
 }
+#endif // ENABLE_DRIVETRAIN

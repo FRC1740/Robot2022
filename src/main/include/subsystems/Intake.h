@@ -42,10 +42,14 @@ class Intake : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_ShutdownDelay;
 
  protected:
+ 
+#ifdef ENABLE_INTAKE
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
   rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushed}; // Regular brushed motor
   // Brushed motor - No sensor
   // rev::SparkMaxRelativeEncoder m_intakeEncoder = m_intakeMotor.GetEncoder();
+#endif // ENABLE_INTAKE
+
   bool m_deployedState; // True if intake system is deployed outside of robot perimeter
   double m_intakePower; // Power to run intake motor
   frc::Timer m_timer;

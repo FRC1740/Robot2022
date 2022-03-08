@@ -10,7 +10,8 @@
 #include "RobotContainer.h"
 #include "Constants.h"
 
-RobotContainer::RobotContainer(){
+RobotContainer::RobotContainer() {
+
   // ANOTHER WAY OF CONSTRUCTING: m_autoDrive = AutoDrive(&m_driveTrain);
   // Initialize all of your commands and subsystems here
 }
@@ -20,7 +21,6 @@ void RobotContainer::RobotInit() {
   // Configure the button bindings
   ConfigureButtonBindings();
 
-  #if defined ENABLE_DRIVETRAIN && defined ENABLE_LAUNCHER
   // #define ENABLE_FLIGHTSTICK
   #ifdef ENABLE_FLIGHTSTICK
     // Set up default drive command
@@ -38,7 +38,6 @@ void RobotContainer::RobotInit() {
       // To swap front & back of robot, add/remove a minus sign in the following line, and swap the INVERTED/NONINVERTED in DriveTrain.cpp
       [this] { return -driver_control.GetRawAxis(ConXBOXControl::LEFT_JOYSTICK_X/4); }));
   #endif
-  #endif // ENABLE_DRIVETRAIN
 
   #ifdef ENABLE_USB_CAMERA
   // Start the Camera Server
@@ -56,12 +55,13 @@ void RobotContainer::RobotInit() {
   #define CODE_VERSION ROBOT_VERSION_STRING " " __DATE__ " " __TIME__ 
   m_nte_CodeVersion = m_sbt_Robot->Add("Code Version", CODE_VERSION).WithSize(3, 1).WithPosition(0, 0).GetEntry();
 
-  m_autoDrive = new AutoDrive(&m_driveTrain, &m_launcher, &m_intake);
-
 }
+
 // Called ONCE when the robot is disabled
 void RobotContainer::DisabledInit() {
+#ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetEncoders();
+#endif // ENABLE_DRIVETRAIN
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
   m_intake.Stow();
@@ -80,7 +80,9 @@ void RobotContainer::TeleopInit() {
 
 void RobotContainer::AutonomousInit() {
   m_driveTrain.SetAutonomousParameters();
+#ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetGyro();
+#endif // ENABLE_DRIVETRAIN
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -138,5 +140,10 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
+  if (m_autoDrive != nullptr) {
+    m_autoDrive->Cancel();
+    m_autoDrive = nullptr;
+  }  
+  m_autoDrive = new AutoDrive(&m_driveTrain, &m_launcher, &m_intake);
   return m_autoDrive;
 }

@@ -19,6 +19,7 @@ class AutoTurn
  public:
   AutoTurn(DriveTrain *drivetrain, double angle);
 
+#ifdef ENABLE_DRIVETRAIN
   void Initialize() override;
 
   void Execute() override;
@@ -28,6 +29,7 @@ class AutoTurn
   bool IsFinished() override;
 
   void PID();
+#endif // ENABLE_DRIVETRAIN
 
  private:
 

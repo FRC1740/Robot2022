@@ -10,6 +10,7 @@ AutoDriveDistance::AutoDriveDistance(DriveTrain *drivetrain, double distance)
   AddRequirements(drivetrain);
 }
 
+#ifdef ENABLE_DRIVETRAIN
 // Called when the command is initially scheduled.
 void AutoDriveDistance::Initialize() {
   m_driveTrain->ResetEncoders();
@@ -40,3 +41,4 @@ bool AutoDriveDistance::IsFinished() {
 
   return ((fabs(m_distance_inches + copysign(epsilon / 2.0, m_distance_inches)- m_driveTrain->GetAverageDistanceInches())) < epsilon);
 }
+#endif // ENABLE_DRIVETRAIN

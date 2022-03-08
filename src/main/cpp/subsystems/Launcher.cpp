@@ -9,7 +9,7 @@
 
 Launcher::Launcher() {
             // Initialize stuff here
-            #ifdef ENABLE_LAUNCHER
+#ifdef ENABLE_LAUNCHER
 #ifdef LAUNCHER_VELOCITY_CONTROL
 double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, kMinOutput = -1.0;
     m_launcherMotorBert.RestoreFactoryDefaults();
@@ -64,7 +64,7 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
             // Save the configuration to flash memory
             m_launcherMotorErnie.BurnFlash();
             m_launcherMotorBert.BurnFlash();
-            #endif            
+#endif            
 
             m_sbt_Launcher = &frc::Shuffleboard::GetTab(ConShuffleboard::LauncherTab);
 
@@ -149,17 +149,13 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
             m_ErnieFwdPower = ConLauncher::ERNIE_POWER;
             m_BertFwdPower = ConLauncher::BERT_POWER;
 
-            #ifdef ENABLE_LAUNCHER
             // Ensure the launcher is in the retracted position
             Retract();
-            #endif
           }
 
 void Launcher::Launch() {
-  #ifdef ENABLE_LAUNCHER
   LaunchBert();
   LaunchErnie();
-  #endif
 }
 
 void Launcher::LaunchBert() {
@@ -180,10 +176,8 @@ void Launcher::LaunchErnie() {
 
 void Launcher::Retract() {
   // Bring both launchers back
-  #ifdef ENABLE_LAUNCHER
   RetractBert();
   RetractErnie();
-  #endif
 }
 
 void Launcher::RetractBert() {
@@ -222,7 +216,7 @@ void Launcher::Stop() {
 
 void Launcher::Periodic() {
   // Push/Pull stuff from the Network Tables
-  #ifdef ENABLE_LAUNCHER
+#ifdef ENABLE_LAUNCHER
   m_ErnieFwdPower = m_nte_Ernie_Power.GetDouble(ConLauncher::ERNIE_POWER);
   m_BertFwdPower = m_nte_Bert_Power.GetDouble(ConLauncher::BERT_POWER);
   m_nte_Bert_Position.SetDouble(m_launcherEncoderBert.GetPosition());
@@ -230,5 +224,5 @@ void Launcher::Periodic() {
   // Display
   m_nte_Bert_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
   m_nte_Ernie_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
-  #endif
+#endif
 }

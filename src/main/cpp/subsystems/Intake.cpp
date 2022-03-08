@@ -7,6 +7,7 @@
 #include "OI.h"
 
 Intake::Intake() {
+#ifdef ENABLE_INTAKE
         // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
         deployDoublePCM.Set(frc::DoubleSolenoid::Value::kReverse);
         m_deployedState = false;
@@ -40,8 +41,8 @@ Intake::Intake() {
               .WithPosition(2,0)
               .GetEntry();
 
-
         m_timer = frc::Timer(); // For delayed shutdown of intake motor
+#endif // ENABLE_INTAKE
         }
 
 void Intake::ToggleDeployedState() {
@@ -50,7 +51,9 @@ void Intake::ToggleDeployedState() {
 
 void Intake::Deploy() {
   printf("Intake::Deploy() Executing...\n");
+#ifdef ENABLE_INTAKE
   deployDoublePCM.Set(ConIntake::DEPLOY_INTAKE);
+#endif // ENABLE_INTAKE
   m_deployedState = true;
   Load();
 }
@@ -58,35 +61,43 @@ void Intake::Deploy() {
 void Intake::Stow() {
   printf("Intake::Stow() Executing...\n");
   
+#ifdef ENABLE_INTAKE
   deployDoublePCM.Set(ConIntake::STOW_INTAKE);
   m_timer.Reset();
   m_timer.Start();
+#endif // ENABLE_INTAKE
   m_deployedState = false;
 }
 
 void Intake::Load() {
   printf("Intake::Load() Executing...\n");
+#ifdef ENABLE_INTAKE
   if (m_deployedState) {
     m_intakeMotor.Set(ConIntake::LOAD_BALL * m_intakePower);
   } else {
     m_intakeMotor.Set(0.0);
   }
+#endif // ENABLE_INTAKE
 }
 
 void Intake::Reject() {
   printf("Intake::Reject() Executing...\n");
+#ifdef ENABLE_INTAKE
   if (m_deployedState) {
     m_intakeMotor.Set(ConIntake::REJECT_BALL * m_intakePower);
   } else {
     m_intakeMotor.Set(0.0);
   }  
+#endif // ENABLE_INTAKE
 }
 
 void Intake::Periodic() {
+#ifdef ENABLE_INTAKE
   m_nte_MotorCurrent.SetDouble(m_intakeMotor.GetOutputCurrent());
   m_nte_StowedState.SetBoolean(!m_deployedState);
   m_intakePower = m_nte_MotorPower.GetDouble(ConIntake::INTAKE_POWER);
   if (m_deployedState == false && m_timer.Get() > ConIntake::SHUTDOWN_DELAY) {
     m_intakeMotor.Set(0.0);
   }
+#endif // ENABLE_INTAKE
 }
