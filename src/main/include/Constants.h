@@ -10,6 +10,15 @@
 #include <cmath>  // for std::fabs
 #include <math.h>
 
+// Units required for Trajectory Following
+#include <units/acceleration.h>
+#include <units/angle.h>
+#include <units/angular_acceleration.h>
+#include <units/angular_velocity.h>
+#include <units/length.h>
+#include <units/time.h>
+#include <units/velocity.h>
+#include <units/voltage.h>
 //On error, create env.h from env-default.h and modify ROBOT_VERSION_STRING
 #include "env.h"
 
@@ -44,9 +53,9 @@ namespace ConLimelight {
     constexpr int SNAPSHOT_START = 1;
 
     constexpr double HORIZONTAL_TOLERANCE = 1.0;  //degrees
-    constexpr double TARGET_HEIGHT = 38.5; //in to center of target
-    constexpr double CAMERA_HEIGHT = 19.5; //in to center of camera
-    constexpr double MAX_HORIZONTAL_OFFSET = 29.8; //degrees
+    constexpr units::length::inch_t TARGET_HEIGHT = 38.5_in; //in to center of target
+    constexpr units::length::inch_t CAMERA_HEIGHT = 19.5_in; //in to center of camera
+    constexpr units::angle::degree_t MAX_HORIZONTAL_OFFSET = 29.8_deg; //degrees
 
     // constexpr cv::Matx33d cameraMatrix = cv::Matx33d(
     //                     772.53876202, 0., 479.132337442,
