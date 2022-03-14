@@ -9,6 +9,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/drive/DifferentialDrive.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <rev/CANSparkMax.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
@@ -42,22 +43,46 @@ namespace ConDriveTrain {
     // Neo Motor & Gearbox
     constexpr double ENCODER_TICK_RESOLUTION = 42.0; // IS IT REALLY 42? or 48? or maybe 24?  
     constexpr double GEAR_RATIO = 10.71; // Neo rotates 10.71 times for one rotation of the output
-    constexpr double WHEEL_DIAMETER = 6.0;
-    constexpr double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI; // Abt 18.85 in.
+    constexpr units::length::inch_t WHEEL_DIAMETER = 6.0_in;
+    constexpr units::length::inch_t WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * M_PI; // Abt 18.85 in.
 
     constexpr double TICKS_PER_WHEEL_REVOLUTION = ENCODER_TICK_RESOLUTION * GEAR_RATIO; // Abt 450 ticks
 
     //Conversions
-    constexpr double TICKS_PER_INCH = TICKS_PER_WHEEL_REVOLUTION / WHEEL_CIRCUMFERENCE; // Abt 24 ticks per inch
-    constexpr double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_WHEEL_REVOLUTION; // Abt 1/24 (.042)
+    constexpr double TICKS_PER_INCH = TICKS_PER_WHEEL_REVOLUTION / (double)WHEEL_CIRCUMFERENCE; // Abt 24 ticks per inch
+    constexpr double INCHES_PER_TICK = (double)WHEEL_CIRCUMFERENCE / TICKS_PER_WHEEL_REVOLUTION; // Abt 1/24 (.042)
 
     // degrees to in
     constexpr double ANGLE_2_IN = 25.5*ConMath::PI/360; // FIXME: What is this fudge factor? 25.5?
     constexpr double IN_2_ANGLE= 1/ANGLE_2_IN;
+
+    // Experimental Drive Characterization/SysID for Trajectory Following
+    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+    // These characterization values MUST be determined either experimentally or
+    // theoretically for *your* robot's drive. The Robot Characterization
+    // Toolsuite provides a convenient tool for obtaining these values for your
+    // robot.
+    constexpr auto ks = 0.14251_V;
+    constexpr auto kv = 1.98 * 1_V * 1_s / 1_in;
+    constexpr auto ka = 0.2 * 1_V * 1_s * 1_s / 1_in;
+
+    // Example value only - as above, this must be tuned for your drive!
+    constexpr double kPDriveVel = 0.14047;
+
+    constexpr auto kTrackwidth = 22.8125_in;
+    extern const frc::DifferentialDriveKinematics kDriveKinematics;
+    constexpr auto kMaxSpeed = 3_mps;
+    constexpr auto kMaxAcceleration = 3_mps_sq;
+
+    // Reasonable baseline values for a RAMSETE follower in units of meters and
+    // seconds
+    constexpr double kRamseteB = 39.3701 * 2.0; // Inches. Was: 2;
+    constexpr double kRamseteZeta = 0.7;
 }
 
 class DriveTrain : public frc2::SubsystemBase {
  public:
+ 
   DriveTrain();
   frc::ShuffleboardTab *m_sbt_DriveTrain;
   nt::NetworkTableEntry m_nte_DriveSpeedFilter;
