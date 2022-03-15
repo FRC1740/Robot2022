@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Climber.h"
+#include <frc/DriverStation.h>
 #include "OI.h"
 #include "Constants.h"
 
@@ -45,6 +46,9 @@ Climber::Climber()
           .WithPosition(2,3)
           .GetEntry();
 
+    // Just call this once and save it
+    m_isFmsAttached = frc::DriverStation::IsFMSAttached();
+
 #ifdef ENABLE_CLIMBER
     m_climberMotor.SetSmartCurrentLimit(ConClimber::CURRENT_STALL_LIMIT, ConClimber::CURRENT_STALL_LIMIT);
     m_climberEncoder.SetPositionConversionFactor(ConSparkMax::POSITION_CONVERSION_FACTOR); // Generally 42
@@ -56,11 +60,12 @@ Climber::Climber()
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, ConClimber::SOFT_LIMIT_FWD);
     m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, ConClimber::SOFT_LIMIT_REV);
-    // Improve flash lifetime (although different behavior is possible between competition and pits) with 
-    //   if (DriverStation.isFMSAttached()) 
-    m_climberMotor.BurnFlash();
-#endif 
+    if (m_isFmsAttached) {
+      printf("BurnFlash for Climber\n");
+      m_climberMotor.BurnFlash();
     }
+#endif 
+  }
 
 void Climber::UseOutput(double output, double setpoint) {
   // Use the output here
@@ -101,6 +106,9 @@ void Climber::Periodic() {
 
 void Climber::SetClimberSoftLimits() {
   double d;
+#ifdef ENABLE_CLIMBER
+  bool toBurn = false;
+#endif // ENABLE_CLIMBER
   d = m_nte_ExtendLimit.GetDouble(ConClimber::SOFT_LIMIT_FWD);
   if (d != m_softLimitFwd) {
     printf("Changing Forward limit from %f to %f\n", m_softLimitFwd, d);
@@ -108,6 +116,7 @@ void Climber::SetClimberSoftLimits() {
 #ifdef ENABLE_CLIMBER
     m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, true);
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_softLimitFwd);
+    toBurn = true;
 #endif // ENABLE_CLIMBER
   }
   d = m_nte_RetractLimit.GetDouble(ConClimber::SOFT_LIMIT_REV);
@@ -117,9 +126,13 @@ void Climber::SetClimberSoftLimits() {
 #ifdef ENABLE_CLIMBER
     m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_softLimitRev);
-    // Improve flash lifetime (although different behavior is possible between competition and pits) with 
-    //   if (DriverStation.isFMSAttached()) 
-    m_climberMotor.BurnFlash();
+    toBurn = true;
 #endif // ENABLE_CLIMBER
   }
+#ifdef ENABLE_CLIMBER
+  if (toBurn && m_isFmsAttached) {
+    printf("BurnFlash for Climber\n");
+    m_climberMotor.BurnFlash();
+  }
+#endif // ENABLE_CLIMBER}
 }

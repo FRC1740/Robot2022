@@ -48,6 +48,7 @@ class Climber : public frc2::PIDSubsystem {
   nt::NetworkTableEntry m_nte_MotorCurrent;
   double m_softLimitFwd = ConClimber::SOFT_LIMIT_FWD;
   double m_softLimitRev = ConClimber::SOFT_LIMIT_REV;
+  bool m_isFmsAttached = false;
 
  protected:
 

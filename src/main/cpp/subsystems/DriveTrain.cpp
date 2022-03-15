@@ -93,11 +93,15 @@ DriveTrain::DriveTrain() {
 
   */
 
-  // Save all SparkMax firmware parameters to flash memory
-  m_leftMotorA.BurnFlash();
-  m_leftMotorB.BurnFlash();
-  m_rightMotorA.BurnFlash();
-  m_rightMotorB.BurnFlash();
+  m_isFmsAttached = frc::DriverStation::IsFMSAttached();
+  if (m_isFmsAttached) {
+    printf("BurnFlash for DriveTrain\n");
+    // Save all SparkMax firmware parameters to flash memory
+    m_leftMotorA.BurnFlash();
+    m_leftMotorB.BurnFlash();
+    m_rightMotorA.BurnFlash();
+    m_rightMotorB.BurnFlash();
+  }
 
 #endif // ENABLE_DRIVETRAIN
 

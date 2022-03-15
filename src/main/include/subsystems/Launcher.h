@@ -69,6 +69,8 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Launcher_Min_Output;
 #endif
 
+  bool m_isFmsAttached = false;
+
  protected:
  #ifdef ENABLE_LAUNCHER
   // NEO motor

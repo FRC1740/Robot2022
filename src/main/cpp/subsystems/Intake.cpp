@@ -14,8 +14,13 @@ Intake::Intake() {
 
         m_intakeMotor.SetSmartCurrentLimit(ConIntake::CURRENT_STALL_LIMIT, ConIntake::CURRENT_STALL_LIMIT);
         m_intakeMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-        // Save SparkMax motor/encoder config to flash memory
-        m_intakeMotor.BurnFlash();
+
+        m_isFmsAttached = frc::DriverStation::IsFMSAttached();
+        if (m_isFmsAttached) {
+          printf("BurnFlash for Intake\n");
+          // Save SparkMax motor/encoder config to flash memory
+          m_intakeMotor.BurnFlash();
+        }
 
         // Initialize Shuffleboard Tab and Network Table Entries
         m_sbt_Intake = &frc::Shuffleboard::GetTab(ConShuffleboard::IntakeTab);

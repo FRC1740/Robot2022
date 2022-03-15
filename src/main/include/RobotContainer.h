@@ -28,10 +28,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Climber.h"
 #include "subsystems/Vision.h"
-
-#ifdef ENABLE_LED
-#include <frc/AddressableLED.h>
-#endif // ENABLE_LED
+#include "subsystems/LEDs.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -69,17 +66,8 @@ class RobotContainer {
   Intake m_intake;
   Climber m_climber;
   Vision m_vision;
+  LEDs m_leds;
   ExampleSubsystem m_testing;
-#ifdef ENABLE_LED
-static constexpr int kLedLength = 100;
-static constexpr int kLedPwmPort = 9;
-  // Must be a PWM header, not MXP or DIO
-  frc::AddressableLED m_led{kLedPwmPort};
-  std::array<frc::AddressableLED::LEDData, kLedLength> m_ledBuffer;  // Reuse the buffer
-
-  int m_currentPixel = 0;
-  int m_delta = 1;
-#endif // ENABLE_LED
 
   // Commands...
   AutoDrive *m_autoDrive = nullptr;
