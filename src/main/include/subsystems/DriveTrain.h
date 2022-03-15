@@ -145,6 +145,7 @@ class DriveTrain : public frc2::SubsystemBase {
   double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
   double m_autoDriveMode = ConDriveTrain::AUTONOMOUS_MODE_2_BALL;
   double m_autoDriveDelay = ConDriveTrain::AUTONOMOUS_DRIVE_DELAY;
+  bool m_isFmsAttached = false;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

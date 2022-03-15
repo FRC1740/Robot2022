@@ -54,7 +54,6 @@ void RobotContainer::RobotInit() {
   // Create widget for code version
   #define CODE_VERSION ROBOT_VERSION_STRING " " __DATE__ " " __TIME__ 
   m_nte_CodeVersion = m_sbt_Robot->Add("Code Version", CODE_VERSION).WithSize(3, 1).WithPosition(0, 0).GetEntry();
-
 }
 
 // Called ONCE when the robot is disabled

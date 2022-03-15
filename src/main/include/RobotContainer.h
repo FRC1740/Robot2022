@@ -28,6 +28,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Climber.h"
 #include "subsystems/Vision.h"
+#include "subsystems/LEDs.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -65,6 +66,7 @@ class RobotContainer {
   Intake m_intake;
   Climber m_climber;
   Vision m_vision;
+  LEDs m_leds;
   ExampleSubsystem m_testing;
 
   // Commands...

@@ -4,8 +4,8 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include "subsystems/Launcher.h"
+#include <frc/DriverStation.h>
 #include "OI.h"
-#include "Constants.h"
 
 Launcher::Launcher() {
             // Initialize stuff here
@@ -61,9 +61,13 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
             m_launcherMotorBert.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
             m_launcherMotorErnie.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
 
-            // Save the configuration to flash memory
-            m_launcherMotorErnie.BurnFlash();
-            m_launcherMotorBert.BurnFlash();
+            m_isFmsAttached = frc::DriverStation::IsFMSAttached();
+            if (m_isFmsAttached) {
+              printf("BurnFlash for Launchers\n");
+              // Save the configuration to flash memory
+              m_launcherMotorErnie.BurnFlash();
+              m_launcherMotorBert.BurnFlash();
+            }
 #endif            
 
             m_sbt_Launcher = &frc::Shuffleboard::GetTab(ConShuffleboard::LauncherTab);
@@ -200,7 +204,10 @@ void Launcher::SetLaunchSoftLimits() {
   m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Ernie_RevLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT));
   m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(ConLauncher::BERT_FWD_LIMIT));
   m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Bert_RevLimit.GetDouble(ConLauncher::BERT_REV_LIMIT));
-  m_launcherMotorBert.BurnFlash();  
+  if (m_isFmsAttached) {
+    printf("BurnFlash for Launchers\n");
+    m_launcherMotorBert.BurnFlash();  
+  }
   #endif
 }
 

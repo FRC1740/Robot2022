@@ -41,6 +41,7 @@ class Intake : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_StowedState;
   nt::NetworkTableEntry m_nte_MotorPower;
   nt::NetworkTableEntry m_nte_ShutdownDelay;
+  bool m_isFmsAttached = false;
 
  protected:
 #ifdef ENABLE_INTAKE

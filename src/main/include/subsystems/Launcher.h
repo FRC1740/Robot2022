@@ -9,8 +9,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
-
-#include "env.h"
+#include "Constants.h"
 
 namespace ConLauncher {
   constexpr int MOTOR_BERT_ID = 6;
@@ -68,6 +67,8 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Launcher_Max_Output;
   nt::NetworkTableEntry m_nte_Launcher_Min_Output;
 #endif
+
+  bool m_isFmsAttached = false;
 
  protected:
  #ifdef ENABLE_LAUNCHER
