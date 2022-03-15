@@ -6,8 +6,8 @@
       "style": "0",
       "userScale": "2",
       "width": "1640",
-      "xpos": "180",
-      "ypos": "74"
+      "xpos": "135",
+      "ypos": "88"
     }
   },
   "Window": {
@@ -43,8 +43,8 @@
     },
     "Deploy Status": {
       "Collapsed": "0",
-      "Pos": "733,86",
-      "Size": "820,862"
+      "Pos": "732,86",
+      "Size": "800,839"
     },
     "Diagnostic Plots": {
       "Collapsed": "0",
@@ -53,17 +53,12 @@
     },
     "Exception Caught!": {
       "Collapsed": "0",
-      "Pos": "563,460",
+      "Pos": "562,460",
       "Size": "480,96"
-    },
-    "Override Units": {
-      "Collapsed": "0",
-      "Pos": "630,365",
-      "Size": "410,215"
     },
     "Warning": {
       "Collapsed": "0",
-      "Pos": "765,3",
+      "Pos": "761,3",
       "Size": "669,964"
     }
   }

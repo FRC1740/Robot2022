@@ -197,8 +197,8 @@ void DriveTrain::GoToAngle(double angle) {
   // fix throws a compiler/unknown reference error for CANSparkMax::ControlType
   //  Use SetReference(double, CANSparkMax::ControlType, int, double, SparkMaxPIDController::ArbFFUnits) instead [-Wdeprecated-declarations]
   //  right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
-  left_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
-  right_pidController.SetReference(angle, rev::ControlType::kSmartMotion);
+  left_pidController.SetReference(angle, rev::CANSparkMax::ControlType::kSmartMotion);
+  right_pidController.SetReference(angle, rev::CANSparkMax::ControlType::kSmartMotion);
 
 }
 double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
