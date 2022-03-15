@@ -71,7 +71,7 @@ class RobotContainer {
   Vision m_vision;
   ExampleSubsystem m_testing;
 #ifdef ENABLE_LED
-static constexpr int kLedLength = 300;
+static constexpr int kLedLength = 100;
 static constexpr int kLedPwmPort = 9;
   // Must be a PWM header, not MXP or DIO
   frc::AddressableLED m_led{kLedPwmPort};

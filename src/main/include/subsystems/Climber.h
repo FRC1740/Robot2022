@@ -20,7 +20,7 @@ namespace ConClimber {
   constexpr bool NONINVERTED = false; //
   constexpr double CLIMB_SPEED = -1.0;  // Climb Motor Speed
   constexpr double DESCEND_SPEED = 1.0; // Descend Motor Speed
-  constexpr int SOFT_LIMIT_FWD = 3000; // Soft Limit Extension 5' 6" MAX height; Bar @ 60-1/4"
+  constexpr int SOFT_LIMIT_FWD = 2830; // Soft Limit Extension 5' 6" MAX height; Bar @ 60-1/4"
   constexpr int SOFT_LIMIT_REV = 0;
   constexpr int CURRENT_STALL_LIMIT = 80;
 
@@ -46,6 +46,8 @@ class Climber : public frc2::PIDSubsystem {
   nt::NetworkTableEntry m_nte_ExtendLimit;
   nt::NetworkTableEntry m_nte_RetractLimit;
   nt::NetworkTableEntry m_nte_MotorCurrent;
+  double m_softLimitFwd = ConClimber::SOFT_LIMIT_FWD;
+  double m_softLimitRev = ConClimber::SOFT_LIMIT_REV;
 
  protected:
 
@@ -53,10 +55,10 @@ class Climber : public frc2::PIDSubsystem {
   double GetMeasurement() override;
   void Periodic();
 
-  
+#ifdef ENABLE_CLIMBER
   // Neo motor controllers
   rev::CANSparkMax m_climberMotor {ConClimber::CLIMBER_MOTOR_ID, rev::CANSparkMax::MotorType::kBrushless};
   // Drive encoders
   rev::SparkMaxRelativeEncoder m_climberEncoder = m_climberMotor.GetEncoder();
-  
+#endif // ENABLE_CLIMBER
 };

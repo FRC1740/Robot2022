@@ -96,7 +96,7 @@ void RobotContainer::DisabledPeriodic() {
   }
   m_ledBuffer[m_currentPixel].SetRGB(255, 255, 255);
   m_currentPixel += m_delta;
-  if ((m_currentPixel <= 0) || (m_currentPixel >= kLedLength)) m_delta = 1 - m_delta;
+  if ((m_currentPixel <= 0) || (m_currentPixel >= kLedLength)) m_delta = -m_delta;
   m_led.SetData(m_ledBuffer);
 #endif // ENABLE_LED
 }

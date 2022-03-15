@@ -11,6 +11,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <frc/Timer.h>
 #include <rev/CANSparkMax.h>
+#include "Constants.h"
 
 namespace ConIntake {
   constexpr int MOTOR_ID = 9;
