@@ -5,7 +5,6 @@
 #include "subsystems/Climber.h"
 #include <frc/DriverStation.h>
 #include "OI.h"
-#include "Constants.h"
 
 Climber::Climber()
     : PIDSubsystem(

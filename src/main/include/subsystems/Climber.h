@@ -9,6 +9,7 @@
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <networktables/NetworkTableEntry.h>
 #include <rev/CANSparkMax.h>
+#include "Constants.h"
 
 namespace ConClimber {
   // Motor

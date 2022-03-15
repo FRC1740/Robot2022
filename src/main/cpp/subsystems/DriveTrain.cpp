@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DriveTrain.h"
+#include <frc/DriverStation.h>
 
 DriveTrain::DriveTrain() {
 
