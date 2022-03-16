@@ -55,7 +55,6 @@ Climber::Climber()
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, ConClimber::SOFT_LIMIT_FWD);
     m_climberMotor.EnableSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, true);
     m_climberMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, ConClimber::SOFT_LIMIT_REV);
-
 #endif 
   }
 
