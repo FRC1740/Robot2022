@@ -35,13 +35,13 @@ class Intake : public frc2::SubsystemBase {
   void Load();
   void Reject();
   void Periodic() override;
+  void BurnFlash();
 
   frc::ShuffleboardTab *m_sbt_Intake;
   nt::NetworkTableEntry m_nte_MotorCurrent;
   nt::NetworkTableEntry m_nte_StowedState;
   nt::NetworkTableEntry m_nte_MotorPower;
   nt::NetworkTableEntry m_nte_ShutdownDelay;
-  bool m_isFmsAttached = false;
 
  protected:
 #ifdef ENABLE_INTAKE

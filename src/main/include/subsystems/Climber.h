@@ -38,7 +38,8 @@ class Climber : public frc2::PIDSubsystem {
   void Extend();
   void Stop();
   void SetClimberSoftLimits();
-  
+  void BurnFlash();
+
   frc::ShuffleboardTab *m_sbt_Climber;
   nt::NetworkTableEntry m_nte_ClimberDistance;
   nt::NetworkTableEntry m_nte_ClimberOutput;
@@ -49,7 +50,6 @@ class Climber : public frc2::PIDSubsystem {
   nt::NetworkTableEntry m_nte_MotorCurrent;
   double m_softLimitFwd = ConClimber::SOFT_LIMIT_FWD;
   double m_softLimitRev = ConClimber::SOFT_LIMIT_REV;
-  bool m_isFmsAttached = false;
 
  protected:
 

@@ -4,7 +4,6 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include "subsystems/Launcher.h"
-#include <frc/DriverStation.h>
 #include "OI.h"
 
 Launcher::Launcher() {
@@ -61,13 +60,6 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
             m_launcherMotorBert.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
             m_launcherMotorErnie.SetSmartCurrentLimit(ConLauncher::CURRENT_STALL_LIMIT, ConLauncher::CURRENT_STALL_LIMIT);
 
-            m_isFmsAttached = frc::DriverStation::IsFMSAttached();
-            if (m_isFmsAttached) {
-              printf("BurnFlash for Launchers\n");
-              // Save the configuration to flash memory
-              m_launcherMotorErnie.BurnFlash();
-              m_launcherMotorBert.BurnFlash();
-            }
 #endif            
 
             m_sbt_Launcher = &frc::Shuffleboard::GetTab(ConShuffleboard::LauncherTab);
@@ -198,17 +190,23 @@ void Launcher::RetractErnie() {
   #endif
 }
 
+void Launcher::SetupFar(){
+  printf("Launcher::SetupFar()\n");
+  m_useClose = false;
+}
+
+void Launcher::SetupClose() {
+  printf("Launcher::SetupClose()\n");
+  m_useClose = true;
+}
+
 void Launcher::SetLaunchSoftLimits() {
-  #ifdef ENABLE_LAUNCHER
+#ifdef ENABLE_LAUNCHER
   m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Ernie_FwdLimit.GetDouble(ConLauncher::ERNIE_FWD_LIMIT));
   m_launcherMotorErnie.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Ernie_RevLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT));
   m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, m_nte_Bert_FwdLimit.GetDouble(ConLauncher::BERT_FWD_LIMIT));
   m_launcherMotorBert.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, m_nte_Bert_RevLimit.GetDouble(ConLauncher::BERT_REV_LIMIT));
-  if (m_isFmsAttached) {
-    printf("BurnFlash for Launchers\n");
-    m_launcherMotorBert.BurnFlash();  
-  }
-  #endif
+#endif // ENABLE_LAUNCHER
 }
 
 void Launcher::SetResetSoftLimits() {
@@ -232,4 +230,13 @@ void Launcher::Periodic() {
   m_nte_Bert_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
   m_nte_Ernie_Voltage.SetDouble(m_launcherMotorErnie.GetBusVoltage());
 #endif
+}
+
+void Launcher::BurnFlash() {
+  printf("BurnFlash for Launchers\n");
+#ifdef ENABLE_LAUNCHER
+  // Save the configuration to flash memory
+  m_launcherMotorErnie.BurnFlash();
+  m_launcherMotorBert.BurnFlash();
+#endif // ENABLE_LAUNCHER
 }

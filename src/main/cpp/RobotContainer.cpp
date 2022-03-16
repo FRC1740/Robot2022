@@ -5,6 +5,7 @@
 #include <frc2/command/StartEndCommand.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/button/Button.h>
+#include <frc/DriverStation.h>
 #include <frc/Relay.h>
 #include <cameraserver/CameraServer.h>
 #include "RobotContainer.h"
@@ -82,6 +83,12 @@ void RobotContainer::AutonomousInit() {
 #ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetGyro();
 #endif // ENABLE_DRIVETRAIN
+  if (frc::DriverStation::IsFMSAttached()) {
+    m_driveTrain.BurnFlash();
+    m_launcher.BurnFlash();
+    m_intake.BurnFlash();
+    m_climber.BurnFlash();
+  }
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -98,6 +105,11 @@ void RobotContainer::ConfigureButtonBindings() {
       frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
+
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
+      frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));
+  frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
+      frc2::InstantCommand( [&] { m_launcher.SetupClose(); }, { &m_launcher }));
 
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));

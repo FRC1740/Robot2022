@@ -134,18 +134,18 @@ class DriveTrain : public frc2::SubsystemBase {
 
   void GoToAngle(double angle);
   void ResetGyro();
-
 #endif // ENABLE_DRIVETRAIN
 
   // Retrieve from dashboard, set member variables
   void SetAutonomousParameters();
+
+  void BurnFlash();
   //void SetSafety(bool safety);
   
   // Autonomous drive parameters
   double m_autoDistance = ConDriveTrain::AUTONOMOUS_DISTANCE;
   double m_autoDriveMode = ConDriveTrain::AUTONOMOUS_MODE_2_BALL;
   double m_autoDriveDelay = ConDriveTrain::AUTONOMOUS_DRIVE_DELAY;
-  bool m_isFmsAttached = false;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DriveTrain.h"
-#include <frc/DriverStation.h>
 
 DriveTrain::DriveTrain() {
 
@@ -93,17 +92,6 @@ DriveTrain::DriveTrain() {
     BUUUT: IF YOU DO THIS, CHANGE THE GetLeftDistanceInches() and GetRightDistanceInches() methods!!!
 
   */
-
-  m_isFmsAttached = frc::DriverStation::IsFMSAttached();
-  if (m_isFmsAttached) {
-    printf("BurnFlash for DriveTrain\n");
-    // Save all SparkMax firmware parameters to flash memory
-    m_leftMotorA.BurnFlash();
-    m_leftMotorB.BurnFlash();
-    m_rightMotorA.BurnFlash();
-    m_rightMotorB.BurnFlash();
-  }
-
 #endif // ENABLE_DRIVETRAIN
 
   // Create and get reference to SB tab
@@ -202,7 +190,6 @@ double DriveTrain::GetGyroAngle() {return gyro->GetAngle();}
 void DriveTrain::ResetGyro() {
   gyro->Reset();
 }																				 
-
 #endif // ENABLE_DRIVETRAIN
 
 // Call SetAutonomousParameters() inside the AutonomousInit() method to read values from Shuffleboard
@@ -224,4 +211,16 @@ void DriveTrain::SetAutonomousParameters() {
     printf("m_autoDriveDelay set to %f\n", m_autoDriveDelay);
   }
 }
+
+void DriveTrain::BurnFlash() {
+  printf("BurnFlash for DriveTrain\n");
+#ifdef ENABLE_DRIVETRAIN
+ // Save all SparkMax firmware parameters to flash memory
+  m_leftMotorA.BurnFlash();
+  m_leftMotorB.BurnFlash();
+  m_rightMotorA.BurnFlash();
+  m_rightMotorB.BurnFlash();
+#endif // ENABLE_DRIVETRAIN
+}
+
 // void DriveTrain::SetSafety(bool safety) { SetSafetyEnabled(safety);}
