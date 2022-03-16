@@ -36,8 +36,11 @@ class Launcher : public frc2::SubsystemBase {
   void RetractErnie();
   void Retract(); // Move both catapaults back to starting position
   void Stop(); // Stop launcher motors
+  void SetupFar();
+  void SetupClose();
   void SetLaunchSoftLimits();
   void SetResetSoftLimits();
+  void BurnFlash();
 
   frc::ShuffleboardTab *m_sbt_Launcher;
   // Inputs from Dashboard
@@ -67,9 +70,6 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Launcher_Max_Output;
   nt::NetworkTableEntry m_nte_Launcher_Min_Output;
 #endif
-
-  bool m_isFmsAttached = false;
-
  protected:
  #ifdef ENABLE_LAUNCHER
   // NEO motor
@@ -85,7 +85,8 @@ class Launcher : public frc2::SubsystemBase {
   rev::SparkMaxPIDController m_pidControllerErnie = m_launcherMotorErnie.GetPIDController();
 #endif
 
- #endif
+#endif
+  bool m_useClose = true;
   // Power Settings for each launcher
   double m_ErnieFwdPower;
   double m_BertFwdPower;
