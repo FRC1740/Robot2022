@@ -80,9 +80,12 @@ void RobotContainer::TeleopInit() {
 
 void RobotContainer::AutonomousInit() {
   m_driveTrain.SetAutonomousParameters();
+  m_launcher.SetLaunchSoftLimits();
+  m_climber.SetClimberSoftLimits();
 #ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetGyro();
 #endif // ENABLE_DRIVETRAIN
+
   if (frc::DriverStation::IsFMSAttached()) {
     m_driveTrain.BurnFlash();
     m_launcher.BurnFlash();

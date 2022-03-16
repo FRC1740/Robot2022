@@ -19,10 +19,14 @@ namespace ConLauncher {
   constexpr int ERNIE_FWD_LIMIT = 125;
   constexpr int BERT_REV_LIMIT = 0;
   constexpr int ERNIE_REV_LIMIT = 0;
+  constexpr int BERT_FAR_LIMIT = 150;
+  constexpr int ERNIE_FAR_LIMIT = 150;
   constexpr double BERT_RAMP_RATE = .1;
   constexpr double ERNIE_RAMP_RATE = .1;
   constexpr double BERT_POWER = .75;
   constexpr double ERNIE_POWER = .75;
+  constexpr double BERT_FAR_POWER = .75;
+  constexpr double ERNIE_FAR_POWER = .75;
   constexpr int CURRENT_STALL_LIMIT = 80;
 }
 
@@ -48,8 +52,16 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Bert_RevLimit; // Ditto for the reverse
   nt::NetworkTableEntry m_nte_Ernie_FwdLimit; // LAUNCHER forward may be MOTOR REVERSE!!!
   nt::NetworkTableEntry m_nte_Ernie_RevLimit; // Ditto for the reverse
+
+  nt::NetworkTableEntry m_nte_Bert_FarLimit; // Alternate
+  nt::NetworkTableEntry m_nte_Ernie_FarLimit; // Alternate
+
   nt::NetworkTableEntry m_nte_Ernie_Power; // 0.0 to 1.0 (max)
   nt::NetworkTableEntry m_nte_Bert_Power; // Ditto
+
+  nt::NetworkTableEntry m_nte_Ernie_FarPower; // Alternate
+  nt::NetworkTableEntry m_nte_Bert_FarPower; // Alternate
+
   nt::NetworkTableEntry m_nte_Bert_Ramp_Rate;
   nt::NetworkTableEntry m_nte_Ernie_Ramp_Rate;
 
@@ -70,8 +82,9 @@ class Launcher : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_nte_Launcher_Max_Output;
   nt::NetworkTableEntry m_nte_Launcher_Min_Output;
 #endif
+
  protected:
- #ifdef ENABLE_LAUNCHER
+#ifdef ENABLE_LAUNCHER
   // NEO motor
   rev::CANSparkMax m_launcherMotorBert{ConLauncher::MOTOR_BERT_ID, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax m_launcherMotorErnie{ConLauncher::MOTOR_ERNIE_ID, rev::CANSparkMax::MotorType::kBrushless};
@@ -87,9 +100,20 @@ class Launcher : public frc2::SubsystemBase {
 
 #endif
   bool m_useClose = true;
+  
   // Power Settings for each launcher
   double m_ErnieFwdPower;
   double m_BertFwdPower;
+
+  double m_ErnieFwdLimit;
+  double m_BertFwdLimit;
+
+  // Alternate settings
+  double m_ErnieFarPower;
+  double m_BertFarPower;
+
+  double m_ErnieFarLimit;
+  double m_BertFarLimit;  
 
   void Periodic();
 };
