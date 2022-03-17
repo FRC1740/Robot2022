@@ -83,38 +83,38 @@ double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, 
                   .WithSize(1,1)
                   .WithPosition(2,1)
                   .GetEntry();
-            m_nte_Bert_RevLimit = m_sbt_Launcher->AddPersistent("Bert Far Limit", ConLauncher::BERT_FAR_LIMIT)
+            m_nte_Bert_FarLimit = m_sbt_Launcher->AddPersistent("Bert Far Limit", ConLauncher::BERT_FAR_LIMIT)
                   .WithSize(1,1)
                   .WithPosition(3,0)
                   .GetEntry();
-            m_nte_Ernie_RevLimit = m_sbt_Launcher->AddPersistent("Ernie Far Limit", ConLauncher::ERNIE_FAR_LIMIT)
+            m_nte_Ernie_FarLimit = m_sbt_Launcher->AddPersistent("Ernie Far Limit", ConLauncher::ERNIE_FAR_LIMIT)
                   .WithSize(1,1)
                   .WithPosition(3,1)
                   .GetEntry();
             m_nte_Bert_Power = m_sbt_Launcher->AddPersistent("Bert Power", ConLauncher::BERT_POWER)
-                  .WithSize(2,1)
+                  .WithSize(1,1)
                   .WithPosition(4,0)
                   .GetEntry();
             m_nte_Ernie_Power = m_sbt_Launcher->AddPersistent("Ernie Power", ConLauncher::ERNIE_POWER)
-                  .WithSize(2,1)
+                  .WithSize(1,1)
                   .WithPosition(4,1)
                   .GetEntry();
-            m_nte_Bert_Power = m_sbt_Launcher->AddPersistent("Bert Far Power", ConLauncher::BERT_FAR_POWER)
-                  .WithSize(2,1)
+            m_nte_Bert_FarPower = m_sbt_Launcher->AddPersistent("Bert Far Power", ConLauncher::BERT_FAR_POWER)
+                  .WithSize(1,1)
                   .WithPosition(5,0)
                   .GetEntry();
-            m_nte_Ernie_Power = m_sbt_Launcher->AddPersistent("Ernie Far Power", ConLauncher::ERNIE_FAR_POWER)
-                  .WithSize(2,1)
+            m_nte_Ernie_FarPower = m_sbt_Launcher->AddPersistent("Ernie Far Power", ConLauncher::ERNIE_FAR_POWER)
+                  .WithSize(1,1)
                   .WithPosition(5,1)
                   .GetEntry();
             m_nte_Bert_Voltage = m_sbt_Launcher->AddPersistent("Bert Voltage", 0.0)
                   .WithSize(2,1)
-                  .WithPosition(4,2)
+                  .WithPosition(3,2)
                   .WithWidget(frc::BuiltInWidgets::kDial)
                   .GetEntry();
             m_nte_Ernie_Voltage = m_sbt_Launcher->AddPersistent("Ernie Voltage", 0.0)
                   .WithSize(2,1)
-                  .WithPosition(4,3)
+                  .WithPosition(3,3)
                   .WithWidget(frc::BuiltInWidgets::kDial)
                   .GetEntry();
 
@@ -165,7 +165,9 @@ void Launcher::Launch() {
 }
 
 void Launcher::LaunchBert() {
-  printf("Launcher::LaunchBert() Executing...\n");  
+  printf("Launcher::LaunchBert() Executing... Power %f Limit %f\n", 
+    m_useClose ? m_BertFwdPower : m_BertFarPower,
+    m_useClose ? m_BertFwdLimit : m_BertFarLimit);
   // Launch a ball
 #ifdef ENABLE_LAUNCHER
   if (m_useClose) {
@@ -177,7 +179,9 @@ void Launcher::LaunchBert() {
 }
 
 void Launcher::LaunchErnie() {
-  printf("Launcher::LaunchErnie() Executing...\n");  
+  printf("Launcher::LaunchErnie() Executing...Power %f Limit %f\n",
+    m_useClose ? m_ErnieFwdPower : m_ErnieFarPower,
+    m_useClose ? m_ErnieFwdLimit : m_ErnieFarLimit); 
   // Launch a ball
 #ifdef ENABLE_LAUNCHER
   if (m_useClose) {
@@ -266,15 +270,15 @@ void Launcher::SetLaunchSoftLimits() {
   }
 
   // Far Limits
-  d = m_nte_Ernie_FarLimit.GetDouble(ConLauncher::ERNIE_REV_LIMIT);
+  d = m_nte_Ernie_FarLimit.GetDouble(ConLauncher::ERNIE_FAR_LIMIT);
   if (d != m_ErnieFarLimit) {
     m_ErnieFarLimit = d;
     printf("m_ErnieFarLimit set to %f\n", m_ErnieFarLimit);
   }
-  d = m_nte_Bert_FarLimit.GetDouble(ConLauncher::BERT_REV_LIMIT);
+  d = m_nte_Bert_FarLimit.GetDouble(ConLauncher::BERT_FAR_LIMIT);
   if (d != m_BertFarLimit) {
     m_BertFarLimit = d;
-    printf("xxx set to %f\n", m_BertFarLimit);
+    printf("m_BertFarLimit set to %f\n", m_BertFarLimit);
   }
 }
 
