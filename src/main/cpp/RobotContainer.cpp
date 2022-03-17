@@ -70,6 +70,7 @@ void RobotContainer::DisabledInit() {
 // Called periodically while the robot is disabled
 void RobotContainer::DisabledPeriodic() {
   m_driveTrain.SetAutonomousParameters();
+  m_launcher.SetLaunchSoftLimits();
 }
 
 void RobotContainer::TeleopInit() {
