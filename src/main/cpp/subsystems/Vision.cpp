@@ -25,6 +25,10 @@ Vision::Vision() {
 }
 
 #ifdef ENABLE_VISION
+void Vision::InitVision() {
+    LightOff();
+    m_nt_Limelight->PutNumber("camMode", ConVision::DRIVER_ONLY);    
+}
 // This method will be called once per scheduler run
 void Vision::Periodic() {}
 

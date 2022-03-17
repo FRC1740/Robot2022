@@ -39,6 +39,8 @@ class Vision : public frc2::SubsystemBase {
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
+  void InitVision();
+
   void Periodic();
 
   double Align();
