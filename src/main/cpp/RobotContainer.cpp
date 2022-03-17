@@ -75,6 +75,7 @@ void RobotContainer::DisabledPeriodic() {
 
 void RobotContainer::TeleopInit() {
   m_launcher.SetLaunchSoftLimits();
+  m_launcher.SetupClose();
   m_climber.SetClimberSoftLimits();
   m_launcher.Retract();
 }
@@ -82,6 +83,7 @@ void RobotContainer::TeleopInit() {
 void RobotContainer::AutonomousInit() {
   m_driveTrain.SetAutonomousParameters();
   m_launcher.SetLaunchSoftLimits();
+  m_launcher.SetupClose();
   m_climber.SetClimberSoftLimits();
 #ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetGyro();
@@ -110,15 +112,20 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
+      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
+
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
       frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
       frc2::InstantCommand( [&] { m_launcher.SetupClose(); }, { &m_launcher }));
 
-  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
-  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
+      frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
+      frc2::InstantCommand( [&] { m_launcher.SetupClose(); }, { &m_launcher }));
 
 #endif
 
