@@ -62,6 +62,9 @@ void RobotContainer::DisabledInit() {
 #ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetEncoders();
 #endif // ENABLE_DRIVETRAIN
+#ifdef ENABLE_VISION
+  m_vision.InitVision();
+#endif // ENABLE_VISION
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
   m_intake.Stow();
