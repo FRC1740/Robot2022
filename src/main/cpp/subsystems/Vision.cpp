@@ -15,16 +15,23 @@ Vision::Vision() {
     m_nte_Align_I = m_sbt_Vision->AddPersistent("Vision I", 0.0)  .WithSize(1, 1).WithPosition(0, 1).GetEntry();;
     m_nte_Align_D = m_sbt_Vision->AddPersistent("Vision D", 100.0).WithSize(1, 1).WithPosition(0, 2).GetEntry();;
 
+}
+
+#ifdef ENABLE_VISION
+
+void Vision::Init() {
+    // Must be called later than constructor
 #ifdef ENABLE_VISION
     // If using Vision Tracking use the following:
     // LightOn();
     // m_nt_Limelight->PutNumber("camMode", ConVision::VISION_TRACKING);
     LightOff();
     m_nt_Limelight->PutNumber("camMode", ConVision::DRIVER_ONLY);
+    // Set PIP w/ secondary camera main view
+    m_nt_Limelight->PutNumber("stream", ConVision::PRIMARY_SECONDARY_PIP);
 #endif
 }
 
-#ifdef ENABLE_VISION
 // This method will be called once per scheduler run
 void Vision::Periodic() {}
 
