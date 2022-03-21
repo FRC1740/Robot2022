@@ -26,6 +26,11 @@ namespace ConVision {
     constexpr int BLINK = 2;
     constexpr int OFF = 1;
 
+    // Stream: 1 = Primary only; 2 = Primary/2nd PIP; 3 = 2nd/Primary PIP
+    constexpr int PRIMARY_ONLY = 1;
+    constexpr int PRIMARY_SECONDARY_PIP = 2;
+    constexpr int SECONDARY_PRIMARY_PIP = 3;
+
     // Camera Mode: Write to NT "camMode"
     constexpr int DRIVER_ONLY = 1;
     constexpr int VISION_TRACKING = 0;
@@ -63,6 +68,8 @@ class Vision : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   std::shared_ptr<nt::NetworkTable> m_nt_Limelight;
+  int m_LEDStatus;
+  int m_Stream;
 
  public:
   frc::ShuffleboardTab *m_sbt_Vision;
