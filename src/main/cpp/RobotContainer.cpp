@@ -82,7 +82,7 @@ void RobotContainer::TeleopInit() {
   m_climber.SetClimberSoftLimits();
   m_launcher.Retract();
   // Set Limelight Camera options
-  m_vision.Init();
+  m_vision.InitVision();
 }
 
 /*
