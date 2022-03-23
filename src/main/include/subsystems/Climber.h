@@ -21,8 +21,8 @@ namespace ConClimber {
   constexpr bool NONINVERTED = false; //
   constexpr double CLIMB_SPEED = -1.0;  // Climb Motor Speed
   constexpr double DESCEND_SPEED = 1.0; // Descend Motor Speed
-  constexpr int SOFT_LIMIT_FWD = 2830; // Soft Limit Extension 5' 6" MAX height; Bar @ 60-1/4"
-  constexpr int SOFT_LIMIT_REV = 0;
+  constexpr int SOFT_LIMIT_FWD = 4874; // Soft Limit Extension 5' 6" MAX height; Bar: 60-1/4"
+  constexpr int SOFT_LIMIT_REV = 200; // FWD/REV Limits Updated for 45:1 transmission @ WNE 03/19
   constexpr int CURRENT_STALL_LIMIT = 80;
 
   //Servo
