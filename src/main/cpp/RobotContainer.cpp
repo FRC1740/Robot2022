@@ -63,7 +63,7 @@ void RobotContainer::DisabledInit() {
   m_driveTrain.ResetEncoders();
 #endif // ENABLE_DRIVETRAIN
 #ifdef ENABLE_VISION
-  m_vision.InitVision();
+  //m_vision.InitVision(); // Causes camera stream to freeze
 #endif // ENABLE_VISION
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
@@ -82,7 +82,7 @@ void RobotContainer::TeleopInit() {
   m_climber.SetClimberSoftLimits();
   m_launcher.Retract();
   // Set Limelight Camera options
-  m_vision.InitVision();
+  //m_vision.InitVision(); // Causes camera stream to freeze
 }
 
 /*
@@ -159,6 +159,13 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(new Climb(&m_climber));
   frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
+
+#ifdef ENABLE_VISION
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(
+      frc2::StartEndCommand( [&] {m_vision.LightBlink();}, [&] {m_vision.LightOff();}, {&m_vision} ));
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(
+      frc2::InstantCommand( [&] {m_vision.PiPStream();}, {&m_vision} ));
+#endif
 
 #ifdef ENABLE_TESTING
 // Servo Test

@@ -47,19 +47,16 @@ class Vision : public frc2::SubsystemBase {
   void InitVision();
 
   void Periodic();
-
   double Align();
-
   void ToggleLight();
-
   void LightOn();
-
   void LightOff();
+  void LightBlink();
+  void PrimaryStream();
+  void PiPStream();
 
   void SelectPlayerStationPipeline();
-
   void SelectNearGoalPipeline();
-
   void SelectFarGoalPipeline();
 
 #endif // ENABLE_VISION
