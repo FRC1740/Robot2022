@@ -62,6 +62,9 @@ void RobotContainer::DisabledInit() {
 #ifdef ENABLE_DRIVETRAIN
   m_driveTrain.ResetEncoders();
 #endif // ENABLE_DRIVETRAIN
+#ifdef ENABLE_VISION
+  m_vision.InitVision();
+#endif // ENABLE_VISION
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
   m_intake.Stow();
@@ -78,8 +81,18 @@ void RobotContainer::TeleopInit() {
   m_launcher.SetupClose();
   m_climber.SetClimberSoftLimits();
   m_launcher.Retract();
+  // Set Limelight Camera options
+  m_vision.InitVision();
 }
 
+/*
+Uncomment this and add declaration in h file if we need live adjustments
+also call this method  from Robot::TelopPeriodic();
+
+void RobotContainer::TeleopPeriodic() {
+  m_launcher.SetLaunchSoftLimits();
+}
+*/
 void RobotContainer::AutonomousInit() {
   m_driveTrain.SetAutonomousParameters();
   m_launcher.SetLaunchSoftLimits();
