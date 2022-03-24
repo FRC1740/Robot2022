@@ -22,7 +22,19 @@ void Vision::InitVision() {
     // LightOn();
     // m_nt_Limelight->PutNumber("camMode", ConVision::VISION_TRACKING);
     // If using JUST for driver camera, use the following:
-    LightOff();
+    // LightOff();
+    m_nt_Limelight->PutNumber("pipeline", ConVision::DRIVER_PIPELINE);
+    // Set PIP w/ secondary camera main view
+    // PiPStream();
+}
+
+void Vision::PrimaryStream() {
+    // Set PIP w/ secondary camera main view
+    // m_nt_Limelight->PutNumber("camMode", ConVision::VISION_TRACKING);
+    m_nt_Limelight->PutNumber("stream", ConVision::PRIMARY_ONLY);
+}
+
+void Vision::PiPStream() {
     m_nt_Limelight->PutNumber("camMode", ConVision::DRIVER_ONLY);
     // Set PIP w/ secondary camera main view
     m_nt_Limelight->PutNumber("stream", ConVision::SECONDARY_PRIMARY_PIP);
@@ -52,6 +64,9 @@ void Vision::LightOff() {
     m_nt_Limelight->PutNumber("ledMode", ConVision::OFF);
 }
 
+void Vision::LightBlink() {
+    m_nt_Limelight->PutNumber("ledMode", ConVision::BLINK);
+}
 void Vision::SelectPlayerStationPipeline() {
     m_nt_Limelight->PutNumber("pipeline", 0);
 }
