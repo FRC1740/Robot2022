@@ -82,7 +82,7 @@ void RobotContainer::TeleopInit() {
   m_climber.SetClimberSoftLimits();
   m_launcher.Retract();
   // Set Limelight Camera options
-  //m_vision.InitVision(); // Causes camera stream to freeze
+  m_vision.InitVision(); // Causes camera stream to freeze
 }
 
 /*

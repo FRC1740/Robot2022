@@ -26,6 +26,10 @@ namespace ConVision {
     constexpr int BLINK = 2;
     constexpr int OFF = 1;
 
+    // Pipelines: 0 = Vision Processing; 1 = Driver
+    constexpr int VISION_PIPELINE = 0;
+    constexpr int DRIVER_PIPELINE = 1;
+    
     // Stream: 1 = Primary only; 2 = Primary/2nd PIP; 3 = 2nd/Primary PIP
     constexpr int PRIMARY_ONLY = 1;
     constexpr int PRIMARY_SECONDARY_PIP = 2;
