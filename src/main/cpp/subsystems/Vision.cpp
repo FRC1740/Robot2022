@@ -16,8 +16,8 @@ Vision::Vision() {
     m_nte_Align_D = m_sbt_Vision->AddPersistent("Vision D", 100.0).WithSize(1, 1).WithPosition(0, 2).GetEntry();;
 }
 
-#ifdef ENABLE_VISION
 void Vision::InitVision() {
+#ifdef ENABLE_VISION
     // If using Vision Tracking use the following:
     // LightOn();
     // m_nt_Limelight->PutNumber("camMode", ConVision::VISION_TRACKING);
@@ -26,8 +26,10 @@ void Vision::InitVision() {
     m_nt_Limelight->PutNumber("pipeline", ConVision::DRIVER_PIPELINE);
     // Set PIP w/ secondary camera main view
     // PiPStream();
+#endif // ENABLE_VISION
 }
 
+#ifdef ENABLE_VISION
 void Vision::PrimaryStream() {
     // Set PIP w/ secondary camera main view
     // m_nt_Limelight->PutNumber("camMode", ConVision::VISION_TRACKING);

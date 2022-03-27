@@ -5,6 +5,10 @@
 //#define ENABLE_DRIVETRAIN
 //#define ENABLE_CLIMBER
 //#define ENABLE_LAUNCHER
+//#define LAUNCHER_VELOCITY_CONTROL
 //#define ENABLE_VISION
+//#define ENABLE_INTAKE
+//#define ENABLE_LED
+//#define ENABLE_LED_DEMO
 
 #endif // ENV_H

@@ -5,27 +5,45 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include "Constants.h"
 #ifdef ENABLE_LED
 #include <frc/AddressableLED.h>
 #endif // ENABLE_LED
+
+namespace ConLED {
+  enum mode {
+    OFF,
+    COLONELS,
+    KITT,
+    VOLTAGE,
+  };
+}
 
 class LEDs : public frc2::SubsystemBase {
  public:
   LEDs();
   void Periodic() override;
-  void DisabledInit();
-  void DisabledPeriodic();
+  void Init();
+  void On();
+  void Off();
 
  private:
+  ConLED::mode m_mode = ConLED::OFF;
+
 #ifdef ENABLE_LED
-static constexpr int kLedLength = 100;
-static constexpr int kLedPwmPort = 9;
+  int m_delay = 0;
+  int m_currentPixel = 0;
+  
+  void Colonels();
+  void Kitt();
+  int m_kittDelta = 1;
+  void Voltage();
+
+  static constexpr int kLedLength = 50;
+  static constexpr int kLedPwmPort = 9;
   // Must be a PWM header, not MXP or DIO
   frc::AddressableLED m_led{kLedPwmPort};
   std::array<frc::AddressableLED::LEDData, kLedLength> m_ledBuffer;  // Reuse the buffer
-
-  int m_currentPixel = 0;
-  int m_delta = 1;
 #endif // ENABLE_LED
 
 };
