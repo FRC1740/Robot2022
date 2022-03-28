@@ -16,6 +16,7 @@ namespace ConLED {
     COLONELS,
     KITT,
     VOLTAGE,
+    CLIMBTIME,
   };
 }
 
@@ -38,6 +39,7 @@ class LEDs : public frc2::SubsystemBase {
   void Kitt();
   int m_kittDelta = 1;
   void Voltage();
+  void ClimbTime();
 
   static constexpr int kLedLength = 50;
   static constexpr int kLedPwmPort = 9;

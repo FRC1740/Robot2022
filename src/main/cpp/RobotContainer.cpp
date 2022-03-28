@@ -169,9 +169,9 @@ frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START);
 #endif // ENABLE_CLIMBER
 
 #ifdef ENABLE_VISION
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).WhileHeld(
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).ToggleWhenPressed(
       frc2::StartEndCommand( [&] {m_vision.LightBlink();}, [&] {m_vision.LightOff();}, {&m_vision} ));
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(
       frc2::InstantCommand( [&] {m_vision.PiPStream();}, {&m_vision} ));
 #endif
 

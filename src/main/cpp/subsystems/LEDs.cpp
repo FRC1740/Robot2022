@@ -26,8 +26,11 @@ void LEDs::Periodic() {
       case ConLED::KITT:
         Kitt();
         break;
-      default:
+      case ConLED::VOLTAGE:
         Voltage();
+        break;
+      default:
+        ClimbTime();
         break;
     }
   }
@@ -52,6 +55,9 @@ void LEDs::On() {
     case ConLED::KITT:
       m_mode = ConLED::VOLTAGE;
       break;
+    case ConLED::VOLTAGE:
+      m_mode = ConLED::CLIMBTIME;
+      break;
     default:
       m_mode = ConLED::COLONELS;
       break;
@@ -71,8 +77,10 @@ void LEDs::Colonels() {
 
     int colors[][3] = {
       {150/2, 255, 128}, // blue
-      {354/2, 255, 128}, // gold
-      //{    0,   0,  64}, // white
+      {150/2, 255, 128}, // blue
+      {150/2, 255, 128}, // blue
+      {    0,   0,  64}, // white
+      //{354/2, 255, 128}, // gold
     };
     int ncolors = sizeof(colors)/sizeof(colors[0]);
     int ix;
@@ -133,4 +141,23 @@ void LEDs::Voltage() {
   }
 }
 
+void LEDs::ClimbTime() {
+  if (--m_delay <= 0) {
+    m_delay = 10;
+    double time = frc::DriverStation::GetMatchTime();
+    int meter = (int) (150-time / 150 * (double) kLedLength);
+    if (meter > kLedLength - 1) meter = kLedLength - 1;
+    if (meter < 0) meter = 0;
+    printf("time: %f meter: %d\n", time, meter);
+
+    for (int i = 0; i < kLedLength; i++) {
+      if (i <= meter) {
+        m_ledBuffer[i].SetRGB(0, 255, 128);
+      } else {
+        m_ledBuffer[i].SetRGB(0, 0, 0);
+      }
+    }
+    m_led.SetData(m_ledBuffer);
+  }
+}
 #endif // ENABLE_LED
