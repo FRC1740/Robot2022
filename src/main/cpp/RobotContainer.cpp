@@ -68,6 +68,7 @@ void RobotContainer::DisabledInit() {
   m_launcher.SetLaunchSoftLimits();
   m_climber.SetClimberSoftLimits();
   m_intake.Stow();
+  m_leds.Init();
 }
 
 // Called periodically while the robot is disabled
@@ -141,6 +142,13 @@ void RobotContainer::ConfigureButtonBindings() {
       frc2::InstantCommand( [&] { m_launcher.SetupClose(); }, { &m_launcher }));
 
 #endif
+
+#ifdef ENABLE_LED_DEMO
+frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
+    frc2::InstantCommand( [&] { m_leds.On(); }, { &m_leds }));
+frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
+    frc2::InstantCommand( [&] { m_leds.Off(); }, { &m_leds }));
+#endif // ENABLE_LED_DEMO
 
 #ifdef ENABLE_INTAKE
   // Duplicate Intake OI controls on both driver & codriver inputs
