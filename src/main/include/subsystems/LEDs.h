@@ -34,7 +34,7 @@ class LEDs : public frc2::SubsystemBase {
 #ifdef ENABLE_LED
   int m_delay = 0;
   int m_currentPixel = 0;
-  
+  int m_blink = 1;
   void Colonels();
   void Kitt();
   int m_kittDelta = 1;

@@ -144,20 +144,27 @@ void LEDs::Voltage() {
 void LEDs::ClimbTime() {
   if (--m_delay <= 0) {
     m_delay = 10;
-    double time = frc::DriverStation::GetMatchTime();
-    int meter = (int) (150-time / 150 * (double) kLedLength);
+    double matchTime = frc::DriverStation::GetMatchTime();
+    int meter = (int) (150-matchTime / 150 * (double) kLedLength);
     if (meter > kLedLength - 1) meter = kLedLength - 1;
     if (meter < 0) meter = 0;
-    printf("time: %f meter: %d\n", time, meter);
+    printf("time: %f meter: %d\n", matchTime, meter);
 
-    for (int i = 0; i < kLedLength; i++) {
-      if (i <= meter) {
-        m_ledBuffer[i].SetRGB(0, 255, 128);
-      } else {
-        m_ledBuffer[i].SetRGB(0, 0, 0);
+    if (m_blink) {
+      for (int i = 0; i < kLedLength; i++) {
+          m_ledBuffer[i].SetRGB(0, 0, 0);
+        }
+    } else {
+      for (int i = 0; i < kLedLength; i++) {
+        if (i <= meter) {
+          m_ledBuffer[i].SetRGB(192, 0, 0);
+        } else {
+          m_ledBuffer[i].SetRGB(0, 0, 0);
+        }
       }
     }
     m_led.SetData(m_ledBuffer);
+    m_blink = 1-m_blink;
   }
 }
 #endif // ENABLE_LED

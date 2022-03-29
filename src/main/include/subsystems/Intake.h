@@ -46,13 +46,8 @@ class Intake : public frc2::SubsystemBase {
  protected:
 #ifdef ENABLE_INTAKE
   frc::DoubleSolenoid deployDoublePCM{frc::PneumaticsModuleType::CTREPCM, ConIntake::PNEUM_PORT_A, ConIntake::PNEUM_PORT_B};
-  #ifdef NEW_NEO_INTAKE
   rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushless}; // New Neo motor
   rev::SparkMaxRelativeEncoder m_intakeEncoder = m_intakeMotor.GetEncoder();
-  #endif
-  #ifndef NEW_NEO_INTAKE
-  rev::CANSparkMax m_intakeMotor {ConIntake::MOTOR_ID, rev::CANSparkMax::MotorType::kBrushed}; // Regular brushed motor
-  #endif
 #endif // ENABLE_INTAKE
 
   bool m_deployedState; // True if intake system is deployed outside of robot perimeter

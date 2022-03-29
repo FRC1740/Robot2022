@@ -21,6 +21,7 @@ void RobotContainer::RobotInit() {
 
   // Configure the button bindings
   ConfigureButtonBindings();
+  frc::DriverStation::SilenceJoystickConnectionWarning(true);
 
   // #define ENABLE_FLIGHTSTICK
   #ifdef ENABLE_FLIGHTSTICK

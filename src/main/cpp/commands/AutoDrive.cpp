@@ -110,6 +110,10 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
 
       case ConDriveTrain::AUTONOMOUS_MODE_5_BALL:
       break;
+
+      // Default DO NOTHING
+      default:
+      break;
     
     #if 0
     // Add autonomous drive & launcher commands
