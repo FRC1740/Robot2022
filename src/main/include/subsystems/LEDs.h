@@ -41,10 +41,13 @@ class LEDs : public frc2::SubsystemBase {
   void Voltage();
   void ClimbTime();
 
-  static constexpr int kLedLength = 50;
-  static constexpr int kLedPwmPort = 9;
+  static constexpr int kLedLength = 13;
+  static constexpr int kLedAPwmPort = 9;
+  static constexpr int kLedBPwmPort = 8;
   // Must be a PWM header, not MXP or DIO
-  frc::AddressableLED m_led{kLedPwmPort};
+  frc::AddressableLED m_ledA{kLedAPwmPort};
+  frc::AddressableLED m_ledB{kLedBPwmPort};
+  // Both LED strips MUST Be the same length
   std::array<frc::AddressableLED::LEDData, kLedLength> m_ledBuffer;  // Reuse the buffer
 #endif // ENABLE_LED
 

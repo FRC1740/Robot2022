@@ -7,12 +7,15 @@
 
 LEDs::LEDs() {
 #ifdef ENABLE_LED
-  m_led.SetLength(kLedLength);
+  m_ledA.SetLength(kLedLength);
+  m_ledB.SetLength(kLedLength);
   for (int i = 0; i < kLedLength; i++) {
     m_ledBuffer[i].SetRGB(0, 0, 0);
   }
-  m_led.SetData(m_ledBuffer);
-  m_led.Start();
+  m_ledA.SetData(m_ledBuffer);
+  m_ledA.Start();
+  m_ledB.SetData(m_ledBuffer);
+  m_ledB.Start();
 #endif // ENABLE_LED
 }
 
@@ -42,7 +45,8 @@ void LEDs::Init() {
   for (int i = 0; i < kLedLength; i++) {
     m_ledBuffer[i].SetRGB(0, 0, 0);
   }
-  m_led.SetData(m_ledBuffer);
+  m_ledA.SetData(m_ledBuffer);
+  m_ledB.SetData(m_ledBuffer);
 #endif // ENABLE_LED
 }
 
@@ -88,7 +92,8 @@ void LEDs::Colonels() {
       ix = (m_currentPixel + i) % ncolors;
       m_ledBuffer[i].SetHSV(colors[ix][0], colors[ix][1], colors[ix][2]);
     }
-    m_led.SetData(m_ledBuffer);
+    m_ledA.SetData(m_ledBuffer);
+    m_ledB.SetData(m_ledBuffer);
     m_currentPixel = (m_currentPixel + 1) % kLedLength;
   }
 }
@@ -107,7 +112,8 @@ void LEDs::Kitt() {
       m_ledBuffer[i].SetRGB(r, g, b);
     }
     m_ledBuffer[m_currentPixel].SetRGB(64,64,64);
-    m_led.SetData(m_ledBuffer);
+    m_ledA.SetData(m_ledBuffer);
+    m_ledB.SetData(m_ledBuffer);
 
     m_currentPixel += m_kittDelta;
     if ((m_currentPixel <= 0) || (m_currentPixel >= kLedLength - 1)) {
@@ -137,7 +143,8 @@ void LEDs::Voltage() {
         m_ledBuffer[i].SetRGB(0, 0, 0);
       }
     }
-    m_led.SetData(m_ledBuffer);
+    m_ledA.SetData(m_ledBuffer);
+    m_ledB.SetData(m_ledBuffer);
   }
 }
 
@@ -163,7 +170,8 @@ void LEDs::ClimbTime() {
         }
       }
     }
-    m_led.SetData(m_ledBuffer);
+    m_ledA.SetData(m_ledBuffer);
+    m_ledB.SetData(m_ledBuffer);
     m_blink = 1-m_blink;
   }
 }
