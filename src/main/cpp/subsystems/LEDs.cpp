@@ -74,16 +74,21 @@ void LEDs::Off() {
   Init();
 }
 
-// Helper macros because the LEDs we use have the B and G channels swapped.
-// Instead of setting (R,G,B) the AddressableLED interface actually sets (R,B,G)
-// And, for the same reason the Hue channel of HSV goes around the circle counterclockwise 
-// Let's change the API to something more intuitive
+/*
+ * Add helper macros because the LEDs we use have the B and G channels swapped.
+ * Instead of setting (R,G,B) the AddressableLED interface actually sets (R,B,G)
+ * And, for the same reason the Hue channel of HSV goes around the circle counterclockwise
+ * Reference: https://en.wikipedia.org/wiki/HSL_and_HSV
+ * Let's change the API (only for code below) to something more intuitive
+ */
+
 #define SetTrue_R_G_B(_r,_g,_b) SetRGB(_r, _b, _g)
 #define SetTrue_H360_S_V(_h,_s,_v) SetHSV((360-(_h))/2,_s,_v)  // A full 0-360 hue
 #define GetR r
 #define GetG b
 #define GetB g
 #define TurnOff SetRGB(0,0,0)
+
 #ifdef ENABLE_LED
 void LEDs::Colonels() {
   if (--m_delay <= 0) {
@@ -121,7 +126,7 @@ void LEDs::Kitt() {
       if (b >= 20) b -= 20; else b = 0;
       m_ledBuffer[i].SetTrue_R_G_B(r, g, b);
     }
-    m_ledBuffer[m_currentPixel].SetTrue_R_G_B(64,64,64);
+    m_ledBuffer[m_currentPixel].SetTrue_R_G_B(64, 64, 64);
     m_ledA.SetData(m_ledBuffer);
     m_ledB.SetData(m_ledBuffer);
 
@@ -144,7 +149,7 @@ void LEDs::Voltage() {
     int meter = (int) ((voltage - vmin) / (vmax - vmin) * (double) kLedLength);
     if (meter > kLedLength - 1) meter = kLedLength - 1;
     if (meter < 0) meter = 0;
-    //printf("voltage %f meter %d\n", voltage, meter);
+    //printf("voltage: %f meter: %d\n", voltage, meter);
 
     for (int i = 0; i < kLedLength; i++) {
       if (i <= meter) {
@@ -169,8 +174,8 @@ void LEDs::ClimbTime() {
 
     if (m_blink) {
       for (int i = 0; i < kLedLength; i++) {
-          m_ledBuffer[i].TurnOff;
-        }
+        m_ledBuffer[i].TurnOff;
+      }
     } else {
       for (int i = 0; i < kLedLength; i++) {
         if (i <= meter) {
