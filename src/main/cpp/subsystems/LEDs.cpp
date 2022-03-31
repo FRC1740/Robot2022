@@ -35,7 +35,7 @@ void LEDs::Periodic() {
         Voltage();
         break;
       case ConLED::TELEOP:
-        if (frc::DriverStation::GetMatchTime() >= 15) {
+        if (frc::DriverStation::GetMatchTime() >= ConLED::TIME_TO_CLIMB) {
           Teleop();
         } else {
           ClimbTime();

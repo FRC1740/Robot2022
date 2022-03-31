@@ -12,6 +12,7 @@
 #endif // ENABLE_LED
 
 namespace ConLED {
+  constexpr int TIME_TO_CLIMB = 15;
   enum mode {
     OFF,
     COLONELS,
