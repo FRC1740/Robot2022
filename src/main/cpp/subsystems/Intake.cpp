@@ -13,6 +13,7 @@ Intake::Intake() {
 
         m_intakeMotor.SetSmartCurrentLimit(ConIntake::CURRENT_STALL_LIMIT, ConIntake::CURRENT_STALL_LIMIT);
         m_intakeMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        m_intakeMotor.SetOpenLoopRampRate(0.1);
 
         // Initialize Shuffleboard Tab and Network Table Entries
         m_sbt_Intake = &frc::Shuffleboard::GetTab(ConShuffleboard::IntakeTab);
