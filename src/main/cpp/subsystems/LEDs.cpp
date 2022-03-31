@@ -79,7 +79,7 @@ void LEDs::Off() {
 // And, for the same reason the Hue channel of HSV goes around the circle counterclockwise 
 // Let's change the API to something more intuitive
 #define SetTrue_R_G_B(_r,_g,_b) SetRGB(_r, _b, _g)
-#define SetTrue_H360_S_V(_h,_s,_v) SetTrueHSV((360-(_h))/2,_s,_v)  // A full 0-360 hue
+#define SetTrue_H360_S_V(_h,_s,_v) SetHSV((360-(_h))/2,_s,_v)  // A full 0-360 hue
 #define GetR r
 #define GetG b
 #define GetB g
