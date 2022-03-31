@@ -70,6 +70,7 @@ void RobotContainer::DisabledInit() {
   m_climber.SetClimberSoftLimits();
   m_intake.Stow();
   m_leds.Init();
+  m_leds.SetMode(ConLED::DISABLED);
 }
 
 // Called periodically while the robot is disabled
@@ -85,6 +86,7 @@ void RobotContainer::TeleopInit() {
   m_launcher.Retract();
   // Set Limelight Camera options
   m_vision.InitVision(); // Causes camera stream to freeze
+  m_leds.SetMode(ConLED::TELEOP);
 }
 
 /*
@@ -110,6 +112,7 @@ void RobotContainer::AutonomousInit() {
     m_intake.BurnFlash();
     m_climber.BurnFlash();
   }
+  m_leds.SetMode(ConLED::AUTONOMOUS);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
