@@ -8,14 +8,15 @@
 LEDs::LEDs() {
 #ifdef ENABLE_LED
   m_ledA.SetLength(kLedLength);
-  m_ledB.SetLength(kLedLength);
+  // m_ledB.SetLength(kLedLength);
   for (int i = 0; i < kLedLength; i++) {
     m_ledBuffer[i].SetRGB(0, 0, 0);
   }
   m_ledA.SetData(m_ledBuffer);
   m_ledA.Start();
-  m_ledB.SetData(m_ledBuffer);
-  m_ledB.Start();
+  // m_ledB.SetData(m_ledBuffer);
+  // m_ledB.Start();
+
 #endif // ENABLE_LED
 }
 
@@ -27,10 +28,21 @@ void LEDs::Periodic() {
         Colonels();
         break;
       case ConLED::KITT:
+      case ConLED::AUTONOMOUS:
         Kitt();
         break;
       case ConLED::VOLTAGE:
         Voltage();
+        break;
+      case ConLED::TELEOP:
+        if (frc::DriverStation::GetMatchTime() >= 15) {
+          Teleop();
+        } else {
+          ClimbTime();
+        }
+        break;
+      case ConLED::DISABLED:
+        Disabled();
         break;
       default:
         ClimbTime();
@@ -42,11 +54,14 @@ void LEDs::Periodic() {
 
 void LEDs::Init() {
 #ifdef ENABLE_LED
+  m_alliance = frc::DriverStation::GetAlliance();
+
   for (int i = 0; i < kLedLength; i++) {
     m_ledBuffer[i].SetRGB(0, 0, 0);
   }
   m_ledA.SetData(m_ledBuffer);
-  m_ledB.SetData(m_ledBuffer);
+  // m_ledB.SetData(m_ledBuffer);
+
 #endif // ENABLE_LED
 }
 
@@ -54,19 +69,29 @@ void LEDs::On() {
   printf("LED::On\n");
   switch (m_mode) {
     case ConLED::COLONELS:
-      m_mode = ConLED::KITT;
+      Colonels();
       break;
     case ConLED::KITT:
-      m_mode = ConLED::VOLTAGE;
+    case ConLED::AUTONOMOUS:
+      Kitt();
       break;
     case ConLED::VOLTAGE:
-      m_mode = ConLED::CLIMBTIME;
+      Voltage();
+      break;
+    case ConLED::TELEOP:
+      Teleop();
+      break;
+    case ConLED::DISABLED:
+      Disabled();
       break;
     default:
-      m_mode = ConLED::COLONELS;
+      ClimbTime();
       break;
   }
 }
+void LEDs::SetMode(ConLED::mode newMode) {
+  m_mode = newMode;
+} 
 
 void LEDs::Off() {
   printf("LED::Off\n");
@@ -108,7 +133,7 @@ void LEDs::Colonels() {
       m_ledBuffer[i].SetTrue_H360_S_V(colors[ix][0], colors[ix][1], colors[ix][2]);
     }
     m_ledA.SetData(m_ledBuffer);
-    m_ledB.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
     m_currentPixel = (m_currentPixel + 1) % kLedLength;
   }
 }
@@ -128,7 +153,7 @@ void LEDs::Kitt() {
     }
     m_ledBuffer[m_currentPixel].SetTrue_R_G_B(64, 64, 64);
     m_ledA.SetData(m_ledBuffer);
-    m_ledB.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
 
     m_currentPixel += m_kittDelta;
     if ((m_currentPixel <= 0) || (m_currentPixel >= kLedLength - 1)) {
@@ -159,34 +184,54 @@ void LEDs::Voltage() {
       }
     }
     m_ledA.SetData(m_ledBuffer);
-    m_ledB.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
   }
 }
 
-void LEDs::ClimbTime() {
+void LEDs::Disabled() {
   if (--m_delay <= 0) {
-    m_delay = 10;
-    double matchTime = frc::DriverStation::GetMatchTime();
-    int meter = (int) ((150 - matchTime) / 150 * (double) kLedLength);
-    if (meter > kLedLength - 1) meter = kLedLength - 1;
-    if (meter < 0) meter = 0;
-    printf("time: %f meter: %d\n", matchTime, meter);
+    m_delay = 30;
 
-    if (m_blink) {
-      for (int i = 0; i < kLedLength; i++) {
-        m_ledBuffer[i].TurnOff;
-      }
-    } else {
-      for (int i = 0; i < kLedLength; i++) {
-        if (i <= meter) {
-          m_ledBuffer[i].SetTrue_R_G_B(192, 0, 0);
-        } else {
-          m_ledBuffer[i].TurnOff;
-        }
+    for (int i = 0; i < kLedLength; i++) {
+        m_ledBuffer[i].SetTrue_R_G_B(255, 48, 0);
+    }
+    m_ledA.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
+  }
+}
+
+void LEDs::Teleop() {
+  if (--m_delay <= 0) {
+    m_delay = 30;
+
+    for (int i = 0; i < kLedLength; i++) {
+      if (m_alliance == frc::DriverStation::Alliance::kRed) {
+        m_ledBuffer[i].SetTrue_R_G_B(192, 0, 0);
+      } 
+      else if (m_alliance == frc::DriverStation::Alliance::kBlue) {
+        m_ledBuffer[i].SetTrue_R_G_B(0, 0, 192);
+      } 
+      else {
+        m_ledBuffer[i].SetTrue_R_G_B(0, 192, 0);
       }
     }
     m_ledA.SetData(m_ledBuffer);
-    m_ledB.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
+  }
+}
+void LEDs::ClimbTime() {
+  if (--m_delay <= 0) {
+    m_delay = 10;
+
+      for (int i = 0; i < kLedLength; i++) {
+        if (m_blink) {
+          m_ledBuffer[i].TurnOff;
+        } else {
+          m_ledBuffer[i].SetTrue_R_G_B(0, 192, 0);
+        }
+      }
+    m_ledA.SetData(m_ledBuffer);
+    // m_ledB.SetData(m_ledBuffer);
     m_blink = 1 - m_blink;
   }
 }

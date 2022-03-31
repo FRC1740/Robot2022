@@ -17,8 +17,8 @@ namespace ConIntake {
   constexpr int MOTOR_ID = 9;
   constexpr int PNEUM_PORT_A = 0;
   constexpr int PNEUM_PORT_B = 1;
-  constexpr double LOAD_BALL = -1.0; // Should be motor forward
-  constexpr double REJECT_BALL = 1.0; // Should be motor reverse
+  constexpr double LOAD_BALL = -.65; // Should be motor forward
+  constexpr double REJECT_BALL = .65; // Should be motor reverse
   constexpr int CURRENT_STALL_LIMIT = 40;
   constexpr double INTAKE_POWER = 1.0; // Up from 60% power
   constexpr frc::DoubleSolenoid::Value DEPLOY_INTAKE = frc::DoubleSolenoid::Value::kReverse;
