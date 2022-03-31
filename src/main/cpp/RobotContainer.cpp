@@ -132,6 +132,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
+#if 0 // turn these off so as not to conflict with led demo
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
       frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
@@ -141,7 +142,7 @@ void RobotContainer::ConfigureButtonBindings() {
       frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(
       frc2::InstantCommand( [&] { m_launcher.SetupClose(); }, { &m_launcher }));
-
+#endif
 #endif
 
 #ifdef ENABLE_LED_DEMO

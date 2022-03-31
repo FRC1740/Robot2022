@@ -74,23 +74,38 @@ void LEDs::Off() {
   Init();
 }
 
+/*
+ * Add helper macros because the LEDs we use have the B and G channels swapped.
+ * Instead of setting (R,G,B) the AddressableLED interface actually sets (R,B,G)
+ * And, for the same reason the Hue channel of HSV goes around the circle counterclockwise
+ * Reference: https://en.wikipedia.org/wiki/HSL_and_HSV
+ * Let's change the API (only for code below) to something more intuitive
+ */
+
+#define SetTrue_R_G_B(_r,_g,_b) SetRGB(_r, _b, _g)
+#define SetTrue_H360_S_V(_h,_s,_v) SetHSV((360-(_h))/2,_s,_v)  // A full 0-360 hue
+#define GetR r
+#define GetG b
+#define GetB g
+#define TurnOff SetRGB(0,0,0)
+
 #ifdef ENABLE_LED
 void LEDs::Colonels() {
   if (--m_delay <= 0) {
     m_delay = 20;
 
     int colors[][3] = {
-      {150/2, 255, 128}, // blue
-      {150/2, 255, 128}, // blue
-      {150/2, 255, 128}, // blue
-      {    0,   0,  64}, // white
-      //{354/2, 255, 128}, // gold
+      {210, 255, 128}, // blue
+      {210, 255, 128}, // blue
+      {210, 255, 128}, // blue
+      {  0,   0,  64}, // white
+      //{  6, 255, 128}, // gold
     };
     int ncolors = sizeof(colors)/sizeof(colors[0]);
     int ix;
     for (int i = 0; i < kLedLength; i++) {
       ix = (m_currentPixel + i) % ncolors;
-      m_ledBuffer[i].SetHSV(colors[ix][0], colors[ix][1], colors[ix][2]);
+      m_ledBuffer[i].SetTrue_H360_S_V(colors[ix][0], colors[ix][1], colors[ix][2]);
     }
     m_ledA.SetData(m_ledBuffer);
     m_ledB.SetData(m_ledBuffer);
@@ -103,15 +118,15 @@ void LEDs::Kitt() {
     m_delay = 1;
 
     for (int i = 0; i < kLedLength; i++) {
-      int r = m_ledBuffer[i].r;
-      int g = m_ledBuffer[i].g;
-      int b = m_ledBuffer[i].b;
+      int r = m_ledBuffer[i].GetR;
+      int g = m_ledBuffer[i].GetG;
+      int b = m_ledBuffer[i].GetB;
       if (r >= 10) r -= 10; else r = 0;
       if (g >= 20) g -= 20; else g = 0;
       if (b >= 20) b -= 20; else b = 0;
-      m_ledBuffer[i].SetRGB(r, g, b);
+      m_ledBuffer[i].SetTrue_R_G_B(r, g, b);
     }
-    m_ledBuffer[m_currentPixel].SetRGB(64,64,64);
+    m_ledBuffer[m_currentPixel].SetTrue_R_G_B(64, 64, 64);
     m_ledA.SetData(m_ledBuffer);
     m_ledB.SetData(m_ledBuffer);
 
@@ -134,13 +149,13 @@ void LEDs::Voltage() {
     int meter = (int) ((voltage - vmin) / (vmax - vmin) * (double) kLedLength);
     if (meter > kLedLength - 1) meter = kLedLength - 1;
     if (meter < 0) meter = 0;
-    //printf("voltage %f meter %d\n", voltage, meter);
+    //printf("voltage: %f meter: %d\n", voltage, meter);
 
     for (int i = 0; i < kLedLength; i++) {
       if (i <= meter) {
-        m_ledBuffer[i].SetRGB(0, 0, 128);
+        m_ledBuffer[i].SetTrue_R_G_B(0, 128, 0);
       } else {
-        m_ledBuffer[i].SetRGB(0, 0, 0);
+        m_ledBuffer[i].TurnOff;
       }
     }
     m_ledA.SetData(m_ledBuffer);
@@ -152,27 +167,27 @@ void LEDs::ClimbTime() {
   if (--m_delay <= 0) {
     m_delay = 10;
     double matchTime = frc::DriverStation::GetMatchTime();
-    int meter = (int) (150-matchTime / 150 * (double) kLedLength);
+    int meter = (int) ((150 - matchTime) / 150 * (double) kLedLength);
     if (meter > kLedLength - 1) meter = kLedLength - 1;
     if (meter < 0) meter = 0;
     printf("time: %f meter: %d\n", matchTime, meter);
 
     if (m_blink) {
       for (int i = 0; i < kLedLength; i++) {
-          m_ledBuffer[i].SetRGB(0, 0, 0);
-        }
+        m_ledBuffer[i].TurnOff;
+      }
     } else {
       for (int i = 0; i < kLedLength; i++) {
         if (i <= meter) {
-          m_ledBuffer[i].SetRGB(192, 0, 0);
+          m_ledBuffer[i].SetTrue_R_G_B(192, 0, 0);
         } else {
-          m_ledBuffer[i].SetRGB(0, 0, 0);
+          m_ledBuffer[i].TurnOff;
         }
       }
     }
     m_ledA.SetData(m_ledBuffer);
     m_ledB.SetData(m_ledBuffer);
-    m_blink = 1-m_blink;
+    m_blink = 1 - m_blink;
   }
 }
 #endif // ENABLE_LED
