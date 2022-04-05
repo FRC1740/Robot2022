@@ -15,18 +15,19 @@ namespace ConLauncher {
   constexpr int MOTOR_BERT_ID = 6;
   constexpr int MOTOR_ERNIE_ID = 1;
   // Starting point for Launcher soft limits
-  constexpr int BERT_FWD_LIMIT = 150;
-  constexpr int ERNIE_FWD_LIMIT = 155;
+  // Testing 04/05
+  constexpr int BERT_FWD_LIMIT = 116;
+  constexpr int ERNIE_FWD_LIMIT = 131;
+  constexpr double BERT_POWER = .82;
+  constexpr double ERNIE_POWER = .79;
   constexpr int BERT_REV_LIMIT = 0;
   constexpr int ERNIE_REV_LIMIT = 0;  
-  constexpr int BERT_FAR_LIMIT = 150;
-  constexpr int ERNIE_FAR_LIMIT = 150;
+  constexpr int BERT_FAR_LIMIT = 176;
+  constexpr int ERNIE_FAR_LIMIT = 191;
   constexpr double BERT_RAMP_RATE = .1;
   constexpr double ERNIE_RAMP_RATE = .1;
-  constexpr double BERT_POWER = .79;
-  constexpr double ERNIE_POWER = .78;
-  constexpr double BERT_FAR_POWER = .79;
-  constexpr double ERNIE_FAR_POWER = .78;
+  constexpr double BERT_FAR_POWER = .82;
+  constexpr double ERNIE_FAR_POWER = .79;
   constexpr int CURRENT_STALL_LIMIT = 80;
 }
 
