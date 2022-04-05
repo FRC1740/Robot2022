@@ -173,23 +173,24 @@ frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START);
   frc2::Button([this] {return codriver_control.GetRawButton(ConXBOXControl::Y); }).WhileHeld(new ExtendClimber(&m_climber));
 #endif // ENABLE_CLIMBER
 
-#ifdef ENABLE_VISION
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).ToggleWhenPressed(
-      frc2::StartEndCommand( [&] {m_vision.LightBlink();}, [&] {m_vision.LightOff();}, {&m_vision} ));
-  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(
-      frc2::InstantCommand( [&] {m_vision.PiPStream();}, {&m_vision} ));
-#endif
-
 #ifdef ENABLE_TESTING
 // Servo Test
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::X); }).WhenPressed(Test(&m_testing, 1));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(Test(&m_testing, 0));
 #endif
 
-#ifdef ENABLE_VISION
+#ifdef ENABLE_TESTING
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
     frc2::InstantCommand( [&] {m_vision.ToggleLight();}, { &m_vision } ));
-  //frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::START); }).WhenPressed(Test(&m_testing, 0));
+
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::X); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_vision.LightBlink();}, [&] {m_vision.LightOff();}, {&m_vision} ));
+
+  /* PiP Not working: Freezes stream
+  frc2::Button([this] {return driver_control.GetRawButton(ConXBOXControl::Y); }).WhenPressed(
+      frc2::InstantCommand( [&] {m_vision.PiPStream();}, {&m_vision} ));
+  */
+
 #endif
 }
 
