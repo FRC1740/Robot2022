@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc/DriverStation.h>
 #include "subsystems/Intake.h"
 #include "OI.h"
 
@@ -54,6 +55,7 @@ void Intake::Deploy() {
 #endif // ENABLE_INTAKE
   m_deployedState = true;
   Load();
+  printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 }
 
 void Intake::Stow() {
@@ -65,6 +67,7 @@ void Intake::Stow() {
   m_timer.Start();
 #endif // ENABLE_INTAKE
   m_deployedState = false;
+  printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 }
 
 void Intake::Load() {

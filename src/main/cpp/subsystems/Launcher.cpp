@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/DriverStation.h>
 #include "subsystems/Launcher.h"
 #include "OI.h"
 
@@ -165,7 +166,7 @@ void Launcher::Launch() {
 }
 
 void Launcher::LaunchBert() {
-  printf("Launcher::LaunchBert() Executing... Power %f Limit %f\n", 
+  printf("LaunchBert() Power %f Limit %f\n", 
     m_useClose ? m_BertFwdPower : m_BertFarPower,
     m_useClose ? m_BertFwdLimit : m_BertFarLimit);
   // Launch a ball
@@ -175,11 +176,12 @@ void Launcher::LaunchBert() {
   } else {
     m_launcherMotorBert.Set(m_BertFarPower);
   }
+  printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 #endif
 }
 
 void Launcher::LaunchErnie() {
-  printf("Launcher::LaunchErnie() Executing...Power %f Limit %f\n",
+  printf("LaunchErnie() Power %f Limit %f\n",
     m_useClose ? m_ErnieFwdPower : m_ErnieFarPower,
     m_useClose ? m_ErnieFwdLimit : m_ErnieFarLimit); 
   // Launch a ball
@@ -189,6 +191,7 @@ void Launcher::LaunchErnie() {
   } else {
     m_launcherMotorErnie.Set(m_ErnieFarPower);
   }
+  printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 #endif
 }
 

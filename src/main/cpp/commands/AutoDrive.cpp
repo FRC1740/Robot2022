@@ -67,23 +67,23 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
         printf("Autonomous %d Ball Mode\n", m_mode);
         AddCommands (
           frc2::SequentialCommandGroup { 
-              frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), 
-              AutoDelay(0.5), 
+              AutoDelay(0.5),
               frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
               frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),
               AutoDelay(0.5),
               frc2::InstantCommand( [&] { m_launcher->RetractBert(); }, { m_launcher }),
               frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), 
               AutoDriveDistance(m_driveTrain, m_distance),
               frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
               AutoDelay(0.5), 
               AutoDriveDistance(m_driveTrain, -m_distance),
-              frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), 
+//              frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), // Only needed to avoid motor interference
               AutoDelay(0.5),
               frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
               frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),                                  
               AutoDelay(0.5),
-              frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
+//              frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
               frc2::InstantCommand( [&] { m_launcher->RetractBert(); }, { m_launcher }),
               frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
               #if 0
