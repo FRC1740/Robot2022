@@ -135,6 +135,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
+  frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::SELECT); }).ToggleWhenPressed(
+      frc2::StartEndCommand( [&] {m_launcher.Launch();}, [&] {m_launcher.Retract();}, {&m_launcher} ));
+  
 #if 0 // turn these off so as not to conflict with led demo
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::SELECT); }).WhenPressed(
       frc2::InstantCommand( [&] { m_launcher.SetupFar(); }, { &m_launcher }));

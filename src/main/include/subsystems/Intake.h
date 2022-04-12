@@ -20,7 +20,7 @@ namespace ConIntake {
   constexpr double LOAD_BALL = -.9; // Should be motor forward
   constexpr double REJECT_BALL = .9; // Should be motor reverse
   constexpr int CURRENT_STALL_LIMIT = 40;
-  constexpr double INTAKE_POWER = 1.0; // Up from 60% power
+  constexpr double INTAKE_POWER = .55; // Up from 60% power
   constexpr frc::DoubleSolenoid::Value DEPLOY_INTAKE = frc::DoubleSolenoid::Value::kReverse;
   constexpr frc::DoubleSolenoid::Value STOW_INTAKE = frc::DoubleSolenoid::Value::kForward;
   constexpr units::time::second_t SHUTDOWN_DELAY = 1.0_s; // Seconds to delay between Stow() and motor shutdown
