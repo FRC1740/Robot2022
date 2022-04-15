@@ -161,35 +161,35 @@ Launcher::Launcher() {
           }
 
 void Launcher::Launch() {
-  LaunchBert();
-  LaunchErnie();
+  LaunchBert(ConLauncher::DOUBLE_LAUNCH_PWR_SCALE_FACTOR);
+  LaunchErnie(ConLauncher::DOUBLE_LAUNCH_PWR_SCALE_FACTOR);
 }
 
-void Launcher::LaunchBert() {
+void Launcher::LaunchBert(double pwrScale) {
   printf("LaunchBert() Power %f Limit %f\n", 
     m_useClose ? m_BertFwdPower : m_BertFarPower,
     m_useClose ? m_BertFwdLimit : m_BertFarLimit);
   // Launch a ball
 #ifdef ENABLE_LAUNCHER
   if (m_useClose) {
-    m_launcherMotorBert.Set(m_BertFwdPower);
+    m_launcherMotorBert.Set(m_BertFwdPower * pwrScale);
   } else {
-    m_launcherMotorBert.Set(m_BertFarPower);
+    m_launcherMotorBert.Set(m_BertFarPower * pwrScale);
   }
   printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 #endif
 }
 
-void Launcher::LaunchErnie() {
+void Launcher::LaunchErnie(double pwrScale) {
   printf("LaunchErnie() Power %f Limit %f\n",
     m_useClose ? m_ErnieFwdPower : m_ErnieFarPower,
     m_useClose ? m_ErnieFwdLimit : m_ErnieFarLimit); 
   // Launch a ball
 #ifdef ENABLE_LAUNCHER
   if (m_useClose) {
-    m_launcherMotorErnie.Set(m_ErnieFwdPower);
+    m_launcherMotorErnie.Set(m_ErnieFwdPower * pwrScale);
   } else {
-    m_launcherMotorErnie.Set(m_ErnieFarPower);
+    m_launcherMotorErnie.Set(m_ErnieFarPower * pwrScale);
   }
   printf("Battery Voltage: %f\n", frc::DriverStation::GetBatteryVoltage());
 #endif

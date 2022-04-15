@@ -126,14 +126,14 @@ void RobotContainer::ConfigureButtonBindings() {
 #ifdef ENABLE_LAUNCHER
   // Duplicate Launch OI controls on both driver & codriver inputs
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
+      frc2::StartEndCommand( [&] {m_launcher.LaunchBert(1.0);}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
   frc2::Button([this] { return driver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
+      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie(1.0);}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::LEFT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchBert();}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
+      frc2::StartEndCommand( [&] {m_launcher.LaunchBert(1.0);}, [&] {m_launcher.RetractBert();}, {&m_launcher} ));
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::RIGHT_BUMPER); }).WhileHeld(
-      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie();}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
+      frc2::StartEndCommand( [&] {m_launcher.LaunchErnie(1.0);}, [&] {m_launcher.RetractErnie();}, {&m_launcher} ));
 
   frc2::Button([this] { return codriver_control.GetRawButton(ConXBOXControl::A); }).WhileHeld(
       frc2::StartEndCommand( [&] {m_launcher.Launch();}, [&] {m_launcher.Retract();}, {&m_launcher} ));
