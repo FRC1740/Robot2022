@@ -68,11 +68,11 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
         AddCommands (
           frc2::SequentialCommandGroup { 
               AutoDelay(0.5),
-              frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [&] { m_launcher->Launch(); }, { m_launcher }),
+              //frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),
               AutoDelay(0.5),
-              frc2::InstantCommand( [&] { m_launcher->RetractBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [&] { m_launcher->Retract(); }, { m_launcher }),
+              // frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
               frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), 
               AutoDriveDistance(m_driveTrain, m_distance),
               frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
@@ -80,12 +80,12 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
               AutoDriveDistance(m_driveTrain, -m_distance),
 //              frc2::InstantCommand( [intake] { intake->Deploy(); }, { intake }), // Only needed to avoid motor interference
               AutoDelay(0.5),
-              frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),                                  
+              frc2::InstantCommand( [&] { m_launcher->Launch(); }, { m_launcher }),
+              //frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),                                  
               AutoDelay(0.5),
 //              frc2::InstantCommand( [intake] { intake->Stow(); }, {intake}),
-              frc2::InstantCommand( [&] { m_launcher->RetractBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [&] { m_launcher->Retract(); }, { m_launcher }),
+              // frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
               #if 0
               // possible additional ball pickup?
               AutoTurn(m_driveTrain, 45.0),
@@ -99,11 +99,11 @@ AutoDrive::AutoDrive(DriveTrain *drivetrain, Launcher *launcher, Intake *intake)
         printf("Autonomous Mode %d: Shoot-Delay-Move\n", m_mode);
         AddCommands (
             frc2::SequentialCommandGroup {
-              frc2::InstantCommand( [&] { m_launcher->LaunchBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [&] { m_launcher->Launch(); }, { m_launcher }),
+              // frc2::InstantCommand( [&] { m_launcher->LaunchErnie(); }, { m_launcher }),
               AutoDelay(m_driveTrain->m_autoDriveDelay),
-              frc2::InstantCommand( [&] { m_launcher->RetractBert(); }, { m_launcher }),
-              frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
+              frc2::InstantCommand( [&] { m_launcher->Retract(); }, { m_launcher }),
+              //frc2::InstantCommand( [&] { m_launcher->RetractErnie(); }, { m_launcher }),
               AutoDriveDistance(m_driveTrain, m_distance),
           } );
       break;

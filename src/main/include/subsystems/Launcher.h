@@ -15,26 +15,27 @@ namespace ConLauncher {
   constexpr int MOTOR_BERT_ID = 6;
   constexpr int MOTOR_ERNIE_ID = 1;
   // Starting point for Launcher soft limits
-  constexpr int BERT_FWD_LIMIT = 111;
+  constexpr int BERT_FWD_LIMIT = 116;
   constexpr int ERNIE_FWD_LIMIT = 115;
   constexpr int BERT_REV_LIMIT = 0;
   constexpr int ERNIE_REV_LIMIT = 0;  
   constexpr int BERT_FAR_LIMIT = 176;
   constexpr int ERNIE_FAR_LIMIT = 191;
-  constexpr double BERT_RAMP_RATE = .1;
-  constexpr double ERNIE_RAMP_RATE = .1;
+  constexpr double BERT_RAMP_RATE = .05;
+  constexpr double ERNIE_RAMP_RATE = .05;
   constexpr double BERT_POWER = .96;
   constexpr double ERNIE_POWER = .92;
   constexpr double BERT_FAR_POWER = .77;
   constexpr double ERNIE_FAR_POWER = .78;
   constexpr int CURRENT_STALL_LIMIT = 80;
+  constexpr double DOUBLE_LAUNCH_PWR_SCALE_FACTOR = 1.05;
 }
 
 class Launcher : public frc2::SubsystemBase {
  public:
   Launcher();
-  void LaunchBert();
-  void LaunchErnie();
+  void LaunchBert(double);
+  void LaunchErnie(double);
   void Launch(); // Launch both Bert & Ernie
   void RetractBert();
   void RetractErnie();
